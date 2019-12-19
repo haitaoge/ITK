@@ -22,8 +22,8 @@ namespace itk
 {
 LoggerBase::LoggerBase()
 {
-  this->m_PriorityLevel = LoggerBase::PriorityLevelType::NOTSET;
-  this->m_LevelForFlushing = LoggerBase::PriorityLevelType::MUSTFLUSH;
+  this->m_PriorityLevel = LoggerBase::PriorityLevelEnum::NOTSET;
+  this->m_LevelForFlushing = LoggerBase::PriorityLevelEnum::MUSTFLUSH;
   this->m_Clock = RealTimeClock::New();
   this->m_Output = MultipleLogOutput::New();
   this->m_TimeStampFormat = REALVALUE;
@@ -44,7 +44,7 @@ LoggerBase::AddLogOutput(OutputType * output)
 }
 
 void
-LoggerBase::Write(PriorityLevelType level, std::string const & content)
+LoggerBase::Write(PriorityLevelEnum level, std::string const & content)
 {
   if (this->m_PriorityLevel >= level)
   {
@@ -63,7 +63,7 @@ LoggerBase::Flush()
 }
 
 std::string
-LoggerBase ::BuildFormattedEntry(PriorityLevelType level, std::string const & content)
+LoggerBase ::BuildFormattedEntry(PriorityLevelEnum level, std::string const & content)
 {
   static std::string m_LevelString[] = { "(MUSTFLUSH) ", "(FATAL) ", "(CRITICAL) ", "(WARNING) ",
                                          "(INFO) ",      "(DEBUG) ", "(NOTSET) " };
@@ -103,35 +103,28 @@ LoggerBase::PrintSelf(std::ostream & os, Indent indent) const
 
 /** Print enumerations */
 std::ostream &
-operator<<(std::ostream & out, const LoggerBase::PriorityLevelType value)
+operator<<(std::ostream & out, const LoggerBase::PriorityLevelEnum value)
 {
-  const char * s = 0;
-  switch (value)
-  {
-    case LoggerBase::PriorityLevelType::MUSTFLUSH:
-      s = "LoggerBase::PriorityLevelType::MUSTFLUSH";
-      break;
-    case LoggerBase::PriorityLevelType::FATAL:
-      s = "LoggerBase::PriorityLevelType::FATAL";
-      break;
-    case LoggerBase::PriorityLevelType::CRITICAL:
-      s = "LoggerBase::PriorityLevelType::CRITICAL";
-      break;
-    case LoggerBase::PriorityLevelType::WARNING:
-      s = "LoggerBase::PriorityLevelType::WARNING";
-      break;
-    case LoggerBase::PriorityLevelType::INFO:
-      s = "LoggerBase::PriorityLevelType::INFO";
-      break;
-    case LoggerBase::PriorityLevelType::DEBUG:
-      s = "LoggerBase::PriorityLevelType::DEBUG";
-      break;
-    case LoggerBase::PriorityLevelType::NOTSET:
-      s = "LoggerBase::PriorityLevelType::NOTSET";
-      break;
-    default:
-      s = "INVALID VALUE FOR LoggerBase::PriorityLevelType";
-  }
-  return out << s;
+  return out << [value] {
+    switch (value)
+    {
+      case LoggerBase::PriorityLevelEnum::MUSTFLUSH:
+        return "LoggerBase::PriorityLevelEnum::MUSTFLUSH";
+      case LoggerBase::PriorityLevelEnum::FATAL:
+        return "LoggerBase::PriorityLevelEnum::FATAL";
+      case LoggerBase::PriorityLevelEnum::CRITICAL:
+        return "LoggerBase::PriorityLevelEnum::CRITICAL";
+      case LoggerBase::PriorityLevelEnum::WARNING:
+        return "LoggerBase::PriorityLevelEnum::WARNING";
+      case LoggerBase::PriorityLevelEnum::INFO:
+        return "LoggerBase::PriorityLevelEnum::INFO";
+      case LoggerBase::PriorityLevelEnum::DEBUG:
+        return "LoggerBase::PriorityLevelEnum::DEBUG";
+      case LoggerBase::PriorityLevelEnum::NOTSET:
+        return "LoggerBase::PriorityLevelEnum::NOTSET";
+      default:
+        return "INVALID VALUE FOR LoggerBase::PriorityLevelEnum";
+    }
+  }();
 }
 } // namespace itk

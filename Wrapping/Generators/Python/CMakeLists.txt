@@ -158,7 +158,6 @@ if(NOT EXTERNAL_WRAP_ITK_PROJECT)
   # Create a list of Python files.
   # WrapITK/Python/*.py
   set(ITK_PYTHON_FILES
-    itk/__init__
     itkBase
     itkTemplate
     itkTypes
@@ -201,10 +200,12 @@ if(NOT EXTERNAL_WRAP_ITK_PROJECT)
   endif()
 
   # Install the package python files.
-  list(GET ITK_WRAP_PYTHON_INSTALL_FILES 0 init_file)
+  set(init_file ${CMAKE_CURRENT_BINARY_DIR}/itk/__init__.py)
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/itk/__init__.py.in
+    ${CMAKE_CURRENT_BINARY_DIR}/itk/__init__.py
+    )
   WRAP_ITK_PYTHON_BINDINGS_INSTALL(/itk "ITKCommon" ${init_file})
   set(python_modules ${ITK_WRAP_PYTHON_INSTALL_FILES})
-  list(REMOVE_AT python_modules 0)
   WRAP_ITK_PYTHON_BINDINGS_INSTALL(/ "ITKCommon" ${python_modules})
 endif()
 
@@ -298,15 +299,10 @@ macro(itk_setup_swig_python type base_name interface_file python_file cpp_file d
       "${doc_file}")
   endif()
 
-  set(py3arg)
-  if(PYTHON_VERSION_STRING VERSION_GREATER 3.0)
-    set(py3arg "-py3")
-  endif()
-
   add_custom_command(
     OUTPUT ${cpp_file} ${python_file}
     COMMAND ${swig_command} -c++ -python -O -features autodoc=1
-    ${py3arg}
+    -py3
     -Werror
     -w302 # Identifier 'name' redefined (ignored)
     -w303 # %extend defined for an undeclared class 'name' (to avoid warning about customization in pyBase.i)
@@ -597,9 +593,8 @@ macro(itk_end_wrap_submodule_python group_name)
 
   # add this wrap_*.cmake stuff to the list of modules to init in the main module.
   # first the extern c declaration and then the call of the extern function
-  if(PYTHON_VERSION_STRING VERSION_GREATER 3.0)
-    set(ITK_WRAP_PYTHON_LIBRARY_DECLS "${ITK_WRAP_PYTHON_LIBRARY_DECLS} extern \"C\" PyMODINIT_FUNC PyInit__${group_name}Python();\n")
-    set(ITK_WRAP_PYTHON_LIBRARY_CALLS "${ITK_WRAP_PYTHON_LIBRARY_CALLS}
+  set(ITK_WRAP_PYTHON_LIBRARY_DECLS "${ITK_WRAP_PYTHON_LIBRARY_DECLS} extern \"C\" PyMODINIT_FUNC PyInit__${group_name}Python();\n")
+  set(ITK_WRAP_PYTHON_LIBRARY_CALLS "${ITK_WRAP_PYTHON_LIBRARY_CALLS}
   PyObject * ${group_name}SysModules = PyImport_GetModuleDict();
   PyObject * ${group_name}AlreadyImported = PyDict_GetItemString(${group_name}SysModules, \"_${group_name}Python\");
   if( ${group_name}AlreadyImported == NULL )
@@ -610,10 +605,6 @@ macro(itk_end_wrap_submodule_python group_name)
     Py_DECREF( ${group_name}Module );
     }
 ")
-  else()
-    set(ITK_WRAP_PYTHON_LIBRARY_DECLS "${ITK_WRAP_PYTHON_LIBRARY_DECLS} extern \"C\" PyMODINIT_FUNC init_${group_name}Python();\n")
-    set(ITK_WRAP_PYTHON_LIBRARY_CALLS "${ITK_WRAP_PYTHON_LIBRARY_CALLS} init_${group_name}Python();\n")
-  endif()
 
 endmacro()
 
@@ -896,9 +887,9 @@ macro(itk_wrap_simple_type_python wrap_class swig_name)
     ADD_PYTHON_VARIABLE_LENGTH_SEQ_TYPEMAP("${swig_name}" "${template_params}")
   endif()
 
-  if("${swig_name}" STREQUAL "itkTransformBase")
+  if("${cpp_name}" STREQUAL "itk::TransformBaseTemplate" AND NOT "${ext_def}" MATCHES "Pointer")
     set(ITK_WRAP_PYTHON_SWIG_EXT "${ITK_WRAP_PYTHON_SWIG_EXT}%template(list${swig_name}_Pointer) std::list< ${swig_name}_Pointer >;\n")
-    ADD_PYTHON_CONFIG_TEMPLATE("list" "std::list" "list${swig_name}_Pointer" "itk::TransformBase")
+    ADD_PYTHON_CONFIG_TEMPLATE("list" "std::list" "list${swig_name}_Pointer" "${cpp_name}< ${template_params}>")
   endif()
 
   if("${cpp_name}" STREQUAL "itk::SpatialObjectPoint")

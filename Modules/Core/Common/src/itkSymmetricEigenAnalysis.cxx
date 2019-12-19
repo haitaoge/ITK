@@ -20,23 +20,20 @@
 namespace itk
 {
 std::ostream &
-operator<<(std::ostream & out, const OrderType value)
+operator<<(std::ostream & out, const EigenValueOrderEnum value)
 {
-  const char * s = nullptr;
-  switch (value)
-  {
-    case OrderType::OrderByValue:
-      s = "OrderType::OrderByValue";
-      break;
-    case OrderType::OrderByMagnitude:
-      s = "OrderType::OrderByMagnitude";
-      break;
-    case OrderType::DoNotOrder:
-      s = "OrderType::DoNotOrder";
-      break;
-    default:
-      s = "INVALID VALUE FOR OrderType";
-  }
-  return out << s;
+  return out << [value] {
+    switch (value)
+    {
+      case EigenValueOrderEnum::OrderByValue:
+        return "EigenValueOrderEnum::OrderByValue";
+      case EigenValueOrderEnum::OrderByMagnitude:
+        return "EigenValueOrderEnum::OrderByMagnitude";
+      case EigenValueOrderEnum::DoNotOrder:
+        return "EigenValueOrderEnum::DoNotOrder";
+      default:
+        return "INVALID VALUE FOR EigenValueOrderEnum";
+    }
+  }();
 }
 } // end namespace itk

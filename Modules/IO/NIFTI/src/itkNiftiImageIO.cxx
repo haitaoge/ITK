@@ -1202,7 +1202,9 @@ NiftiImageIO ::ReadImageInformation()
   }
 
   // set slope/intercept
-  if (this->m_NiftiImage->qform_code == 0 && this->m_NiftiImage->sform_code == 0)
+  // this->m_NiftiImage->qform_code == 0 && this->m_NiftiImage->sform_code == 0
+  // do this only for Analyze files
+  if (this->m_NiftiImage->nifti_type == 0)
   {
     this->m_RescaleSlope = 1;
     this->m_RescaleIntercept = 0;
@@ -1341,7 +1343,6 @@ mat44_transpose(const mat44 & in)
 void
 NiftiImageIO ::WriteImageInformation()
 {
-  //  MetaDataDictionary &thisDic=this->GetMetaDataDictionary();
   //
   //
   // First of all we need to not go any further if there's
@@ -1656,6 +1657,20 @@ NiftiImageIO ::WriteImageInformation()
   this->m_NiftiImage->scl_inter = static_cast<float>(m_RescaleIntercept);
   // TODO: Note both arguments are the same, no need to distinguish between them.
   this->SetNIfTIOrientationFromImageIO(this->GetNumberOfDimensions(), this->GetNumberOfDimensions());
+
+  MetaDataDictionary & thisDic = this->GetMetaDataDictionary();
+  std::string          temp;
+  if (itk::ExposeMetaData<std::string>(thisDic, "aux_file", temp))
+  {
+    if (temp.length() > 23)
+    {
+      itkExceptionMacro(<< "aux_file too long, Nifti limit is 23 characters");
+    }
+    else
+    {
+      strcpy(this->m_NiftiImage->aux_file, temp.c_str());
+    }
+  }
 }
 
 namespace
@@ -1684,7 +1699,9 @@ Normalize(std::vector<double> & x)
 void
 NiftiImageIO::SetImageIOOrientationFromNIfTI(unsigned short int dims)
 {
+  typedef SpatialOrientationAdapter OrientAdapterType;
   // in the case of an Analyze75 file, use old analyze orient method.
+  // but this could be a nifti file without qform and sform
   if (this->m_NiftiImage->qform_code == 0 && this->m_NiftiImage->sform_code == 0)
   {
     m_Origin[0] = 0.0;
@@ -1695,6 +1712,48 @@ NiftiImageIO::SetImageIOOrientationFromNIfTI(unsigned short int dims)
     if (dims > 2)
     {
       m_Origin[2] = 0.0;
+    }
+
+    if (this->m_NiftiImage->nifti_type == 0)
+    { // only do this for Analyze file format
+      SpatialOrientationAdapter::DirectionType   dir;
+      SpatialOrientationAdapter::OrientationType orient;
+      switch (this->m_NiftiImage->analyze75_orient)
+      {
+        case a75_transverse_unflipped:
+          orient = SpatialOrientation::ITK_COORDINATE_ORIENTATION_RPI;
+          break;
+        case a75_sagittal_unflipped:
+          orient = SpatialOrientation::ITK_COORDINATE_ORIENTATION_PIR;
+          break;
+        case a75_coronal_unflipped:
+          orient = SpatialOrientation::ITK_COORDINATE_ORIENTATION_RIP;
+          break;
+        case a75_transverse_flipped:
+          orient = SpatialOrientation::ITK_COORDINATE_ORIENTATION_RAI;
+          break;
+        case a75_sagittal_flipped:
+          orient = SpatialOrientation::ITK_COORDINATE_ORIENTATION_PIL;
+          break;
+        case a75_coronal_flipped:
+          orient = SpatialOrientation::ITK_COORDINATE_ORIENTATION_RSP;
+          break;
+        case a75_orient_unknown:
+          orient = SpatialOrientation::ITK_COORDINATE_ORIENTATION_RIP;
+          break;
+      }
+      dir = OrientAdapterType().ToDirectionCosines(orient);
+      const int max_defined_orientation_dims = (dims > 3) ? 3 : dims;
+      for (int d = 0; d < max_defined_orientation_dims; d++)
+      {
+        std::vector<double> direction(dims, 0.0);
+        for (int i = 0; i < max_defined_orientation_dims; i++)
+        {
+          direction[i] = dir[i][d];
+        }
+        Normalize(direction);
+        this->SetDirection(d, direction);
+      }
     }
     return;
   }

@@ -21,38 +21,30 @@ namespace itk
 {
 /** Print enumerations */
 std::ostream &
-operator<<(std::ostream & out, const TreeIteratorBaseNodeType value)
+operator<<(std::ostream & out, const TreeIteratorBaseNodeEnum value)
 {
-  const char * s = nullptr;
-  switch (value)
-  {
-    case TreeIteratorBaseNodeType::UNDEFIND:
-      s = "TreeIteratorBaseNodeType::UNDEFIND";
-      break;
-    case TreeIteratorBaseNodeType::PREORDER:
-      s = "TreeIteratorBaseNodeType::PREORDER";
-      break;
-    case TreeIteratorBaseNodeType::INORDER:
-      s = "TreeIteratorBaseNodeType::INORDER";
-      break;
-    case TreeIteratorBaseNodeType::POSTORDER:
-      s = "TreeIteratorBaseNodeType::POSTORDER";
-      break;
-    case TreeIteratorBaseNodeType::LEVELORDER:
-      s = "TreeIteratorBaseNodeType::LEVELORDER";
-      break;
-    case TreeIteratorBaseNodeType::CHILD:
-      s = "TreeIteratorBaseNodeType::CHILD";
-      break;
-    case TreeIteratorBaseNodeType::ROOT:
-      s = "TreeIteratorBaseNodeType::ROOT";
-      break;
-    case TreeIteratorBaseNodeType::LEAF:
-      s = "TreeIteratorBaseNodeType::LEAF";
-      break;
-    default:
-      s = "INVALID VALUE FOR TreeIteratorBaseNodeType";
-  }
-  return out << s;
+  return out << [value] {
+    switch (value)
+    {
+      case TreeIteratorBaseNodeEnum::UNDEFIND:
+        return "TreeIteratorBaseNodeEnum::UNDEFIND";
+      case TreeIteratorBaseNodeEnum::PREORDER:
+        return "TreeIteratorBaseNodeEnum::PREORDER";
+      case TreeIteratorBaseNodeEnum::INORDER:
+        return "TreeIteratorBaseNodeEnum::INORDER";
+      case TreeIteratorBaseNodeEnum::POSTORDER:
+        return "TreeIteratorBaseNodeEnum::POSTORDER";
+      case TreeIteratorBaseNodeEnum::LEVELORDER:
+        return "TreeIteratorBaseNodeEnum::LEVELORDER";
+      case TreeIteratorBaseNodeEnum::CHILD:
+        return "TreeIteratorBaseNodeEnum::CHILD";
+      case TreeIteratorBaseNodeEnum::ROOT:
+        return "TreeIteratorBaseNodeEnum::ROOT";
+      case TreeIteratorBaseNodeEnum::LEAF:
+        return "TreeIteratorBaseNodeEnum::LEAF";
+      default:
+        return "INVALID VALUE FOR TreeIteratorBaseNodeEnum";
+    }
+  }();
 }
 } // end namespace itk

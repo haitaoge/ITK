@@ -20,11 +20,6 @@
 #include "itkStatisticsAlgorithm.h"
 #include "itkTestingMacros.h"
 
-// Problem has been solved in _MSC_FULL_VER == 191125508
-#if (NDEBUG && (_MSC_FULL_VER == 190024215 || _MSC_FULL_VER == 191025017))
-#  pragma optimize("g", off) // disable global optimizations
-#endif
-
 int
 itkStatisticsAlgorithmTest(int, char *[])
 {
@@ -91,6 +86,7 @@ itkStatisticsAlgorithmTest(int, char *[])
     }
   }
 
+  constSample = sample;
   // Now testing the real algorithm
   ITK_TRY_EXPECT_NO_EXCEPTION(
     itk::Statistics::Algorithm::FindSampleBound(constSample, constSample->Begin(), constSample->End(), lower, upper));

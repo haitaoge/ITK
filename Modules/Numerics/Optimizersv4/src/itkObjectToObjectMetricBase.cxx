@@ -21,51 +21,43 @@ namespace itk
 {
 /** Define how to print enumerations */
 std::ostream &
-operator<<(std::ostream & out, const SourceTypeOfGradient value)
+operator<<(std::ostream & out, const GradientSourceEnum value)
 {
-  const char * s = nullptr;
-  switch (value)
-  {
-    case SourceTypeOfGradient::GRADIENT_SOURCE_FIXED:
-      s = "SourceTypeOfGradient::GRADIENT_SOURCE_FIXED";
-      break;
-    case SourceTypeOfGradient::GRADIENT_SOURCE_MOVING:
-      s = "SourceTypeOfGradient::GRADIENT_SOURCE_MOVING";
-      break;
-    case SourceTypeOfGradient::GRADIENT_SOURCE_BOTH:
-      s = "SourceTypeOfGradient::GRADIENT_SOURCE_BOTH";
-      break;
-    default:
-      s = "INVALID VALUE FOR SourceTypeOfGradient";
-  }
-  return out << s;
+  return out << [value] {
+    switch (value)
+    {
+      case GradientSourceEnum::GRADIENT_SOURCE_FIXED:
+        return "GradientSourceEnum::GRADIENT_SOURCE_FIXED";
+      case GradientSourceEnum::GRADIENT_SOURCE_MOVING:
+        return "GradientSourceEnum::GRADIENT_SOURCE_MOVING";
+      case GradientSourceEnum::GRADIENT_SOURCE_BOTH:
+        return "GradientSourceEnum::GRADIENT_SOURCE_BOTH";
+      default:
+        return "INVALID VALUE FOR GradientSourceEnum";
+    }
+  }();
 }
 
 /** Define how to print enumerations */
 std::ostream &
-operator<<(std::ostream & out, const CategoryTypeForMetric value)
+operator<<(std::ostream & out, const MetricCategoryEnum value)
 {
-  const char * s = nullptr;
-  switch (value)
-  {
-    case CategoryTypeForMetric::UNKNOWN_METRIC:
-      s = "CategoryTypeForMetric::UNKNOWN_METRIC";
-      break;
-    case CategoryTypeForMetric::OBJECT_METRIC:
-      s = "CategoryTypeForMetric::OBJECT_METRIC";
-      break;
-    case CategoryTypeForMetric::IMAGE_METRIC:
-      s = "CategoryTypeForMetric::IMAGE_METRIC";
-      break;
-    case CategoryTypeForMetric::POINT_SET_METRIC:
-      s = "CategoryTypeForMetric::POINT_SET_METRIC";
-      break;
-    case CategoryTypeForMetric::MULTI_METRIC:
-      s = "CategoryTypeForMetric::MULTI_METRIC";
-      break;
-    default:
-      s = "INVALID VALUE FOR CategoryTypeForMetric";
-  }
-  return out << s;
+  return out << [value] {
+    switch (value)
+    {
+      case MetricCategoryEnum::UNKNOWN_METRIC:
+        return "MetricCategoryEnum::UNKNOWN_METRIC";
+      case MetricCategoryEnum::OBJECT_METRIC:
+        return "MetricCategoryEnum::OBJECT_METRIC";
+      case MetricCategoryEnum::IMAGE_METRIC:
+        return "MetricCategoryEnum::IMAGE_METRIC";
+      case MetricCategoryEnum::POINT_SET_METRIC:
+        return "MetricCategoryEnum::POINT_SET_METRIC";
+      case MetricCategoryEnum::MULTI_METRIC:
+        return "MetricCategoryEnum::MULTI_METRIC";
+      default:
+        return "INVALID VALUE FOR MetricCategoryEnum";
+    }
+  }();
 }
 } // namespace itk

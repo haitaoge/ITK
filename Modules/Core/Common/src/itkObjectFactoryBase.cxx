@@ -563,7 +563,7 @@ ObjectFactoryBase ::RegisterFactoryInternal(ObjectFactoryBase * factory)
  * Add a factory to the registered list
  */
 bool
-ObjectFactoryBase ::RegisterFactory(ObjectFactoryBase * factory, InsertionPositionType where, size_t position)
+ObjectFactoryBase ::RegisterFactory(ObjectFactoryBase * factory, InsertionPositionEnum where, size_t position)
 {
   itkInitGlobalsMacro(PimplGlobals);
 
@@ -610,27 +610,27 @@ ObjectFactoryBase ::RegisterFactory(ObjectFactoryBase * factory, InsertionPositi
   //
   switch (where)
   {
-    case InsertionPositionType::INSERT_AT_BACK:
+    case InsertionPositionEnum::INSERT_AT_BACK:
     {
       if (position)
       {
         itkGenericExceptionMacro(
-          << "position argument must not be used with InsertionPositionType::INSERT_AT_BACK option");
+          << "position argument must not be used with InsertionPositionEnum::INSERT_AT_BACK option");
       }
       m_PimplGlobals->m_RegisteredFactories->push_back(factory);
       break;
     }
-    case InsertionPositionType::INSERT_AT_FRONT:
+    case InsertionPositionEnum::INSERT_AT_FRONT:
     {
       if (position)
       {
         itkGenericExceptionMacro(
-          << "position argument must not be used with InsertionPositionType::INSERT_AT_FRONT option");
+          << "position argument must not be used with InsertionPositionEnum::INSERT_AT_FRONT option");
       }
       m_PimplGlobals->m_RegisteredFactories->push_front(factory);
       break;
     }
-    case InsertionPositionType::INSERT_AT_POSITION:
+    case InsertionPositionEnum::INSERT_AT_POSITION:
     {
       const size_t numberOfFactories = m_PimplGlobals->m_RegisteredFactories->size();
       if (position < numberOfFactories)
@@ -876,7 +876,7 @@ ObjectFactoryBase ::SynchronizeObjectFactoryBase(void * objectFactoryBasePrivate
   ObjectFactoryBasePrivate * previousObjectFactoryBasePrivate;
   previousObjectFactoryBasePrivate = GetPimplGlobalsPointer();
 
-  m_PimplGlobals = reinterpret_cast<ObjectFactoryBasePrivate *>(objectFactoryBasePrivate);
+  m_PimplGlobals = static_cast<ObjectFactoryBasePrivate *>(objectFactoryBasePrivate);
   if (m_PimplGlobals && previousObjectFactoryBasePrivate)
   {
     SynchronizeList(m_PimplGlobals->m_InternalFactories, previousObjectFactoryBasePrivate->m_InternalFactories, true);
@@ -965,23 +965,20 @@ ObjectFactoryBasePrivate * ObjectFactoryBase::m_PimplGlobals;
 
 /** Print enumerations */
 std::ostream &
-operator<<(std::ostream & out, const ObjectFactoryBase::InsertionPositionType value)
+operator<<(std::ostream & out, const ObjectFactoryBase::InsertionPositionEnum value)
 {
-  const char * s = 0;
-  switch (value)
-  {
-    case ObjectFactoryBase::InsertionPositionType::INSERT_AT_FRONT:
-      s = "ObjectFactoryBase::InsertionPositionType::INSERT_AT_FRONT";
-      break;
-    case ObjectFactoryBase::InsertionPositionType::INSERT_AT_BACK:
-      s = "ObjectFactoryBase::InsertionPositionType::INSERT_AT_BACK";
-      break;
-    case ObjectFactoryBase::InsertionPositionType::INSERT_AT_POSITION:
-      s = "ObjectFactoryBase::InsertionPositionType::INSERT_AT_POSITION";
-      break;
-    default:
-      s = "INVALID VALUE FOR ObjectFactoryBase::InsertionPositionType";
-  }
-  return out << s;
+  return out << [value] {
+    switch (value)
+    {
+      case ObjectFactoryBase::InsertionPositionEnum::INSERT_AT_FRONT:
+        return "ObjectFactoryBase::InsertionPositionEnum::INSERT_AT_FRONT";
+      case ObjectFactoryBase::InsertionPositionEnum::INSERT_AT_BACK:
+        return "ObjectFactoryBase::InsertionPositionEnum::INSERT_AT_BACK";
+      case ObjectFactoryBase::InsertionPositionEnum::INSERT_AT_POSITION:
+        return "ObjectFactoryBase::InsertionPositionEnum::INSERT_AT_POSITION";
+      default:
+        return "INVALID VALUE FOR ObjectFactoryBase::InsertionPositionEnum";
+    }
+  }();
 }
 } // end namespace itk

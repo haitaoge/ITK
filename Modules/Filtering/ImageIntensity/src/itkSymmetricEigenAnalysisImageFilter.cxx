@@ -23,24 +23,21 @@ namespace Functor
 {
 /** Define how to print enumerations */
 std::ostream &
-operator<<(std::ostream & out, const OrderTypeOfEigenValue value)
+operator<<(std::ostream & out, const EigenValueOrderEnum value)
 {
-  const char * s = nullptr;
-  switch (value)
-  {
-    case OrderTypeOfEigenValue::OrderByValue:
-      s = "OrderTypeOfEigenValue::OrderByValue";
-      break;
-    case OrderTypeOfEigenValue::OrderByMagnitude:
-      s = "OrderTypeOfEigenValue::OrderByMagnitude";
-      break;
-    case OrderTypeOfEigenValue::DoNotOrder:
-      s = "OrderTypeOfEigenValue::DoNotOrder";
-      break;
-    default:
-      s = "INVALID VALUE FOR OrderTypeOfEigenValue";
-  }
-  return out << s;
+  return out << [value] {
+    switch (value)
+    {
+      case EigenValueOrderEnum::OrderByValue:
+        return "EigenValueOrderEnum::OrderByValue";
+      case EigenValueOrderEnum::OrderByMagnitude:
+        return "EigenValueOrderEnum::OrderByMagnitude";
+      case EigenValueOrderEnum::DoNotOrder:
+        return "EigenValueOrderEnum::DoNotOrder";
+      default:
+        return "INVALID VALUE FOR EigenValueOrderEnum";
+    }
+  }();
 }
-} // end namespace Functor
+} // namespace Functor
 } // end namespace itk

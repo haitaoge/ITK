@@ -241,6 +241,17 @@ endif()
 set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Generate debug library name with a postfix.")
 mark_as_advanced(CMAKE_DEBUG_POSTFIX)
 
+# Configure find_package behavior
+if("${CMAKE_VERSION}" VERSION_GREATER_EQUAL "3.16")
+  if(NOT DEFINED CMAKE_FIND_USE_PACKAGE_REGISTRY)
+    set(CMAKE_FIND_USE_PACKAGE_REGISTRY 0)
+  endif()
+else()
+  if(NOT DEFINED CMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY)
+    set(CMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY 1)
+  endif()
+endif()
+
 # Setup build locations.
 if(NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${ITK_BINARY_DIR}/bin)
@@ -254,29 +265,32 @@ endif()
 set(ITK_MODULES_DIR "${ITK_BINARY_DIR}/${ITK_INSTALL_PACKAGE_DIR}/Modules")
 
 
+
 #-----------------------------------------------------------------------------
 # Provide compatibility options.
-option(ITKV4_COMPATIBILITY "Enable compatibility with ITK4.x when possible." OFF)
 # During major release updates deprecated interface may be needed for backwards compatibility
-option(ITK_LEGACY_REMOVE "Remove current legacy code completely." OFF)
+cmake_dependent_option(ITK_LEGACY_REMOVE
+  "Remove current legacy code completely." OFF
+  "NOT ITK_WRAPPING" ON)
+
 # During minor releases bugs may be identified that identify broken interface, or
 # useless interfaces that need to be retained to not break backwards compatibilty.
 # These ITK_FUTURE_LEGACY_REMOVE are another level of granularity for
 # which backwards compatible features we want to maintain.
-option(ITK_FUTURE_LEGACY_REMOVE "Completely remove compilation of code which will become deprecated by default in ITKv5." OFF)
-if(ITK_WRAPPING)
-  option(ITK_LEGACY_SILENT "Silence all legacy code messages." ON)
-else()
-  option(ITK_LEGACY_SILENT "Silence all legacy code messages." OFF)
-endif()
-mark_as_advanced(ITK_LEGACY_SILENT ITK_LEGACY_REMOVE ITK_FUTURE_LEGACY_REMOVE ITKV4_COMPATIBILITY)
-
+cmake_dependent_option(ITK_FUTURE_LEGACY_REMOVE
+      "Completely remove compilation of code which will become deprecated by default in ITKv5." OFF
+      "ITK_LEGACY_REMOVE" OFF)
+cmake_dependent_option(ITK_LEGACY_SILENT
+      "Silence all legacy code messages when ITK_LEGACY_REMOVE:BOOL=OFF." OFF
+      "NOT ITK_LEGACY_REMOVE" OFF)
 # The disabling of legacy code, and the ITKv4 compatibility option can not both be
 # requested. If removal of legacy code is requested, then ITKV4_COMPATIBILITY must
 # be off.
-if(ITKV4_COMPATIBILITY AND ITK_LEGACY_REMOVE)
-  message(FATAL_ERROR "Invalid configuration: ITKV4_COMPATIBILITY AND ITK_LEGACY_REMOVE can not both be ON")
-endif()
+cmake_dependent_option(ITKV4_COMPATIBILITY
+      "Enable LEGACY compatibility with ITK4.x when possible." OFF
+      "NOT ITK_LEGACY_REMOVE" OFF)
+mark_as_advanced(ITK_LEGACY_SILENT ITK_LEGACY_REMOVE ITK_FUTURE_LEGACY_REMOVE ITKV4_COMPATIBILITY)
+
 if (ITKV3_COMPATIBILITY)
   message(FATAL_ERROR "ITKV3_COMPATIBILITY is removed starting in ITK version 5.0, this option is no longer valid.")
 endif()
@@ -302,8 +316,8 @@ option(BUILD_EXAMPLES "Build the examples from the ITK Software Guide." OFF)
 option(ITK_USE_GPU "GPU acceleration via OpenCL" OFF)
 mark_as_advanced(ITK_USE_GPU)
 
-if( ITK_USE_GPU )
-   include(itkOpenCL)
+if(ITK_USE_GPU)
+  include(itkOpenCL)
 endif()
 
 #-----------------------------------------------------------------------------
@@ -392,10 +406,6 @@ endif()
 # In this case we need to tell the user that he has to change the flags manually to the right values.
 if(ITK_WRAPPING)
   set(CMAKE_POSITION_INDEPENDENT_CODE 1)
-
-  if(NOT ITK_LEGACY_SILENT)
-    message(FATAL_ERROR "Wrapping requires to disable legacy code, please set ITK_LEGACY_SILENT=ON")
-  endif()
 endif()
 
 #----------------------------------------------------------------------------
@@ -407,9 +417,17 @@ set(ITK_DATA_ROOT ${ITK_SOURCE_DIR}/Testing/Data)
 # Location of ITK Example Data.
 set(ITK_EXAMPLE_DATA_ROOT "${ITK_SOURCE_DIR}/Examples/Data")
 
-#This flag is used in particular, to enable some tests that require large memory to run.
-# This probably can be discovered at configuration time by CMake. (Check with CMake developers).
-set(ITK_COMPUTER_MEMORY_SIZE 1 CACHE STRING "Provide here the size of your RAM in gibibytes")
+# This flag is used in particular, to enable some tests that require large memory to run.
+# Test that have significant memory requirements should use
+# "set_tests_properties( testname PROPERTIES RESOURCE_LOCK MEMORY_SIZE )",
+# so that only 1 of the memory constrained tests is run at a time.  (NOTE: Other low
+# memory tests that do not have the RESOURCE_LOCK requirement can be run at the same time.)
+# Allow for tests that may use upto 80% of the computer memory to be used for testing.
+cmake_host_system_information(RESULT ITK_COMPUTER_MEMORY_AVAILABLE_MB QUERY TOTAL_PHYSICAL_MEMORY)
+math(EXPR EIGHTY_PERCENT_AVAILABLE_MEMORY_IN_GB "(${ITK_COMPUTER_MEMORY_AVAILABLE_MB} * 80) / ( 1024 * 100)" )
+set(ITK_COMPUTER_MEMORY_SIZE ${EIGHTY_PERCENT_AVAILABLE_MEMORY_IN_GB} CACHE STRING "Provide here the size of your RAM in gibibytes")
+unset(EIGHTY_PERCENT_AVAILABLE_MEMORY_IN_GB)
+unset(ITK_COMPUTER_MEMORY_AVAILABLE_MB)
 mark_as_advanced(ITK_COMPUTER_MEMORY_SIZE)
 
 #This flag sets the floating point type used in itk::ImageBase for
@@ -495,6 +513,10 @@ endif()
 install(FILES "LICENSE" "NOTICE" "README.md" DESTINATION ${ITK_INSTALL_DOC_DIR} COMPONENT Runtime)
 
 if(BUILD_TESTING)
+  # If building the testing, write the test costs (i.e. time to run)
+  # analysis to disk to more easily review long-running test times
+  set(CTEST_COST_DATA_FILE "${CMAKE_BINARY_DIR}/test_cost.list" CACHE FILEPATH "Configurable path to CTest cost data file.")
+  mark_as_advanced(CTEST_COST_DATA_FILE)
   add_subdirectory(Utilities/InstallTest)
 endif()
 

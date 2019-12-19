@@ -128,7 +128,7 @@ LBFGS2Optimizerv4::EvaluateCostCallback(void *                                  
                                         const int                                n,
                                         const LBFGS2Optimizerv4::PrecisionType   step)
 {
-  auto * optimizer = reinterpret_cast<LBFGS2Optimizerv4 *>(instance);
+  auto * optimizer = static_cast<LBFGS2Optimizerv4 *>(instance);
   return optimizer->EvaluateCost(x, g, n, step);
 }
 
@@ -166,7 +166,7 @@ LBFGS2Optimizerv4::UpdateProgressCallback(void *                                
                                           int                                      k,
                                           int                                      ls)
 {
-  auto * optimizer = reinterpret_cast<LBFGS2Optimizerv4 *>(instance);
+  auto * optimizer = static_cast<LBFGS2Optimizerv4 *>(instance);
   return optimizer->UpdateProgress(x, g, fx, xnorm, gnorm, step, n, k, ls);
 }
 
@@ -277,8 +277,8 @@ LBFGS2Optimizerv4::GetStopConditionDescription() const
 void
 LBFGS2Optimizerv4 ::SetScales(const ScalesType &)
 {
-  itkWarningMacro(<< "LBFGS optimizer does not support scaling. All scales are set to one.")
-    m_Scales.SetSize(this->m_Metric->GetNumberOfLocalParameters());
+  itkWarningMacro(<< "LBFGS optimizer does not support scaling. All scales are set to one.");
+  m_Scales.SetSize(this->m_Metric->GetNumberOfLocalParameters());
   m_Scales.Fill(NumericTraits<ScalesType::ValueType>::OneValue());
   this->m_ScalesAreIdentity = true;
 }
@@ -286,8 +286,8 @@ LBFGS2Optimizerv4 ::SetScales(const ScalesType &)
 void
 LBFGS2Optimizerv4 ::SetWeights(const ScalesType)
 {
-  itkWarningMacro(<< "LBFGS optimizer does not support weights. All weights are set to one.")
-    m_Weights.SetSize(this->m_Metric->GetNumberOfLocalParameters());
+  itkWarningMacro(<< "LBFGS optimizer does not support weights. All weights are set to one.");
+  m_Weights.SetSize(this->m_Metric->GetNumberOfLocalParameters());
   m_Weights.Fill(NumericTraits<ScalesType::ValueType>::OneValue());
   this->m_WeightsAreIdentity = true;
 }

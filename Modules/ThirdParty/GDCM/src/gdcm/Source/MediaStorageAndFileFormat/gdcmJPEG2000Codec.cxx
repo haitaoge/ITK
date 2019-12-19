@@ -21,7 +21,7 @@
 #include <cstring>
 #include <cstdio> // snprintf
 #include <numeric>
-#ifdef _WIN32
+#if defined(_MSC_VER) && (_MSC_VER < 1900)
 #define snprintf _snprintf
 #endif
 
@@ -781,12 +781,20 @@ std::pair<char *, size_t> JPEG2000Codec::DecodeByStreamsCommon(char *dummy_buffe
 
   assert( image->numcomps == this->GetPixelFormat().GetSamplesPerPixel() );
   assert( image->numcomps == this->GetPhotometricInterpretation().GetSamplesPerPixel() );
-  if( this->GetPhotometricInterpretation() == PhotometricInterpretation::RGB )
-    assert( !mct );
-  else if( this->GetPhotometricInterpretation() == PhotometricInterpretation::YBR_RCT )
-    assert( mct );
+  if( this->GetPhotometricInterpretation() == PhotometricInterpretation::RGB
+   || this->GetPhotometricInterpretation() == PhotometricInterpretation::YBR_FULL )
+  {
+    if( mct ) gdcmWarningMacro("Invalid PhotometricInterpretation, should be YBR_RCT");
+  }
+  else if( this->GetPhotometricInterpretation() == PhotometricInterpretation::YBR_RCT
+        || this->GetPhotometricInterpretation() == PhotometricInterpretation::YBR_ICT )
+  {
+    if( !mct ) gdcmWarningMacro("Invalid PhotometricInterpretation, should be RGB");
+  }
   else
-    assert( !mct );
+  {
+    if( mct ) gdcmWarningMacro("MCT flag was set in SamplesPerPixel = 1 image. corrupt j2k ?");
+  }
 
   /* close the byte stream */
   opj_stream_destroy(cio);
@@ -846,7 +854,7 @@ std::pair<char *, size_t> JPEG2000Codec::DecodeByStreamsCommon(char *dummy_buffe
     else if (comp->prec <= 16)
       {
       // ELSCINT1_JP2vsJ2K.dcm is a 12bits image
-      uint16_t *data16 = (uint16_t*)raw + compno;
+      uint16_t *data16 = (uint16_t*)(void*)raw + compno;
       for (int i = 0; i < wr * hr; i++)
         {
         int v = image->comps[compno].data[i / wr * w + i % wr];
@@ -856,7 +864,7 @@ std::pair<char *, size_t> JPEG2000Codec::DecodeByStreamsCommon(char *dummy_buffe
       }
     else
       {
-      uint32_t *data32 = (uint32_t*)raw + compno;
+      uint32_t *data32 = (uint32_t*)(void*)raw + compno;
       for (int i = 0; i < wr * hr; i++)
         {
         int v = image->comps[compno].data[i / wr * w + i % wr];
@@ -1025,7 +1033,7 @@ void rawtoimage_fill(const T *inputbuffer, int w, int h, int numcomps, opj_image
     }
 }
 
-opj_image_t* rawtoimage(const char *inputbuffer, opj_cparameters_t *parameters,
+opj_image_t* rawtoimage(const char *inputbuffer8, opj_cparameters_t *parameters,
   size_t fragment_size, int image_width, int image_height, int sample_pixel,
   int bitsallocated, int bitsstored, int highbit, int sign, int quality, int pc)
 {
@@ -1036,6 +1044,7 @@ opj_image_t* rawtoimage(const char *inputbuffer, opj_cparameters_t *parameters,
   OPJ_COLOR_SPACE color_space;
   opj_image_cmptparm_t cmptparm[3]; /* maximum of 3 components */
   opj_image_t * image = nullptr;
+  const void * inputbuffer = inputbuffer8;
 
   assert( sample_pixel == 1 || sample_pixel == 3 );
   if( sample_pixel == 1 )
@@ -1435,7 +1444,7 @@ bool JPEG2000Codec::GetHeaderInfo(const char * dummy_buffer, size_t buf_size, Tr
 
   myfile mysrc;
   myfile *fsrc = &mysrc;
-  fsrc->mem = fsrc->cur = (char*)src;
+  fsrc->mem = fsrc->cur = (char*)const_cast<unsigned char*>(src);
   fsrc->len = file_length;
 
   // the hack is not used when reading meta-info of a j2k stream:

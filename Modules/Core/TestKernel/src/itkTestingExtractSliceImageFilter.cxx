@@ -23,27 +23,23 @@ namespace Testing
 {
 /** Define how to print enumerations */
 std::ostream &
-operator<<(std::ostream & out, const TestExtractSliceImageFilterCollapseStrategy value)
+operator<<(std::ostream & out, const TestExtractSliceImageFilterCollapseStrategyEnum value)
 {
-  const char * s = nullptr;
-  switch (value)
-  {
-    case TestExtractSliceImageFilterCollapseStrategy::DIRECTIONCOLLAPSETOUNKOWN:
-      s = "TestExtractSliceImageFilterCollapseStrategy::DIRECTIONCOLLAPSETOUNKOWN";
-      break;
-    case TestExtractSliceImageFilterCollapseStrategy::DIRECTIONCOLLAPSETOIDENTITY:
-      s = "TestExtractSliceImageFilterCollapseStrategy::DIRECTIONCOLLAPSETOIDENTITY";
-      break;
-    case TestExtractSliceImageFilterCollapseStrategy::DIRECTIONCOLLAPSETOSUBMATRIX:
-      s = "TestExtractSliceImageFilterCollapseStrategy::DIRECTIONCOLLAPSETOSUBMATRIX";
-      break;
-    case TestExtractSliceImageFilterCollapseStrategy::DIRECTIONCOLLAPSETOGUESS:
-      s = "TestExtractSliceImageFilterCollapseStrategy::DIRECTIONCOLLAPSETOGUESS";
-      break;
-    default:
-      s = "INVALID VALUE FOR TestExtractSliceImageFilterCollapseStrategy";
-  }
-  return out << s;
+  return out << [value] {
+    switch (value)
+    {
+      case TestExtractSliceImageFilterCollapseStrategyEnum::DIRECTIONCOLLAPSETOUNKOWN:
+        return "TestExtractSliceImageFilterCollapseStrategyEnum::DIRECTIONCOLLAPSETOUNKOWN";
+      case TestExtractSliceImageFilterCollapseStrategyEnum::DIRECTIONCOLLAPSETOIDENTITY:
+        return "TestExtractSliceImageFilterCollapseStrategyEnum::DIRECTIONCOLLAPSETOIDENTITY";
+      case TestExtractSliceImageFilterCollapseStrategyEnum::DIRECTIONCOLLAPSETOSUBMATRIX:
+        return "TestExtractSliceImageFilterCollapseStrategyEnum::DIRECTIONCOLLAPSETOSUBMATRIX";
+      case TestExtractSliceImageFilterCollapseStrategyEnum::DIRECTIONCOLLAPSETOGUESS:
+        return "TestExtractSliceImageFilterCollapseStrategyEnum::DIRECTIONCOLLAPSETOGUESS";
+      default:
+        return "INVALID VALUE FOR TestExtractSliceImageFilterCollapseStrategyEnum";
+    }
+  }();
 }
 } // end namespace Testing
 } // end namespace itk

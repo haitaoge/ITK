@@ -21,26 +21,22 @@ namespace itk
 {
 /** Define how to print enumeration */
 std::ostream &
-operator<<(std::ostream & out, const ExtractImageFilterCollapseStrategy value)
+operator<<(std::ostream & out, const ExtractImageFilterCollapseStrategyEnum value)
 {
-  const char * s = nullptr;
-  switch (value)
-  {
-    case ExtractImageFilterCollapseStrategy::DIRECTIONCOLLAPSETOUNKOWN:
-      s = "ExtractImageFilterCollapseStrategy::DIRECTIONCOLLAPSETOUNKOWN";
-      break;
-    case ExtractImageFilterCollapseStrategy::DIRECTIONCOLLAPSETOIDENTITY:
-      s = "ExtractImageFilterCollapseStrategy::DIRECTIONCOLLAPSETOIDENTITY";
-      break;
-    case ExtractImageFilterCollapseStrategy::DIRECTIONCOLLAPSETOSUBMATRIX:
-      s = "ExtractImageFilterCollapseStrategy::DIRECTIONCOLLAPSETOSUBMATRIX";
-      break;
-    case ExtractImageFilterCollapseStrategy::DIRECTIONCOLLAPSETOGUESS:
-      s = "ExtractImageFilterCollapseStrategy::DIRECTIONCOLLAPSETOGUESS";
-      break;
-    default:
-      s = "INVALID VALUE FOR ExtractImageFilterCollapseStrategy";
-  }
-  return out << s;
+  return out << [value] {
+    switch (value)
+    {
+      case ExtractImageFilterCollapseStrategyEnum::DIRECTIONCOLLAPSETOUNKOWN:
+        return "ExtractImageFilterCollapseStrategyEnum::DIRECTIONCOLLAPSETOUNKOWN";
+      case ExtractImageFilterCollapseStrategyEnum::DIRECTIONCOLLAPSETOIDENTITY:
+        return "ExtractImageFilterCollapseStrategyEnum::DIRECTIONCOLLAPSETOIDENTITY";
+      case ExtractImageFilterCollapseStrategyEnum::DIRECTIONCOLLAPSETOSUBMATRIX:
+        return "ExtractImageFilterCollapseStrategyEnum::DIRECTIONCOLLAPSETOSUBMATRIX";
+      case ExtractImageFilterCollapseStrategyEnum::DIRECTIONCOLLAPSETOGUESS:
+        return "ExtractImageFilterCollapseStrategyEnum::DIRECTIONCOLLAPSETOGUESS";
+      default:
+        return "INVALID VALUE FOR ExtractImageFilterCollapseStrategyEnum";
+    }
+  }();
 }
 } // end namespace itk

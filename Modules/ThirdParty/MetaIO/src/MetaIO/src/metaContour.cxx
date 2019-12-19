@@ -191,7 +191,11 @@ Clear()
     {
     std::cout << "MetaContour: Clear" << std::endl;
     }
+
   MetaObject::Clear();
+
+  strcpy(m_ObjectTypeName,"Contour");
+
   m_InterpolationType = MET_NO_INTERPOLATION;
   m_NControlPoints = 0;
   m_NInterpolatedPoints = 0;
@@ -302,7 +306,6 @@ M_SetupWriteFields()
 {
   if(META_DEBUG) std::cout << "MetaContour: M_SetupWriteFields" << std::endl;
 
-  strcpy(m_ObjectTypeName,"Contour");
   MetaObject::M_SetupWriteFields();
 
   MET_FieldRecordType * mF;
@@ -362,7 +365,7 @@ M_Read()
   mF = MET_GetFieldRecord("Closed", &m_Fields);
   if(mF->defined)
     {
-    if(mF->value[0])
+    if(mF->value[0] != 0.0)
       {
       m_Closed = true;
       }
@@ -371,7 +374,7 @@ M_Read()
   mF = MET_GetFieldRecord("DisplayOrientation", &m_Fields);
   if(mF->defined)
     {
-    if(mF->value[0])
+    if(mF->value[0] != 0.0)
       {
       m_DisplayOrientation = (int)mF->value[0];
       }
@@ -380,7 +383,7 @@ M_Read()
   mF = MET_GetFieldRecord("PinToSlice", &m_Fields);
   if(mF->defined)
     {
-    if(mF->value[0])
+    if(mF->value[0] != 0.0)
       {
       m_AttachedToSlice = (long int)mF->value[0];
       }
@@ -518,7 +521,7 @@ M_Read()
         }
 
       unsigned long pos = 0;
-      pnt->m_Id = (unsigned long)v[pos];
+      pnt->m_Id = (unsigned int)v[pos];
       pos++;
 
       int d;
@@ -694,7 +697,7 @@ M_Read()
           }
 
         unsigned long pos = 0;
-        pnt->m_Id = (unsigned long)v[pos];
+        pnt->m_Id = (unsigned int)v[pos];
         pos++;
 
         int d;

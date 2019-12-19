@@ -57,7 +57,7 @@ itkGDCMImageIONoCrashTest(int ac, char * av[])
   {
     reader->Update();
   }
-  catch (itk::ExceptionObject & e)
+  catch (const itk::ExceptionObject & e)
   {
     std::cerr << "exception in file reader " << std::endl;
     std::cerr << e << std::endl;
@@ -73,7 +73,9 @@ itkGDCMImageIONoCrashTest(int ac, char * av[])
   std::cout << "SeriesInstanceUID: " << gdcmImageIO->GetSeriesInstanceUID() << std::endl;
   std::cout << "FrameOfReferenceInstanceUID: " << gdcmImageIO->GetFrameOfReferenceInstanceUID() << std::endl;
   std::cout << "KeepOriginalUID: " << gdcmImageIO->GetKeepOriginalUID() << std::endl;
+#ifndef ITK_LEGACY_REMOVE
   std::cout << "LoadSequences: " << gdcmImageIO->GetLoadSequences() << std::endl;
+#endif
   std::cout << "LoadPrivateTags: " << gdcmImageIO->GetLoadPrivateTags() << std::endl;
   std::cout << "CompressionType: " << gdcmImageIO->GetCompressionType() << std::endl;
 

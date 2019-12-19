@@ -107,7 +107,7 @@ MakeNiftiImage()
         ++ri;
       }
     }
-    catch (itk::ExceptionObject & ex)
+    catch (const itk::ExceptionObject & ex)
     {
       std::cerr << "Error filling array" << ex << std::endl;
       return EXIT_FAILURE;
@@ -175,17 +175,18 @@ MakeNiftiImage()
     img->SetOrigin(og);
   }
   {
-    // Set the qform and sfrom codes for the MetaDataDictionary.
+    // Set the qform, sfrom and aux_file values for the MetaDataDictionary.
     itk::MetaDataDictionary & thisDic = img->GetMetaDataDictionary();
     itk::EncapsulateMetaData<std::string>(thisDic, "qform_code_name", "NIFTI_XFORM_SCANNER_ANAT");
     itk::EncapsulateMetaData<std::string>(thisDic, "sform_code_name", "NIFTI_XFORM_UNKNOWN");
+    itk::EncapsulateMetaData<std::string>(thisDic, "aux_file", "aux_info.txt");
   }
 
   try
   {
     itk::IOTestHelper::WriteImage<ImageType, itk::NiftiImageIO>(img, std::string(filename));
   }
-  catch (itk::ExceptionObject & ex)
+  catch (const itk::ExceptionObject & ex)
   {
     std::string message;
     message = "Problem found while writing image ";
@@ -222,8 +223,15 @@ MakeNiftiImage()
                 << "'" << std::endl;
       return EXIT_FAILURE;
     }
+    std::string auxfile_temp = "";
+    if (!itk::ExposeMetaData<std::string>(thisDic, "aux_file", auxfile_temp) || auxfile_temp != "aux_info.txt")
+    {
+      std::cerr << "ERROR: aux_file not recovered from file properly:  'aux_info.txt' != '" << auxfile_temp << "'"
+                << std::endl;
+      return EXIT_FAILURE;
+    }
   }
-  catch (itk::ExceptionObject & e)
+  catch (const itk::ExceptionObject & e)
   {
     e.Print(std::cerr);
     itk::IOTestHelper::Remove(filename);
@@ -263,7 +271,7 @@ CORDirCosines()
  * loops iterating too many times.  This turns off optimization to
  * allow the tests to pass.
  */
-#if _MSC_VER == 1900
+#if defined(_MSC_VER) && (_MSC_VER == 1900)
 #  pragma optimize("", off)
 #endif
 
@@ -373,7 +381,7 @@ TestImageOfSymMats(const std::string & fname)
   {
     itk::IOTestHelper::WriteImage<DtiImageType, itk::NiftiImageIO>(vi, fname);
   }
-  catch (itk::ExceptionObject & ex)
+  catch (const itk::ExceptionObject & ex)
   {
     std::string message;
     message = "Problem found while writing image ";
@@ -393,7 +401,7 @@ TestImageOfSymMats(const std::string & fname)
   {
     readback = itk::IOTestHelper::ReadImage<DtiImageType>(fname);
   }
-  catch (itk::ExceptionObject & ex)
+  catch (const itk::ExceptionObject & ex)
   {
     std::string message;
     message = "Problem found while reading image ";
@@ -539,7 +547,7 @@ RGBTest(int ac, char * av[])
     itk::IOTestHelper::WriteImage<RGBImageType, itk::NiftiImageIO>(im, std::string(tmpImage));
     im2 = itk::IOTestHelper::ReadImage<RGBImageType>(std::string(tmpImage));
   }
-  catch (itk::ExceptionObject & err)
+  catch (const itk::ExceptionObject & err)
   {
     std::cout << "itkNiftiImageIOTest9" << std::endl << "Exception Object caught: " << std::endl << err << std::endl;
     return EXIT_FAILURE;

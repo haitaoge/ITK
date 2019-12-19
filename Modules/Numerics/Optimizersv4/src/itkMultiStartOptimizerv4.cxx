@@ -21,32 +21,26 @@ namespace itk
 {
 /**Define how to print enumerations. */
 std::ostream &
-operator<<(std::ostream & out, const StopType value)
+operator<<(std::ostream & out, const StopEnum value)
 {
-  const char * s = nullptr;
-  switch (value)
-  {
-    case StopType::MAXIMUM_NUMBER_OF_ITERATIONS:
-      s = "StopType::MAXIMUM_NUMBER_OF_ITERATIONS";
-      break;
-    case StopType::COSTFUNCTION_ERROR:
-      s = "StopType::COSTFUNCTION_ERROR";
-      break;
-    case StopType::UPDATE_PARAMETERS_ERROR:
-      s = "StopType::UPDATE_PARAMETERS_ERROR";
-      break;
-    case StopType::STEP_TOO_SMALL:
-      s = "StopType::STEP_TOO_SMALL";
-      break;
-    case StopType::CONVERGENCE_CHECKER_PASSED:
-      s = "StopType::CONVERGENCE_CHECKER_PASSED";
-      break;
-    case StopType::OTHER_ERROR:
-      s = "StopType::OTHER_ERROR";
-      break;
-    default:
-      s = "INVALID VALUE FOR StopType";
-  }
-  return out << s;
+  return out << [value] {
+    switch (value)
+    {
+      case StopEnum::MAXIMUM_NUMBER_OF_ITERATIONS:
+        return "StopEnum::MAXIMUM_NUMBER_OF_ITERATIONS";
+      case StopEnum::COSTFUNCTION_ERROR:
+        return "StopEnum::COSTFUNCTION_ERROR";
+      case StopEnum::UPDATE_PARAMETERS_ERROR:
+        return "StopEnum::UPDATE_PARAMETERS_ERROR";
+      case StopEnum::STEP_TOO_SMALL:
+        return "StopEnum::STEP_TOO_SMALL";
+      case StopEnum::CONVERGENCE_CHECKER_PASSED:
+        return "StopEnum::CONVERGENCE_CHECKER_PASSED";
+      case StopEnum::OTHER_ERROR:
+        return "StopEnum::OTHER_ERROR";
+      default:
+        return "INVALID VALUE FOR StopEnum";
+    }
+  }();
 }
 } // namespace itk

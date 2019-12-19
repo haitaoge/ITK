@@ -96,7 +96,7 @@ GradientDescentOptimizer ::ResumeOptimization()
     {
       // An exception has occurred.
       // Terminate immediately.
-      m_StopCondition = StopConditionType::MetricError;
+      m_StopCondition = StopConditionEnum::MetricError;
       m_StopConditionDescription << "Metric error";
       StopOptimization();
 
@@ -117,7 +117,7 @@ GradientDescentOptimizer ::ResumeOptimization()
     if (m_CurrentIteration >= m_NumberOfIterations)
     {
       m_StopConditionDescription << "Maximum number of iterations (" << m_NumberOfIterations << ") exceeded.";
-      m_StopCondition = StopConditionType::MaximumNumberOfIterations;
+      m_StopCondition = StopConditionEnum::MaximumNumberOfIterations;
       StopOptimization();
       break;
     }
@@ -187,21 +187,19 @@ GradientDescentOptimizer ::AdvanceOneStep()
 
 /** Print enum values */
 std::ostream &
-operator<<(std::ostream & out, const GradientDescentOptimizer::StopConditionType value)
+operator<<(std::ostream & out, const GradientDescentOptimizer::StopConditionEnum value)
 {
-  const char * s = 0;
-  switch (value)
-  {
-    case GradientDescentOptimizer::StopConditionType::MaximumNumberOfIterations:
-      s = "GradientDescentOptimizer::StopConditionType::MaximumNumberOfIterations";
-      break;
-    case GradientDescentOptimizer::StopConditionType::MetricError:
-      s = "GradientDescentOptimizer::StopConditionType::MetricError";
-      break;
-    default:
-      s = "INVALID VALUE FOR GradientDescentOptimizer::StopConditionType";
-  }
-  return out << s;
+  return out << [value] {
+    switch (value)
+    {
+      case GradientDescentOptimizer::StopConditionEnum::MaximumNumberOfIterations:
+        return "GradientDescentOptimizer::StopConditionEnum::MaximumNumberOfIterations";
+      case GradientDescentOptimizer::StopConditionEnum::MetricError:
+        return "GradientDescentOptimizer::StopConditionEnum::MetricError";
+      default:
+        return "INVALID VALUE FOR GradientDescentOptimizer::StopConditionEnum";
+    }
+  }();
 }
 } // end namespace itk
 

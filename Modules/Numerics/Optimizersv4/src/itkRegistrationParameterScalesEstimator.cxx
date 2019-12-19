@@ -21,29 +21,24 @@ namespace itk
 {
 /** Define how to print enumerations */
 std::ostream &
-operator<<(std::ostream & out, const StrategyTypeForSampling value)
+operator<<(std::ostream & out, const SamplingStrategyEnum value)
 {
-  const char * s = nullptr;
-  switch (value)
-  {
-    case StrategyTypeForSampling::FullDomainSampling:
-      s = "StrategyTypeForSampling::FullDomainSampling";
-      break;
-    case StrategyTypeForSampling::CornerSampling:
-      s = "StrategyTypeForSampling::CornerSampling";
-      break;
-    case StrategyTypeForSampling::RandomSampling:
-      s = "StrategyTypeForSampling::RandomSampling";
-      break;
-    case StrategyTypeForSampling::CentralRegionSampling:
-      s = "StrategyTypeForSampling::CentralRegionSampling";
-      break;
-    case StrategyTypeForSampling::VirtualDomainPointSetSampling:
-      s = "StrategyTypeForSampling::VirtualDomainPointSetSampling";
-      break;
-    default:
-      s = "INVALID VALUE FOR StrategyTypeForSampling";
-  }
-  return out << s;
+  return out << [value] {
+    switch (value)
+    {
+      case SamplingStrategyEnum::FullDomainSampling:
+        return "SamplingStrategyEnum::FullDomainSampling";
+      case SamplingStrategyEnum::CornerSampling:
+        return "SamplingStrategyEnum::CornerSampling";
+      case SamplingStrategyEnum::RandomSampling:
+        return "SamplingStrategyEnum::RandomSampling";
+      case SamplingStrategyEnum::CentralRegionSampling:
+        return "SamplingStrategyEnum::CentralRegionSampling";
+      case SamplingStrategyEnum::VirtualDomainPointSetSampling:
+        return "SamplingStrategyEnum::VirtualDomainPointSetSampling";
+      default:
+        return "INVALID VALUE FOR SamplingStrategyEnum";
+    }
+  }();
 }
 } // namespace itk

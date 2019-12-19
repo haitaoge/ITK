@@ -4,6 +4,7 @@ itkGDCMImageIOTest.cxx
 itkGDCMImageIOTest2.cxx
 itkGDCMImageIONoCrashTest.cxx
 itkGDCMImageReadSeriesWriteTest.cxx
+itkGDCMImageReadWriteTest.cxx
 itkGDCMSeriesReadImageWriteTest.cxx
 itkGDCMSeriesMissingDicomTagTest.cxx
 itkGDCMSeriesStreamReadImageWriteTest.cxx
@@ -163,3 +164,56 @@ itk_add_test(NAME itkGDCMImageIONoPreambleTest
   COMMAND ITKIOGDCMTestDriver itkGDCMImageIONoPreambleTest
   DATA{Input/NoPreambleDicomTest.dcm}
   )
+
+itk_add_test(NAME itkGDCMImageReadWriteTest_RGB
+  COMMAND ITKIOGDCMTestDriver
+    --compare ${ITK_TEST_OUTPUT_DIR}/itkGDCMImageReadWriteTest_RGB.mha
+      DATA{Baseline/itkGDCMImageReadWriteTest_RGB.mha}
+    itkGDCMImageReadWriteTest
+      DATA{${ITK_DATA_ROOT}/Input/RGBDicomTest.dcm}
+      ${ITK_TEST_OUTPUT_DIR}/itkGDCMImageReadWriteTest_RGB.mha
+      rgb)
+
+itk_add_test(NAME itkGDCMImageReadWriteTest_JPEGBaseline1
+  COMMAND ITKIOGDCMTestDriver
+    --compareIntensityTolerance 5
+    --compareNumberOfPixelsTolerance 71
+    --compare DATA{Baseline/itkGDCMImageReadWriteTest_RGB.mha}
+      ${ITK_TEST_OUTPUT_DIR}/itkGDCMImageReadWriteTest_JPEGBaseline1.mha
+    itkGDCMImageReadWriteTest
+      DATA{Input/JPEGBaseline1DicomTest.dcm}
+      ${ITK_TEST_OUTPUT_DIR}/itkGDCMImageReadWriteTest_JPEGBaseline1.mha
+      rgb)
+
+itk_add_test(NAME itkGDCMImageIOTest3_mono1
+  COMMAND ITKIOGDCMTestDriver
+    --ignoreInputInformation
+    --compare DATA{Baseline/itkGDCMImageIOTest3Baseline.mha}
+      ${ITK_TEST_OUTPUT_DIR}/itkGDCMImageIOTest3_mono1.mha
+    itkGDCMImageReadWriteTest
+      DATA{Input/itkGDCMImageIOTest3_mono1.dcm}
+      ${ITK_TEST_OUTPUT_DIR}/itkGDCMImageIOTest3_mono1.mha
+      scalar
+  )
+
+function(AddComplianceTest fileName)
+  itk_add_test(NAME itkGDCM_ComplianceTestRGB_${fileName}
+    COMMAND ITKIOGDCMTestDriver
+      --compareIntensityTolerance 3
+      --compareCoordinateTolerance 0.001
+      --compare DATA{Baseline/Lily.png}
+        ${ITK_TEST_OUTPUT_DIR}/itkGDCM_ComplianceTestRGB_${fileName}.mha
+      itkGDCMImageReadWriteTest
+        DATA{Input/Lily/${fileName}.dcm}
+        ${ITK_TEST_OUTPUT_DIR}/itkGDCM_ComplianceTestRGB_${fileName}.mha
+        rgb)
+endfunction()
+
+AddComplianceTest(JPEG2000-YBR_RCT)
+AddComplianceTest(JPEGLS-RGB)
+AddComplianceTest(losslessJPEG-RGB)
+AddComplianceTest(lossyJPEG-YBR_FULL_422)
+AddComplianceTest(raw-RGB)
+AddComplianceTest(raw-YBR_FULL)
+AddComplianceTest(raw-YBR_FULL_422)
+AddComplianceTest(RLE-RGB)

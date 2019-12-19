@@ -42,20 +42,18 @@ VideoIOBase::PrintSelf(std::ostream & os, Indent indent) const
 
 /** Print Enumerations */
 std::ostream &
-operator<<(std::ostream & out, const VideoIOBase::ReadType value)
+operator<<(std::ostream & out, const VideoIOBase::ReadFromEnum value)
 {
-  const char * s = 0;
-  switch (value)
-  {
-    case VideoIOBase::ReadType::ReadFromFile:
-      s = "VideoIOBase::ReadType::ReadFromFile";
-      break;
-    case VideoIOBase::ReadType::ReadFromCamera:
-      s = "VideoIOBase::ReadType::ReadFromCamera";
-      break;
-    default:
-      s = "INVALID VALUE FOR VideoIOBase::ReadType";
-  }
-  return out << s;
+  return out << [value] {
+    switch (value)
+    {
+      case VideoIOBase::ReadFromEnum::ReadFromFile:
+        return "VideoIOBase::ReadFromEnum::ReadFromFile";
+      case VideoIOBase::ReadFromEnum::ReadFromCamera:
+        return "VideoIOBase::ReadFromEnum::ReadFromCamera";
+      default:
+        return "INVALID VALUE FOR VideoIOBase::ReadFromEnum";
+    }
+  }();
 }
 } // namespace itk

@@ -21,26 +21,22 @@ namespace itk
 {
 /**Define how to print enumerations */
 std::ostream &
-operator<<(std::ostream & out, const ChoiceMethod value)
+operator<<(std::ostream & out, const ChoiceMethodEnum value)
 {
-  const char * s = 0;
-  switch (value)
-  {
-    case ChoiceMethod::KEEP:
-      s = "ChoiceMethod::KEEP";
-      break;
-    case ChoiceMethod::AGGREGATE:
-      s = "ChoiceMethod::AGGREGATE";
-      break;
-    case ChoiceMethod::PACK:
-      s = "ChoiceMethod::PACK";
-      break;
-    case ChoiceMethod::STRICT:
-      s = "ChoiceMethod::STRICT";
-      break;
-    default:
-      s = "INVALID VALUE FOR ChoiceMethod";
-  }
-  return out << s;
+  return out << [value] {
+    switch (value)
+    {
+      case ChoiceMethodEnum::KEEP:
+        return "ChoiceMethodEnum::KEEP";
+      case ChoiceMethodEnum::AGGREGATE:
+        return "ChoiceMethodEnum::AGGREGATE";
+      case ChoiceMethodEnum::PACK:
+        return "ChoiceMethodEnum::PACK";
+      case ChoiceMethodEnum::STRICT:
+        return "ChoiceMethodEnum::STRICT";
+      default:
+        return "INVALID VALUE FOR ChoiceMethodEnum";
+    }
+  }();
 }
 } // namespace itk

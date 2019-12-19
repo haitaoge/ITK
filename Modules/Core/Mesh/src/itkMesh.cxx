@@ -21,26 +21,22 @@ namespace itk
 {
 /** Define how to print enumerations */
 std::ostream &
-operator<<(std::ostream & out, const MeshClassCellsAllocationMethodType value)
+operator<<(std::ostream & out, const MeshClassCellsAllocationMethodEnum value)
 {
-  const char * s = nullptr;
-  switch (value)
-  {
-    case MeshClassCellsAllocationMethodType::CellsAllocationMethodUndefined:
-      s = "MeshClassCellsAllocationMethodType::CellsAllocationMethodUndefined";
-      break;
-    case MeshClassCellsAllocationMethodType::CellsAllocatedAsStaticArray:
-      s = "MeshClassCellsAllocationMethodType::CellsAllocatedAsStaticArray";
-      break;
-    case MeshClassCellsAllocationMethodType::CellsAllocatedAsADynamicArray:
-      s = "MeshClassCellsAllocationMethodType::CellsAllocatedAsADynamicArray";
-      break;
-    case MeshClassCellsAllocationMethodType::CellsAllocatedDynamicallyCellByCell:
-      s = "MeshClassCellsAllocationMethodType::CellsAllocatedDynamicallyCellByCell";
-      break;
-    default:
-      s = "INVALID VALUE FOR MeshClassCellsAllocationMethodType";
-  }
-  return out << s;
+  return out << [value] {
+    switch (value)
+    {
+      case MeshClassCellsAllocationMethodEnum::CellsAllocationMethodUndefined:
+        return "MeshClassCellsAllocationMethodEnum::CellsAllocationMethodUndefined";
+      case MeshClassCellsAllocationMethodEnum::CellsAllocatedAsStaticArray:
+        return "MeshClassCellsAllocationMethodEnum::CellsAllocatedAsStaticArray";
+      case MeshClassCellsAllocationMethodEnum::CellsAllocatedAsADynamicArray:
+        return "MeshClassCellsAllocationMethodEnum::CellsAllocatedAsADynamicArray";
+      case MeshClassCellsAllocationMethodEnum::CellsAllocatedDynamicallyCellByCell:
+        return "MeshClassCellsAllocationMethodEnum::CellsAllocatedDynamicallyCellByCell";
+      default:
+        return "INVALID VALUE FOR MeshClassCellsAllocationMethodEnum";
+    }
+  }();
 }
 } // namespace itk
