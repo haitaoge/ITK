@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@
 namespace itk
 {
 
-/** \class KittlerIllingworthThresholdCalculator
+/**
+ *\class KittlerIllingworthThresholdCalculator
  * \brief Computes the KittlerIllingworth's threshold for an image.
  *
  * Kittler and J. Illingworth, "Minimum error thresholding," Pattern Recognition, vol. 19, pp. 41-47, 1986.

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  *  limitations under the License.
  *
  *=========================================================================*/
+#include <set>
 #include "itkGaussianDerivativeOperator.h"
 #include "itkStdStreamStateSave.h"
 #include "itkTestingMacros.h"
@@ -147,5 +148,16 @@ itkGaussianDerivativeOperatorTest(int argc, char * argv[])
   {
     return EXIT_SUCCESS;
   }
+
+  // Test streaming enumeration for GaussianDerivativeOperatorEnums::InterpolationMode elements
+  const std::set<itk::GaussianDerivativeOperatorEnums::InterpolationMode> allInterpolationMode{
+    itk::GaussianDerivativeOperatorEnums::InterpolationMode::NearestNeighbourInterpolation,
+    itk::GaussianDerivativeOperatorEnums::InterpolationMode::LinearInterpolation
+  };
+  for (const auto & ee : allInterpolationMode)
+  {
+    std::cout << "STREAMED ENUM VALUE GaussianDerivativeOperatorEnums::InterpolationMode: " << ee << std::endl;
+  }
+
   return EXIT_FAILURE;
 }

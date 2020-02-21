@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ EllipseSpatialObject<TDimension>::EllipseSpatialObject()
 
 template <unsigned int TDimension>
 void
-EllipseSpatialObject<TDimension>::Clear(void)
+EllipseSpatialObject<TDimension>::Clear()
 {
   Superclass::Clear();
 

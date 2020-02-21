@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -43,7 +43,8 @@ class DataSet;
 
 namespace itk
 {
-/** \class HDF5ImageIO
+/**
+ *\class HDF5ImageIO
  *
  * \author Kent Williams
  * \brief Class that defines how to read HDF5 file format.

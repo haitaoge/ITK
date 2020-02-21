@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@
 
 namespace itk
 {
-/** \class ImageSpatialObject
+/**
+ *\class ImageSpatialObject
  * \brief Implementation of an image as spatial object.
  *
  * This class combines functionalities from a spatial object,
@@ -68,7 +69,7 @@ public:
   /** Reset the spatial object to its initial condition, yet preserves
    *   Id, Parent, and Child information */
   void
-  Clear(void) override;
+  Clear() override;
 
   /** Set the image. */
   void

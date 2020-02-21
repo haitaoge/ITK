@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,7 +23,8 @@
 
 namespace itk
 {
-/** \class ChangeLabelLabelMapFilter
+/**
+ *\class ChangeLabelLabelMapFilter
  * \brief  Replace the label Ids of selected LabelObjects with new label Ids.
  *
  * This filter takes as input a label map and a list of pairs of Label Ids, to

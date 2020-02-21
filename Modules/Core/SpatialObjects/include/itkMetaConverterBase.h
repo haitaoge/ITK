@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@
 namespace itk
 {
 
-/** \class MetaConverterBase
+/**
+ *\class MetaConverterBase
  *  \brief Base class for MetaObject<->SpatialObject converters
  *
  *  SpatialObject scenes are written and read using the MetaIO
@@ -77,7 +78,7 @@ public:
   itkGetConstMacro(WriteImagesInSeparateFile, bool);
 
 protected:
-  MetaConverterBase() {}
+  MetaConverterBase() = default;
   ~MetaConverterBase() override = default;
 
   /** Creator for specific metaObject, defined in subclass */

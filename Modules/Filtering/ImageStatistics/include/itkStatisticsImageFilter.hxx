@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -114,7 +114,7 @@ StatisticsImageFilter<TInputImage>::ThreadedStreamedGenerateData(const RegionTyp
     while (!it.IsAtEndOfLine())
     {
       const PixelType & value = it.Get();
-      const RealType    realValue = static_cast<RealType>(value);
+      const auto        realValue = static_cast<RealType>(value);
       min = std::min(min, value);
       max = std::max(max, value);
 

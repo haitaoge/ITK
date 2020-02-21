@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -135,7 +135,7 @@ public:
     m_Steps = val;
   }
   int
-  GetSteps()
+  GetSteps() const
   {
     return m_Steps;
   }
@@ -147,7 +147,7 @@ public:
     m_Iterations = val;
   }
   int
-  GetIterations()
+  GetIterations() const
   {
     return m_Iterations;
   }
@@ -160,7 +160,7 @@ public:
     m_Quiet = val;
   }
   bool
-  GetQuiet()
+  GetQuiet() const
   {
     return m_Quiet;
   }

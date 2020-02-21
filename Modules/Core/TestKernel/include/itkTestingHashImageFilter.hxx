@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -30,7 +30,6 @@ namespace Testing
 
 template <typename TImageType>
 HashImageFilter<TImageType>::HashImageFilter()
-  : m_HashFunction(MD5)
 {
   // create data object
   this->ProcessObject::SetNthOutput(1, this->MakeOutput(1).GetPointer());

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -373,6 +373,19 @@ itkRegistrationParameterScalesEstimatorTest(int, char *[])
   if (!nonUniformForJacobian)
   {
     std::cout << "Error: the jacobian scales for an affine transform are equal for all parameters." << std::endl;
+  }
+
+  // Test streaming enumeration for RegistrationParameterScalesEstimatorEnums::SamplingStrategy elements
+  const std::set<itk::RegistrationParameterScalesEstimatorEnums::SamplingStrategy> allSamplingStrategy{
+    itk::RegistrationParameterScalesEstimatorEnums::SamplingStrategy::FullDomainSampling,
+    itk::RegistrationParameterScalesEstimatorEnums::SamplingStrategy::CornerSampling,
+    itk::RegistrationParameterScalesEstimatorEnums::SamplingStrategy::RandomSampling,
+    itk::RegistrationParameterScalesEstimatorEnums::SamplingStrategy::CentralRegionSampling,
+    itk::RegistrationParameterScalesEstimatorEnums::SamplingStrategy::VirtualDomainPointSetSampling
+  };
+  for (const auto & ee : allSamplingStrategy)
+  {
+    std::cout << "STREAMED ENUM VALUE RegistrationParameterScalesEstimatorEnums::SamplingStrategy: " << ee << std::endl;
   }
 
   if (jacobianPass && nonUniformForJacobian && randomPass && fullDomainPass)

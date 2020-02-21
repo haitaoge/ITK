@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,7 +27,8 @@
 namespace itk
 {
 /* Necessary forward declaration see below for definition */
-/** \class LBFGSOptimizerBaseHelperv4
+/**
+ *\class LBFGSOptimizerBaseHelperv4
  * \brief Wrapper helper around vnl optimizer.
  *
  * This class is used to translate iteration events, etc, from
@@ -39,7 +40,8 @@ namespace itk
 template <typename TInternalVnlOptimizerType>
 class ITK_TEMPLATE_EXPORT LBFGSOptimizerBaseHelperv4;
 
-/** \class LBFGSOptimizerBasev4
+/**
+ *\class LBFGSOptimizerBasev4
  * \brief Abstract base for vnl lbfgs algorithm optimizers in ITKv4 registration framework.
  *
  * \note The StopConditionDescription returned by this class is directly from the vnl

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -74,7 +74,8 @@ public:
   using OutputIndexIteratorType = ImageRegionIteratorWithIndex<OutputImageType>;
   using OutputIteratorType = ImageRegionIterator<OutputImageType>;
 
-  /** \class LevelSetDomain
+  /**
+   *\class LevelSetDomain
    * \brief Specifies an image region where an unique std::list of level sets Id's are defined.
    * \ingroup ITKLevelSetsv4 */
   class LevelSetDomain

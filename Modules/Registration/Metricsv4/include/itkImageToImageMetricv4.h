@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -204,7 +204,7 @@ public:
   using ParametersValueType = typename Superclass::ParametersValueType;
 
   /** Gradient source type */
-  using GradientSourceType = typename Superclass::GradientSourceType;
+  using GradientSourceEnum = typename Superclass::GradientSourceEnum;
 
   /** Dimension type */
   using DimensionType = typename Superclass::DimensionType;
@@ -605,7 +605,7 @@ public:
   MetricCategoryType
   GetMetricCategory() const override
   {
-    return Superclass::IMAGE_METRIC;
+    return MetricCategoryType::IMAGE_METRIC;
   }
 
 protected:

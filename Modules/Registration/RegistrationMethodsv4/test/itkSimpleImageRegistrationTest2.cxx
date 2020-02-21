@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -202,8 +202,9 @@ PerformSimpleImageRegistration2(int argc, char * argv[])
   rigidShrinkFactorsPerLevel[2] = 4;
   rigidRegistration->SetShrinkFactorsPerLevel(rigidShrinkFactorsPerLevel);
 
-  typename RegistrationType::MetricSamplingStrategyType rigidSamplingStrategy = RegistrationType::RANDOM;
-  double                                                rigidSamplingPercentage = 0.20;
+  typename RegistrationType::MetricSamplingStrategyEnum rigidSamplingStrategy =
+    RegistrationType::MetricSamplingStrategyEnum::RANDOM;
+  double rigidSamplingPercentage = 0.20;
   rigidRegistration->SetMetricSamplingStrategy(rigidSamplingStrategy);
   rigidRegistration->SetMetricSamplingPercentage(rigidSamplingPercentage);
 

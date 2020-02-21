@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  *  limitations under the License.
  *
  *=========================================================================*/
+#include <set>
 #include "itkFRPROptimizer.h"
 
 
@@ -243,5 +244,13 @@ itkFRPROptimizerTest(int, char *[])
     std::cout << "Polak Ribiere test passed." << std::endl;
   }
 
+  // Test streaming enumeration for FRPROptimizerEnums::Optimization elements
+  const std::set<itk::FRPROptimizerEnums::Optimization> allOptimization{
+    itk::FRPROptimizerEnums::Optimization::FletchReeves, itk::FRPROptimizerEnums::Optimization::PolakRibiere
+  };
+  for (const auto & ee : allOptimization)
+  {
+    std::cout << "STREAMED ENUM VALUE FRPROptimizerEnums::Optimization: " << ee << std::endl;
+  }
   return EXIT_SUCCESS;
 }

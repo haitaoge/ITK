@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ namespace itk
 namespace fem
 {
 
-LinearSystemWrapper::~LinearSystemWrapper() {}
+LinearSystemWrapper::~LinearSystemWrapper() = default;
 
 void
 LinearSystemWrapper::Clean()
@@ -366,7 +366,7 @@ LinearSystemWrapper::FollowConnectionsCuthillMckeeOrdering(unsigned int  rowNumb
   }
 
   /* while there are more rows to examine */
-  while ((nextRows.size() != 0) && (nextRowNumber < this->m_Order))
+  while ((!nextRows.empty()) && (nextRowNumber < this->m_Order))
   {
     bufferArray.clear();
     for (i = 0; i < (int)(nextRows.size()); i++)
@@ -429,7 +429,7 @@ LinearSystemWrapper::FollowConnectionsCuthillMckeeOrdering(unsigned int  rowNumb
   }
 }
 
-FEMExceptionLinearSystem::~FEMExceptionLinearSystem() noexcept {}
+FEMExceptionLinearSystem::~FEMExceptionLinearSystem() noexcept = default;
 
 FEMExceptionLinearSystem::FEMExceptionLinearSystem(const char * file,
                                                    unsigned int lineNumber,
@@ -468,7 +468,7 @@ FEMExceptionLinearSystemBounds::FEMExceptionLinearSystemBounds(const char * file
   SetDescription(buf.str().c_str());
 }
 
-FEMExceptionLinearSystemBounds::~FEMExceptionLinearSystemBounds() noexcept {}
+FEMExceptionLinearSystemBounds::~FEMExceptionLinearSystemBounds() noexcept = default;
 
 } // end namespace fem
 } // end namespace itk

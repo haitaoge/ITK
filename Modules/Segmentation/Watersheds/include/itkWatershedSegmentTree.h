@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,7 +26,8 @@ namespace itk
 {
 namespace watershed
 {
-/** \class SegmentTree
+/**
+ *\class SegmentTree
  * A data structure for storing segment merge information used in filters of
  * the watershed segmentation algorithm.  See itk::WatershedImageFilter for an
  * overview.

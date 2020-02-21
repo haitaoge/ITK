@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -232,7 +232,8 @@ public:
 };
 
 
-/** \class Modulus
+/**
+ *\class Modulus
  *
  * \ingroup ITKImageIntensity
  */
@@ -271,7 +272,8 @@ public:
 
 #if !defined(ITK_FUTURE_LEGACY_REMOVE)
 
-/** \class ModulusTransform
+/**
+ *\class ModulusTransform
  *
  * \deprecated The two template parametered ModulusTransform functor
  * is deprecated. Please use the version with 3 template parameters.

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -36,13 +36,13 @@ GPUBinaryThresholdImageFilter<TInputImage, TOutputImage>::GPUBinaryThresholdImag
   }
 
   std::vector<std::string> validTypes;
-  validTypes.push_back("unsigned char");
-  validTypes.push_back("unsigned short");
-  validTypes.push_back("char");
-  validTypes.push_back("int");
-  validTypes.push_back("unsigned int");
-  validTypes.push_back("float");
-  validTypes.push_back("double");
+  validTypes.emplace_back("unsigned char");
+  validTypes.emplace_back("unsigned short");
+  validTypes.emplace_back("char");
+  validTypes.emplace_back("int");
+  validTypes.emplace_back("unsigned int");
+  validTypes.emplace_back("float");
+  validTypes.emplace_back("double");
 
   defines << "#define DIM_" << TInputImage::ImageDimension << "\n";
 
@@ -92,7 +92,6 @@ GPUBinaryThresholdImageFilter<TInputImage, TOutputImage>::GPUBinaryThresholdImag
     itkExceptionMacro(<< excpMsg.str().c_str());
   }
 
-  std::cout << "Defines: " << defines.str() << std::endl;
   const char * GPUSource = GPUBinaryThresholdImageFilter::GetOpenCLSource();
 
   // load and build program

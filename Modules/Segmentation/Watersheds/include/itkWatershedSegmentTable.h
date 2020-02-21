@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,7 +27,8 @@ namespace itk
 {
 namespace watershed
 {
-/** \class SegmentTable
+/**
+ *\class SegmentTable
  * A table for storing segmentation information in various component filters of
  * the watershed segmentation algorithm.  See itk::WatershedImageFilter for an
  * overview.
@@ -118,7 +119,7 @@ public:
   segment_t *
   Lookup(const IdentifierType a)
   {
-    Iterator result = m_HashMap.find(a);
+    auto result = m_HashMap.find(a);
 
     if (result == m_HashMap.end())
     {

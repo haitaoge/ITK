@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,7 +27,8 @@ namespace itk
 {
 namespace watershed
 {
-/** \class Segmenter
+/**
+ *\class Segmenter
  *
  * This filter implements the first step in the N-d watershed segmentation
  * algorithm.  It produces a segmented, labeled image from a scalar-valued
@@ -257,7 +258,7 @@ protected:
     //    InputPixelType  bounds_max; // <-- may not be necc.
     InputPixelType value;
     bool           is_on_boundary{ false };
-    flat_region_t() {}
+    flat_region_t() = default;
   };
 
   /** Table for storing flat region information.  */

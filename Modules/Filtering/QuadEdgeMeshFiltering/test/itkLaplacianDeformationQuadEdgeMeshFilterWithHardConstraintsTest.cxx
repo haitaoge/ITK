@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -54,11 +54,11 @@ itkLaplacianDeformationQuadEdgeMeshFilterWithHardConstraintsTest(int argc, char 
 
   if (std::stoi(argv[3]) == 1)
   {
-    filter->SetAreaComputationType(FilterType::MIXEDAREA);
+    filter->SetAreaComputationType(FilterType::AreaEnum::MIXEDAREA);
   }
   else
   {
-    filter->SetAreaComputationType(FilterType::NONE);
+    filter->SetAreaComputationType(FilterType::AreaEnum::NONE);
   }
 
   using CoefficientType = itk::ConformalMatrixCoefficients<MeshType>;
@@ -145,6 +145,15 @@ itkLaplacianDeformationQuadEdgeMeshFilterWithHardConstraintsTest(int argc, char 
     return EXIT_FAILURE;
   }
 
+  // Test streaming enumeration for LaplacianDeformationQuadEdgeMeshFilterEnums::Area elements
+  const std::set<itk::LaplacianDeformationQuadEdgeMeshFilterEnums::Area> allArea{
+    itk::LaplacianDeformationQuadEdgeMeshFilterEnums::Area::NONE,
+    itk::LaplacianDeformationQuadEdgeMeshFilterEnums::Area::MIXEDAREA
+  };
+  for (const auto & ee : allArea)
+  {
+    std::cout << "STREAMED ENUM VALUE LaplacianDeformationQuadEdgeMeshFilterEnums::Area: " << ee << std::endl;
+  }
 
   return EXIT_SUCCESS;
 }

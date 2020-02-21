@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@
 
 namespace itk
 {
-/** \class QuadEdgeMeshToQuadEdgeMeshFilter
+/**
+ *\class QuadEdgeMeshToQuadEdgeMeshFilter
  *  \brief Duplicates the content of a Mesh
  *
  * \author Alexandre Gouaillard, Leonardo Florez-Valencia, Eric Boix
@@ -218,7 +219,7 @@ CopyMeshToMeshCells(const TInputMesh * in, TOutputMesh * out)
   using InputCellTraits = typename TInputMesh::CellTraits;
   using InputPointsIdInternalIterator = typename InputCellTraits::PointIdInternalIterator;
 
-  out->SetCellsAllocationMethod(TOutputMesh::CellsAllocationMethodType::CellsAllocatedDynamicallyCellByCell);
+  out->SetCellsAllocationMethod(MeshEnums::MeshClassCellsAllocationMethod::CellsAllocatedDynamicallyCellByCell);
 
   InputCellsContainerConstPointer inCells = in->GetCells();
 

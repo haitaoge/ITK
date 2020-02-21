@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -166,7 +166,7 @@ itkBlockMatchingImageFilterTest(int argc, char * argv[])
   using RGBFilterType = itk::ScalarToRGBColormapImageFilter<InputImageType, OutputImageType>;
   RGBFilterType::Pointer colormapImageFilter = RGBFilterType::New();
 
-  colormapImageFilter->SetColormap(itk::RGBColormapFilterEnum::Grey);
+  colormapImageFilter->SetColormap(itk::ScalarToRGBColormapImageFilterEnums::RGBColormapFilter::Grey);
   colormapImageFilter->SetInput(reader->GetOutput());
   try
   {

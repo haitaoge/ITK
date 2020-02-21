@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -140,9 +140,9 @@ It can affect all MultiThreaderBase's derived classes in ITK");
    * Deprecated. Use C++11 thread support instead. */
   itkLegacyMacro(void TerminateThread(ThreadIdType thread_id));
 
-  virtual void
+  void
   SetMaximumNumberOfThreads(ThreadIdType numberOfThreads) override;
-  virtual void
+  void
   SetNumberOfWorkUnits(ThreadIdType numberOfWorkUnits) override;
 
   struct WorkUnitInfo : MultiThreaderBase::WorkUnitInfo

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -103,6 +103,9 @@ public:
   /** iterator definition for iterating over a geometry map */
   using GeometryMapIterator = typename GeometryMapType::Iterator;
   using GeometryMapConstIterator = typename GeometryMapType::ConstIterator;
+
+  // Backward compatibility to expose enum from class.
+  using MeshClassCellsAllocationMethodEnum = itk::MeshEnums::MeshClassCellsAllocationMethod;
 
   /** Method for creation through the object factory. */
   itkNewMacro(Self);

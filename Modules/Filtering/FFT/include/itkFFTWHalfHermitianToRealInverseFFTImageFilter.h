@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@
 
 namespace itk
 {
-/** \class FFTWHalfHermitianToRealInverseFFTImageFilter
+/**
+ *\class FFTWHalfHermitianToRealInverseFFTImageFilter
  *
  * \brief FFTW-based reverse Fast Fourier Transform
  *
@@ -120,7 +121,7 @@ public:
 
 protected:
   FFTWHalfHermitianToRealInverseFFTImageFilter();
-  ~FFTWHalfHermitianToRealInverseFFTImageFilter() override {}
+  ~FFTWHalfHermitianToRealInverseFFTImageFilter() override = default;
 
   void
   UpdateOutputData(DataObject * output) override;

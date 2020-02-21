@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -32,7 +32,8 @@
 
 namespace itk
 {
-/** \class ChangeRegionLabelMapFilter
+/**
+ *\class ChangeRegionLabelMapFilter
  * \brief Change the region of a label map.
  *
  * Change the region of a label map. If the output can't contain some of the objects' lines

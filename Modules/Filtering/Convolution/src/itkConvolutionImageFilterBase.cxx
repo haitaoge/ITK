@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,17 +21,17 @@ namespace itk
 {
 /** Define how to print enumerations */
 std::ostream &
-operator<<(std::ostream & out, const ConvolutionImageFilterOutputRegionEnum value)
+operator<<(std::ostream & out, const ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion value)
 {
   return out << [value] {
     switch (value)
     {
-      case ConvolutionImageFilterOutputRegionEnum::SAME:
-        return "ConvolutionImageFilterOutputRegionEnum::SAME";
-      case ConvolutionImageFilterOutputRegionEnum::VALID:
-        return "ConvolutionImageFilterOutputRegionEnum::VALID";
+      case ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion::SAME:
+        return "ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion::SAME";
+      case ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion::VALID:
+        return "ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion::VALID";
       default:
-        return "INVALID VALUE FOR ConvolutionImageFilterOutputRegionEnum";
+        return "INVALID VALUE FOR ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion";
     }
   }();
 }

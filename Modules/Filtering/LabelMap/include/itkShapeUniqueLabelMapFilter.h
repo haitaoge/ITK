@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,7 +26,8 @@
 
 namespace itk
 {
-/** \class ShapeUniqueLabelMapFilter
+/**
+ *\class ShapeUniqueLabelMapFilter
  * \brief Remove some pixels in the label object according to the value of their shape attribute to ensure that a pixel
  * is not in to objects
  *

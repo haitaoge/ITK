@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ OpenCLGetAvailableDevices(cl_platform_id platform, cl_device_type devType, cl_ui
   errid = clGetDeviceIDs(platform, devType, 0, nullptr, &totalNumDevices);
   OpenCLCheckError(errid, __FILE__, __LINE__, ITK_LOCATION);
 
-  cl_device_id * totalDevices = (cl_device_id *)malloc(totalNumDevices * sizeof(cl_device_id));
+  auto * totalDevices = (cl_device_id *)malloc(totalNumDevices * sizeof(cl_device_id));
   errid = clGetDeviceIDs(platform, devType, totalNumDevices, totalDevices, nullptr);
   OpenCLCheckError(errid, __FILE__, __LINE__, ITK_LOCATION);
 

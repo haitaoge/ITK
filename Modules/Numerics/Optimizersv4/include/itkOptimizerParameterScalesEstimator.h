@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@
 namespace itk
 {
 
-/** \class OptimizerParameterScalesEstimatorTemplate
+/**
+ *\class OptimizerParameterScalesEstimatorTemplate
  *  \brief OptimizerParameterScalesEstimatorTemplate is the base class offering a
  * empty method of estimating the parameter scales for optimizers.
  *

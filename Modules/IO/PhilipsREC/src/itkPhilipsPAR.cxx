@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -221,7 +221,7 @@ GetImageInformationDefinitionV3(std::string file, int lineNum, PhilipsPAR * phil
     return tempInfo;
   }
   currentLine = philipsPARClass->GetLineNumber(file, lineNum);
-  if ((currentLine == "") || (currentLine == "\n") || (currentLine == "\r\n") || (currentLine == "\r") ||
+  if ((currentLine.empty()) || (currentLine == "\n") || (currentLine == "\r\n") || (currentLine == "\r") ||
       (currentLine == "#=== END OF DATA DESCRIPTION FILE ======================"
                       "=========================") ||
       (currentLine == "#=== END OF DATA DESCRIPTION FILE ======================"
@@ -262,7 +262,7 @@ GetImageInformationDefinitionV4(std::string file, int lineNum, PhilipsPAR * phil
     return tempInfo;
   }
   currentLine = philipsPARClass->GetLineNumber(file, lineNum);
-  if ((currentLine == "") || (currentLine == "\n") || (currentLine == "\r\n") || (currentLine == "\r") ||
+  if ((currentLine.empty()) || (currentLine == "\n") || (currentLine == "\r\n") || (currentLine == "\r") ||
       (currentLine == "#=== END OF DATA DESCRIPTION FILE ======================"
                       "=========================") ||
       (currentLine == "#=== END OF DATA DESCRIPTION FILE ======================"
@@ -308,7 +308,7 @@ GetImageInformationDefinitionV41(std::string file, int lineNum, PhilipsPAR * phi
     return tempInfo;
   }
   currentLine = philipsPARClass->GetLineNumber(file, lineNum);
-  if ((currentLine == "") || (currentLine == "\n") || (currentLine == "\r\n") || (currentLine == "\r") ||
+  if ((currentLine.empty()) || (currentLine == "\n") || (currentLine == "\r\n") || (currentLine == "\r") ||
       (currentLine == "#=== END OF DATA DESCRIPTION FILE ======================"
                       "=========================") ||
       (currentLine == "#=== END OF DATA DESCRIPTION FILE ======================"
@@ -357,7 +357,7 @@ GetImageInformationDefinitionV42(std::string file, int lineNum, PhilipsPAR * phi
     return tempInfo;
   }
   currentLine = philipsPARClass->GetLineNumber(file, lineNum);
-  if ((currentLine == "") || (currentLine == "\n") || (currentLine == "\r\n") || (currentLine == "\r") ||
+  if ((currentLine.empty()) || (currentLine == "\n") || (currentLine == "\r\n") || (currentLine == "\r") ||
       (currentLine == "#=== END OF DATA DESCRIPTION FILE ======================"
                       "=========================") ||
       (currentLine == "#=== END OF DATA DESCRIPTION FILE ======================"
@@ -400,7 +400,7 @@ PhilipsPAR::PhilipsPAR()
   this->m_PARFileLines.resize(0);
 }
 
-PhilipsPAR::~PhilipsPAR() {}
+PhilipsPAR::~PhilipsPAR() = default;
 
 std::string
 PhilipsPAR::GetLineNumber(std::string file, int lineNum)

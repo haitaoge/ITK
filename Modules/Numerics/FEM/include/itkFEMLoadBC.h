@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -54,8 +54,7 @@ public:
 
   /** Default constructor */
   LoadBC()
-    : m_DegreeOfFreedom(0)
-    , m_Value()
+    : m_Value()
   {}
 
   /** Set the number of degrees of freedom*/
@@ -81,7 +80,7 @@ protected:
   /**
    * Local DOF number within the Element object.
    */
-  unsigned int m_DegreeOfFreedom;
+  unsigned int m_DegreeOfFreedom{ 0 };
 
   /**
    * Value which the DOF is being fixed.

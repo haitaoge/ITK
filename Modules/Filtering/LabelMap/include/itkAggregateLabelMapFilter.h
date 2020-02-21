@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@
 
 namespace itk
 {
-/** \class AggregateLabelMapFilter
+/**
+ *\class AggregateLabelMapFilter
  * \brief Collapses all labels into the first label.
  *
  * This filter takes a label map as input and visits the pixels of all labels

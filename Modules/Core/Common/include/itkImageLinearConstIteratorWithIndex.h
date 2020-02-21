@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -146,7 +146,6 @@ public:
    * returns ImageIterators and uses constructors to cast from an
    * ImageIterator to a ImageLinearConstIteratorWithIndex. */
   ImageLinearConstIteratorWithIndex(const ImageConstIteratorWithIndex<TImage> & it)
-    : m_Direction(0)
   {
     this->ImageConstIteratorWithIndex<TImage>::operator=(it);
   }

@@ -1,6 +1,8 @@
 Contributing to ITK
 ===================
 
+Welcome to the Insight Toolkit (ITK) ! We're excited you're here and want to contribute.
+
 This article documents how to contribute improvements to ITK.
 
 For a *quick start guide*, see the [ITK Git Cheatsheet].
@@ -218,7 +220,17 @@ When a topic is submitted, it is tested across the three major platforms
 before being merged thanks to the [Azure DevOps Pipelines CI
 system](https://azure.microsoft.com/en-ca/services/devops/pipelines/),
 as well as the [CDash GitHub
-Checks](https://github.com/InsightSoftwareConsortium/ITKGitHubCDashStatus).
+Checks](https://github.com/InsightSoftwareConsortium/ITKGitHubCDashStatus),
+and [ITK Coding Style
+check](https://github.com/InsightSoftwareConsortium/ITKClangFormatLinterAction).
+
+If a platform configuration test failure appears to be a false positive, the
+test can be re-executed by adding a comment to the pull request with the
+content `/azp run <ConfigurationName>`. For example:
+
+```
+    /azp run ITK.Linux
+```
 
 After the topic has been merged, it is tested on many
 platforms and configurations on the [nightly
@@ -327,10 +339,17 @@ The `branch -d` command works only when the topic branch has been correctly
 merged. Use `-D` instead of `-d` to force the deletion of an unmerged topic
 branch (*warning*: you could lose commits).
 
+Citation Addition
+-----------------
+
+To connect your [ORCID](https://orcid.org/) profile to the [ITK Zenodo
+citation](https://zenodo.org/record/3592082), add your name and ORCID iD to
+the *ITK/.zenodo* file after contributing 10 or more commits.
 
 More Information
 ----------------
 
+- [ITK Software Guide, Book 1, Part III: Development Guidelines](https://itk.org/ItkSoftwareGuide.pdf)
 - General [Git Help]
 - [GitHub flow guide]
 - [ITK Git Cheatsheet]

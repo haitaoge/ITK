@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,7 +26,8 @@
 
 namespace itk
 {
-/** \class MultivariateLegendrePolynomial
+/**
+ *\class MultivariateLegendrePolynomial
  * \brief 2D and 3D multivariate Legendre Polynomial
  *
  * In 2D,
@@ -130,7 +131,8 @@ public:
     return m_DomainSize;
   }
 
-  /** \class CoefficientVectorSizeMismatch
+  /**
+   *\class CoefficientVectorSizeMismatch
    * \brief Exception object.
    * \ingroup ITKPolynomials
    */
@@ -207,13 +209,10 @@ public:
 
   /** Gets the number of coefficients. */
   unsigned int
-  GetNumberOfCoefficients();
-
-  /** Gets the number of coefficients. */
-  unsigned int
   GetNumberOfCoefficients(unsigned int dimension, unsigned int degree);
 
-  /** \class SimpleForwardIterator
+  /**
+   *\class SimpleForwardIterator
    * \brief Iterator which only supports forward iteration and
    * Begin(), IsAtEnd(), and Get() method which work just like as
    * SimpleImageRegionIterator.

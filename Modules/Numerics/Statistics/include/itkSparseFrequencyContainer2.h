@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -29,7 +29,8 @@ namespace itk
 {
 namespace Statistics
 {
-/** \class SparseFrequencyContainer2
+/**
+ *\class SparseFrequencyContainer2
  *  \brief his class is a container for an histogram.
  *
  *  This class uses an map to store histogram. If your histogram is dense
@@ -97,7 +98,7 @@ public:
   GetFrequency(const InstanceIdentifier id) const;
 
   TotalAbsoluteFrequencyType
-  GetTotalFrequency()
+  GetTotalFrequency() const
   {
     return m_TotalFrequency;
   }

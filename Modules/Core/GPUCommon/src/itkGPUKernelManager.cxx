@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ GPUKernelManager::~GPUKernelManager()
 {
   cl_int errid;
 
-  while (m_KernelContainer.size() > 0)
+  while (!m_KernelContainer.empty())
   {
     errid = clReleaseKernel(m_KernelContainer.back());
     OpenCLCheckError(errid, __FILE__, __LINE__, ITK_LOCATION);
@@ -251,7 +251,7 @@ GPUKernelManager::CreateKernel(const char * kernelName)
   m_KernelContainer.push_back(newKernel);
 
   // argument list
-  m_KernelArgumentReady.push_back(std::vector<KernelArgumentList>());
+  m_KernelArgumentReady.emplace_back();
   cl_uint nArg;
   errid = clGetKernelInfo(newKernel, CL_KERNEL_NUM_ARGS, sizeof(cl_uint), &nArg, nullptr);
   (m_KernelArgumentReady.back()).resize(nArg);
@@ -659,7 +659,7 @@ GPUKernelManager::SetCurrentCommandQueue(int queueid)
 }
 
 int
-GPUKernelManager::GetCurrentCommandQueueID()
+GPUKernelManager::GetCurrentCommandQueueID() const
 {
   return m_CommandQueueId;
 }

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -29,7 +29,8 @@
 
 namespace itk
 {
-/** \class KLMDynamicBorderArray
+/**
+ *\class KLMDynamicBorderArray
  * \brief  Object maintaining a reference to a list of borders associated
  * with a region.
  *
@@ -112,7 +113,8 @@ public:
   TBorder * m_Pointer;
 };
 
-/** \class KLMSegmentationBorder
+/**
+ *\class KLMSegmentationBorder
  * \brief Base class for KLMSegmentationBorder object
  *
  * itkKLMSegmentationBorder is the base class for the KLMSegmentationBorder

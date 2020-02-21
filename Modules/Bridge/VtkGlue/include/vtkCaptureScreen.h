@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
  *
  *=========================================================================*/
 
-#ifndef __vtkCaptureScreen_h
-#define __vtkCaptureScreen_h
+#ifndef vtkCaptureScreen_h
+#define vtkCaptureScreen_h
 
 #include <string>
 #include "vtkSmartPointer.h"
@@ -34,11 +34,9 @@ public:
     : m_Renderer(iRenderer)
   {}
 
-  vtkCaptureScreen()
-    : m_Renderer(nullptr)
-  {}
+  vtkCaptureScreen() = default;
 
-  ~vtkCaptureScreen() {}
+  ~vtkCaptureScreen() = default;
 
   void
   operator()(const std::string & iFileName) const
@@ -47,18 +45,18 @@ public:
   }
 
   void
-  operator()(vtkRenderWindow * iRenderer, const std::string & iFileName) const
+  operator()(vtkRenderWindow * iRenderer, const std::string & iFileName)
   {
     m_Renderer = iRenderer;
     Capture(m_Renderer, iFileName);
   }
 
 private:
-  vtkCaptureScreen(const vtkCaptureScreen &);
+  vtkCaptureScreen(const vtkCaptureScreen &) = delete;
   void
-  operator=(const vtkCaptureScreen &);
+  operator=(const vtkCaptureScreen &) = delete;
 
-  vtkRenderWindow * m_Renderer;
+  vtkRenderWindow * m_Renderer{ nullptr };
 
   void
   Capture(vtkRenderWindow * iRenderer, const std::string & iFileName) const

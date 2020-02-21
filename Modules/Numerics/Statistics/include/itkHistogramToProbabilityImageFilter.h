@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@
 
 namespace itk
 {
-/** \class HistogramToProbabilityImageFilter
+/**
+ *\class HistogramToProbabilityImageFilter
  * \brief The class takes a histogram as an input and gives the probability
  * image as the output. A pixel, at position I,  in the output image is given by
  *
@@ -56,7 +57,7 @@ public:
   // Returns pixels of float..
   using OutputPixelType = TOutput;
 
-  HistogramProbabilityFunction() {}
+  HistogramProbabilityFunction() = default;
 
   ~HistogramProbabilityFunction() = default;
 

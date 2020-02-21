@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -262,7 +262,7 @@ main(int argc, char * argv[])
 
   metric->SetNumberOfHistogramBins(50);
 
-  const unsigned int numberOfSamples = static_cast<unsigned int>(fixedRegion.GetNumberOfPixels() * 60.0 / 100.0);
+  const auto numberOfSamples = static_cast<unsigned int>(fixedRegion.GetNumberOfPixels() * 60.0 / 100.0);
 
   metric->SetNumberOfSpatialSamples(numberOfSamples);
 

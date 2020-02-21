@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@
 
 namespace itk
 {
-/** \class JoinSeriesImageFilter
+/**
+ *\class JoinSeriesImageFilter
  * \brief Join N-D images into an (N+1)-D image
  *
  * This filter is templated over the input image type and the output image

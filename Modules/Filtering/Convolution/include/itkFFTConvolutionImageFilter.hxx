@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -329,7 +329,7 @@ FFTConvolutionImageFilter<TInputImage, TKernelImage, TOutputImage, TInternalPrec
   extractFilter->GraftOutput(this->GetOutput());
 
   // Set up the crop sizes.
-  if (this->GetOutputRegionMode() == ConvolutionImageFilterOutputRegionEnum::SAME)
+  if (this->GetOutputRegionMode() == ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion::SAME)
   {
     InputRegionType sameRegion = this->GetInput()->GetLargestPossibleRegion();
     extractFilter->SetExtractionRegion(sameRegion);

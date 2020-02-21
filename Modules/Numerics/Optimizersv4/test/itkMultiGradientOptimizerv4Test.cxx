@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -62,7 +62,7 @@ public:
   using DerivativeType = Superclass::DerivativeType;
   using MeasureType = Superclass::MeasureType;
 
-  MultiGradientOptimizerv4TestMetric() {}
+  MultiGradientOptimizerv4TestMetric() = default;
 
   void
   Initialize() throw(itk::ExceptionObject) override
@@ -175,7 +175,7 @@ public:
   using DerivativeType = Superclass::DerivativeType;
   using MeasureType = Superclass::MeasureType;
 
-  MultiGradientOptimizerv4TestMetric2() {}
+  MultiGradientOptimizerv4TestMetric2() = default;
 
   void
   Initialize() throw(itk::ExceptionObject) override

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -89,7 +89,7 @@ ConvolutionImageFilter<TInputImage, TKernelImage, TOutputImage>::ComputeConvolut
   {
     optionalFilterWeights += 0.1f;
   }
-  if (this->GetOutputRegionMode() == ConvolutionImageFilterOutputRegionEnum::VALID)
+  if (this->GetOutputRegionMode() == ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion::VALID)
   {
     optionalFilterWeights += 0.1f;
   }
@@ -139,7 +139,7 @@ ConvolutionImageFilter<TInputImage, TKernelImage, TOutputImage>::ComputeConvolut
   convolutionFilter->ReleaseDataFlagOn();
   progress->RegisterInternalFilter(convolutionFilter, 1.0f - optionalFilterWeights);
 
-  if (this->GetOutputRegionMode() == ConvolutionImageFilterOutputRegionEnum::SAME)
+  if (this->GetOutputRegionMode() == ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion::SAME)
   {
     // Graft the output of the convolution filter onto this filter's
     // output.

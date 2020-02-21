@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -43,8 +43,8 @@ itkGPUReductionTest(int argc, char * argv[])
 
   itk::GPUReduction<ElementType>::Pointer summer = itk::GPUReduction<ElementType>::New();
   summer->InitializeKernel(numPixels);
-  unsigned int  bytes = numPixels * sizeof(ElementType);
-  ElementType * h_idata = (ElementType *)malloc(bytes);
+  unsigned int bytes = numPixels * sizeof(ElementType);
+  auto *       h_idata = (ElementType *)malloc(bytes);
 
   for (int ii = 0; ii < numPixels; ii++)
   {

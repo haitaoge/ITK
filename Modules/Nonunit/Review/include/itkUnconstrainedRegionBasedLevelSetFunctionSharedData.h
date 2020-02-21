@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -138,16 +138,12 @@ protected:
   UnconstrainedRegionBasedLevelSetFunctionSharedData()
     : Superclass()
   {}
-  ~UnconstrainedRegionBasedLevelSetFunctionSharedData() override {}
+  ~UnconstrainedRegionBasedLevelSetFunctionSharedData() override = default;
 
 private:
-  UnconstrainedRegionBasedLevelSetFunctionSharedData(const Self &); // purposely
-                                                                    // not
-                                                                    // implemented
+  UnconstrainedRegionBasedLevelSetFunctionSharedData(const Self &) = delete;
   void
-  operator=(const Self &); // purposely
-                           // not
-                           // implemented
+  operator=(const Self &) = delete;
 };
 } // end namespace itk
 

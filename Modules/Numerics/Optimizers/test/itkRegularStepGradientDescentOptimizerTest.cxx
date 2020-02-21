@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
  *
  *=========================================================================*/
 
+#include <set>
 #include "itkRegularStepGradientDescentOptimizer.h"
 #include "itkMath.h"
 
@@ -275,6 +276,30 @@ itkRegularStepGradientDescentOptimizerTest(int, char *[])
     std::cerr << "the GradientMagnitudeTolerance is negative " << std::endl;
     std::cerr << "TEST FAILED !" << std::endl;
     return EXIT_FAILURE;
+  }
+
+  // Test streaming enumeration for
+  // RegularStepGradientDescentBaseOptimizerEnums::StopConditionRegularStepGradientDescentBaseOptimizer elements
+  const std::set<
+    itk::RegularStepGradientDescentBaseOptimizerEnums::StopConditionRegularStepGradientDescentBaseOptimizer>
+    allStopConditionRegularStepGradientDescentBaseOptimizer{
+      itk::RegularStepGradientDescentBaseOptimizerEnums::StopConditionRegularStepGradientDescentBaseOptimizer::
+        GradientMagnitudeTolerance,
+      itk::RegularStepGradientDescentBaseOptimizerEnums::StopConditionRegularStepGradientDescentBaseOptimizer::
+        StepTooSmall,
+      itk::RegularStepGradientDescentBaseOptimizerEnums::StopConditionRegularStepGradientDescentBaseOptimizer::
+        ImageNotAvailable,
+      itk::RegularStepGradientDescentBaseOptimizerEnums::StopConditionRegularStepGradientDescentBaseOptimizer::
+        CostFunctionError,
+      itk::RegularStepGradientDescentBaseOptimizerEnums::StopConditionRegularStepGradientDescentBaseOptimizer::
+        MaximumNumberOfIterations,
+      itk::RegularStepGradientDescentBaseOptimizerEnums::StopConditionRegularStepGradientDescentBaseOptimizer::Unknown
+    };
+  for (const auto & ee : allStopConditionRegularStepGradientDescentBaseOptimizer)
+  {
+    std::cout << "STREAMED ENUM VALUE "
+                 "RegularStepGradientDescentBaseOptimizerEnums::StopConditionRegularStepGradientDescentBaseOptimizer: "
+              << ee << std::endl;
   }
 
   std::cout << "TEST PASSED !" << std::endl;

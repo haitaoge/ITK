@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -36,7 +36,8 @@ namespace itk
 {
 namespace Statistics
 {
-/** \class ScalarImageToCooccurrenceListSampleFilter
+/**
+ *\class ScalarImageToCooccurrenceListSampleFilter
  *  \brief Converts pixel data into a list of pairs in order to compute a cooccurrence Histogram.
  *
  *  This class is intended to be used in combination with the ListToHistogramFilter class.

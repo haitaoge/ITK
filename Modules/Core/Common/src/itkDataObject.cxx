@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -41,12 +41,10 @@ DataObjectError ::DataObjectError() noexcept
 
 DataObjectError ::DataObjectError(const char * file, unsigned int lineNumber)
   : ExceptionObject(file, lineNumber)
-  , m_DataObject(nullptr)
 {}
 
 DataObjectError ::DataObjectError(const std::string & file, unsigned int lineNumber)
   : ExceptionObject(file, lineNumber)
-  , m_DataObject(nullptr)
 {}
 
 DataObjectError ::DataObjectError(const DataObjectError & orig) noexcept

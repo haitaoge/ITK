@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -86,7 +86,7 @@ public:
 
 #if !defined(ITK_WRAPPING_PARSER)
   /** Empty implementation - this will not be used by GPU filters */
-  virtual PixelType
+  PixelType
   ComputeUpdate(const NeighborhoodType & itkNotUsed(neighborhood),
                 void *                   itkNotUsed(globalData),
                 const FloatOffsetType &  itkNotUsed(offset = FloatOffsetType(0.0))) override
@@ -114,7 +114,7 @@ public:
 
 protected:
   GPUFiniteDifferenceFunction() { m_GPUKernelManager = GPUKernelManager::New(); }
-  ~GPUFiniteDifferenceFunction() override {}
+  ~GPUFiniteDifferenceFunction() override = default;
 
   /** GPU kernel manager for GPUFiniteDifferenceFunction class */
   typename GPUKernelManager::Pointer m_GPUKernelManager;

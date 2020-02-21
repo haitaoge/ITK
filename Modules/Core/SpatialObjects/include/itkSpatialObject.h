@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -151,12 +151,12 @@ public:
 
   /** Get the class name with the dimension of the spatial object appended */
   virtual std::string
-  GetClassNameAndDimension(void) const;
+  GetClassNameAndDimension() const;
 
   /** Restore a spatial object to its initial state, yet preserves Id as well as
    *   parent and children relationships */
   virtual void
-  Clear(void);
+  Clear();
 
   /** Set the property applied to the object. */
   void

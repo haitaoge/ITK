@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -101,18 +101,18 @@ public:
   }
 
   void
-  Visit(unsigned long, TetraCellType *)
+  Visit(unsigned long, TetraCellType *) const
   {
     m_CountClass->m_Tetra++;
   }
   void
-  Visit(unsigned long, QuadraticEdgeCellType *)
+  Visit(unsigned long, QuadraticEdgeCellType *) const
   {
     m_CountClass->m_QuadraticEdgeCell++;
   }
 
   void
-  Visit(unsigned long, QuadraticTriangleCellType *)
+  Visit(unsigned long, QuadraticTriangleCellType *) const
   {
     m_CountClass->m_QuadraticTriangleCellType++;
   }
@@ -180,7 +180,7 @@ itkMeshTest(int, char *[])
   /**
    * Specify the method used for allocating cells
    */
-  mesh->SetCellsAllocationMethod(itk::MeshClassCellsAllocationMethodEnum::CellsAllocatedDynamicallyCellByCell);
+  mesh->SetCellsAllocationMethod(itk::MeshEnums::MeshClassCellsAllocationMethod::CellsAllocatedDynamicallyCellByCell);
 
   /**
    * Create the test cell. Note that testCell is a generic auto

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@
 
 namespace itk
 {
-/** \class FrequencyBandImageFilter
+/**
+ *\class FrequencyBandImageFilter
  * \brief Performs a frequency band filtering on a frequency domain image
  *
  * The default filtering functor filters in the range LowFrequencyThreshold and

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,14 +25,12 @@ namespace itk
 
 template <typename TInputImage, typename TOutputImage, typename TParentImageFilter>
 GPUImageToImageFilter<TInputImage, TOutputImage, TParentImageFilter>::GPUImageToImageFilter()
-  : m_GPUEnabled(true)
 {
   m_GPUKernelManager = GPUKernelManager::New();
 }
 
 template <typename TInputImage, typename TOutputImage, typename TParentImageFilter>
-GPUImageToImageFilter<TInputImage, TOutputImage, TParentImageFilter>::~GPUImageToImageFilter()
-{}
+GPUImageToImageFilter<TInputImage, TOutputImage, TParentImageFilter>::~GPUImageToImageFilter() = default;
 
 template <typename TInputImage, typename TOutputImage, typename TParentImageFilter>
 void
@@ -75,7 +73,7 @@ void
 GPUImageToImageFilter<TInputImage, TOutputImage, TParentImageFilter>::GraftOutput(DataObject * output)
 {
   using GPUOutputImage = typename itk::GPUTraits<TOutputImage>::Type;
-  GPUOutputImage * gpuImage = dynamic_cast<GPUOutputImage *>(output);
+  auto * gpuImage = dynamic_cast<GPUOutputImage *>(output);
   if (gpuImage)
   {
     this->GraftOutput(gpuImage);
@@ -105,7 +103,7 @@ GPUImageToImageFilter<TInputImage, TOutputImage, TParentImageFilter>::GraftOutpu
                                                                                   DataObject * output)
 {
   using GPUOutputImage = typename itk::GPUTraits<TOutputImage>::Type;
-  GPUOutputImage * gpuImage = dynamic_cast<GPUOutputImage *>(output);
+  auto * gpuImage = dynamic_cast<GPUOutputImage *>(output);
   if (gpuImage)
   {
     this->GraftOutput(key, gpuImage);

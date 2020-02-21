@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -29,6 +29,17 @@
 
 namespace itk
 {
+template <typename TInputImage, typename TOutputImage, typename TMaskImage>
+ConnectedComponentImageFilter<TInputImage, TOutputImage, TMaskImage>::ConnectedComponentImageFilter()
+  : ScanlineFilterCommon<TInputImage, TOutputImage>(this)
+{
+  // implicit
+  // #0 "Primary" required
+
+  //  #1 "MaskImage" optional
+  Self::AddOptionalInputName("MaskImage", 1);
+}
+
 template <typename TInputImage, typename TOutputImage, typename TMaskImage>
 void
 ConnectedComponentImageFilter<TInputImage, TOutputImage, TMaskImage>::GenerateInputRequestedRegion()

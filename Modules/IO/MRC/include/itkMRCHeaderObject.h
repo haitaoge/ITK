@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,7 +26,8 @@
 namespace itk
 {
 
-/** \class MRCHeaderObject
+/**
+ *\class MRCHeaderObject
  * \brief This class is a light wrapper for a couple of plain old data
  * structures, so that they can be utilized in a MetaDataDictionary.
  *

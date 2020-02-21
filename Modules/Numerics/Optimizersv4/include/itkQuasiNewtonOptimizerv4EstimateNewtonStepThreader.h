@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,7 +26,8 @@ namespace itk
 template <typename TInternalComputationValueType>
 class ITK_FORWARD_EXPORT QuasiNewtonOptimizerv4Template;
 
-/** \class QuasiNewtonOptimizerv4EstimateNewtonStepThreaderTemplate
+/**
+ *\class QuasiNewtonOptimizerv4EstimateNewtonStepThreaderTemplate
  * \brief Estimate the quasi-Newton step in a thread.
  * \ingroup ITKOptimizersv4
  * */

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -114,7 +114,7 @@ public:
   /** DemonsRegistrationFilterFunction type. */
   using DemonsRegistrationFunctionType =
     ESMDemonsRegistrationFunction<FixedImageType, MovingImageType, DisplacementFieldType>;
-  using GradientType = typename DemonsRegistrationFunctionType::GradientType;
+  using GradientType = typename DemonsRegistrationFunctionType::GradientEnum;
 
   static constexpr unsigned int ImageDimension = FixedImageType::ImageDimension;
 

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -147,7 +147,7 @@ private:
   MeasureType *
   RecalculateExtendedArrayFromGaussianParameters(MeasureType * originalArray,
                                                  MeasureType * extendedArray,
-                                                 int           startingPointForInsertion);
+                                                 int           startingPointForInsertion) const;
 
   /** Calculates the squared difference error between each Gaussian
    * iteration loop. */
@@ -168,7 +168,7 @@ private:
 
   /** Print the computed parameters. */
   void
-  PrintComputedParameters();
+  PrintComputedParameters() const;
 
   /** Find the constant of the integrated sample. */
   double

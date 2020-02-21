@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -109,7 +109,7 @@ ImageFileWriter<TInputImage>::Write()
       itkDebugMacro(<< "ImageIO exists but doesn't know how to write file:" << m_FileName);
       itkDebugMacro(<< "Attempting creation of ImageIO with a factory for file:" << m_FileName);
     }
-    m_ImageIO = ImageIOFactory::CreateImageIO(m_FileName.c_str(), ImageIOFactory::FileModeEnum::WriteMode);
+    m_ImageIO = ImageIOFactory::CreateImageIO(m_FileName.c_str(), ImageIOFactory::IOFileModeEnum::WriteMode);
     m_FactorySpecifiedImageIO = true;
   }
 

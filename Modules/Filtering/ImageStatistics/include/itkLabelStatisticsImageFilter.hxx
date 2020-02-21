@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ LabelStatisticsImageFilter<TInputImage, TLabelImage>::MergeMap(MapType & m1, Map
   for (auto & m2_value : m2)
   {
     // does this label exist in the cumulative structure yet?
-    MapIterator m1It = m1.find(m2_value.first);
+    auto m1It = m1.find(m2_value.first);
     if (m1It == m1.end())
     {
       // move m2 entry into m1, this reuses the histogram if needed.
@@ -181,7 +181,7 @@ LabelStatisticsImageFilter<TInputImage, TLabelImage>::ThreadedStreamedGenerateDa
 
   ImageScanlineConstIterator<TLabelImage> labelIt(this->GetLabelInput(), outputRegionForThread);
 
-  MapIterator mapIt = localStatistics.end();
+  auto mapIt = localStatistics.end();
 
   // do the work
   while (!it.IsAtEnd())

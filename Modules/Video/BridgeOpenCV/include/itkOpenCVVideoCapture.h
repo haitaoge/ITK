@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -35,7 +35,8 @@
 namespace itk
 {
 
-/** \class OpenCVVideoCapture
+/**
+ *\class OpenCVVideoCapture
  * \brief This class implements OpenCV's VideoCapture API and takes an itk
  * VideoStream as input
  *

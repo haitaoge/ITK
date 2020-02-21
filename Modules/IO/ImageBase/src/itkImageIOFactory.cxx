@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ std::mutex createImageIOLock;
 }
 
 ImageIOBase::Pointer
-ImageIOFactory::CreateImageIO(const char * path, FileModeEnum mode)
+ImageIOFactory::CreateImageIO(const char * path, IOFileModeEnum mode)
 {
   std::list<ImageIOBase::Pointer> possibleImageIO;
 
@@ -50,14 +50,14 @@ ImageIOFactory::CreateImageIO(const char * path, FileModeEnum mode)
   }
   for (auto & k : possibleImageIO)
   {
-    if (mode == FileModeEnum::ReadMode)
+    if (mode == IOFileModeEnum::ReadMode)
     {
       if (k->CanReadFile(path))
       {
         return k;
       }
     }
-    else if (mode == FileModeEnum::WriteMode)
+    else if (mode == IOFileModeEnum::WriteMode)
     {
       if (k->CanWriteFile(path))
       {
@@ -68,20 +68,4 @@ ImageIOFactory::CreateImageIO(const char * path, FileModeEnum mode)
   return nullptr;
 }
 
-/** Print enum values */
-std::ostream &
-operator<<(std::ostream & out, const ImageIOFactory::FileModeEnum value)
-{
-  return out << [value] {
-    switch (value)
-    {
-      case ImageIOFactory::FileModeEnum::ReadMode:
-        return "ImageIOFactory::FileModeEnum::ReadMode";
-      case ImageIOFactory::FileModeEnum::WriteMode:
-        return "ImageIOFactory::FileModeEnum::WriteMode";
-      default:
-        return "INVALID VALUE FOR ImageIOFactory::FileModeEnum";
-    }
-  }();
-}
 } // end namespace itk

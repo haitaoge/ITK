@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -56,7 +56,8 @@ public:
 };
 } // namespace Functor
 
-/** \class SqrtImageFilter
+/**
+ *\class SqrtImageFilter
  * \brief Computes the square root of each pixel.
  *
  * The computations are performed using std::sqrt(x).

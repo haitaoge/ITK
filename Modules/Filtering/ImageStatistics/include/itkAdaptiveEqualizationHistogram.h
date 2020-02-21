@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ class AdaptiveEqualizationHistogram
 public:
   using RealType = float;
 
-  AdaptiveEqualizationHistogram() {}
+  AdaptiveEqualizationHistogram() = default;
 
   // ~AdaptiveEqualizationHistogram()  {} default is ok
 
@@ -57,7 +57,7 @@ public:
   {
 
     // insert new item if one doesn't exist
-    typename MapType::iterator it = m_Map.find(p);
+    auto it = m_Map.find(p);
 
     itkAssertInDebugAndIgnoreInReleaseMacro(it != m_Map.end());
 
@@ -76,9 +76,9 @@ public:
     // float, but use double for accumulate and temporaries.
     const double iscale = (double)m_Maximum - m_Minimum;
 
-    double                     sum = 0.0;
-    typename MapType::iterator itMap = m_Map.begin();
-    const RealType             u = ((double)pixel - m_Minimum) / iscale - 0.5;
+    double         sum = 0.0;
+    auto           itMap = m_Map.begin();
+    const RealType u = ((double)pixel - m_Minimum) / iscale - 0.5;
     while (itMap != m_Map.end())
     {
       const RealType v = ((double)itMap->first - m_Minimum) / iscale - 0.5;

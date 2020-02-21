@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@
 
 namespace itk
 {
-/** \class Array
+/**
+ *\class Array
  *  \brief Array class with size defined at construction time.
  *
  * This class derives from the vnl_vector<> class.
@@ -182,7 +183,7 @@ public:
 #endif
   /** This destructor is not virtual for performance reasons. However, this
    * means that subclasses cannot allocate memory. */
-  ~Array();
+  ~Array() override;
 
 #if !defined(ITK_LEGACY_REMOVE)
   void

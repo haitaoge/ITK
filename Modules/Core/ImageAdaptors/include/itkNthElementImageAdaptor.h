@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,7 +23,8 @@
 
 namespace itk
 {
-/** \class NthElementImageAdaptor
+/**
+ *\class NthElementImageAdaptor
  * \brief Presents an image as being composed of the N-th element of its pixels
  *
  * It assumes that the pixels are of container type and have in their API

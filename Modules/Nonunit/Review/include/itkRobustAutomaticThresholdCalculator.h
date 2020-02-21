@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -109,13 +109,13 @@ public:
 
 protected:
   RobustAutomaticThresholdCalculator();
-  ~RobustAutomaticThresholdCalculator() override {}
+  ~RobustAutomaticThresholdCalculator() override = default;
   void
   PrintSelf(std::ostream & os, Indent indent) const override;
 
 private:
-  bool           m_Valid; // Have moments been computed yet?
-  double         m_Pow;
+  bool           m_Valid{ false }; // Have moments been computed yet?
+  double         m_Pow{ 1 };
   InputPixelType m_Output;
 
   InputImageConstPointer    m_Input;

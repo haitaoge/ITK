@@ -7,6 +7,7 @@ ITK: The Insight Toolkit
 [![PyPI](https://img.shields.io/pypi/v/itk.svg)](https://pypi.python.org/pypi/itk)
 [![Wheels](https://img.shields.io/pypi/wheel/itk.svg)](https://pypi.org/project/itk)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/InsightSoftwareConsortium/ITK/blob/master/LICENSE)
+[![DOI](https://zenodo.org/badge/800928.svg)](https://zenodo.org/badge/latestdoi/800928)
 
 | | C++ | Python |
 |:------:|:--------:|:--------:|
@@ -19,12 +20,12 @@ Links
 -----
 
 * [Homepage](https://itk.org)
-* [Download](https://itk.org/ITK/resources/software.html)
+* [Download](https://itk.org/download/)
 * [Discussion](https://discourse.itk.org/)
-* [Software Guide](https://itk.org/ITKSoftwareGuide/html/)
-* [Help](https://itk.org/ITK/help/help.html)
+* [Software Guide](https://itk.org/ItkSoftwareGuide.pdf)
+* [Help](https://itk.org/resources/)
 * [Examples](https://itk.org/ITKExamples/)
-* [Issue tracking](http://issues.itk.org/)
+* [Issue tracking](https://github.com/InsightSoftwareConsortium/ITK/issues)
 * [Submit a patch](CONTRIBUTING.md)
 
 
@@ -59,10 +60,44 @@ The cross-platform, C++ core of the toolkit may be built from source using
 Copyright
 ---------
 
-The [Insight Software Consortium](http://www.insightsoftwareconsortium.org)
-holds the copyright of this software. This is a non-profit entity that
-promotes the use of ITK for educational and research purposes. ITK is
-distributed under a license that enables use for both non-commercial and
-commercial applications. See [LICENSE](https://github.com/InsightSoftwareConsortium/ITK/blob/master/LICENSE)
-and [NOTICE](https://github.com/InsightSoftwareConsortium/ITK/blob/master/NOTICE)
+[NumFOCUS](https://numfocus.org/) holds the copyright of this software.
+NumFOCUS is a non-profit entity that promotes the use of open source
+scientific software for educational and research purposes.  NumFOCUS delegates
+project governance to the [Insight Software
+Consortium](http://www.insightsoftwareconsortium.org) Council, an educational
+consortium dedicated to promoting and maintaining open-source, freely
+available software for medical image analysis. This includes promoting such
+software in teaching, research, and commercial applications, and maintaining
+webpages and user and developer communities.  ITK is distributed under a
+license that enables use for both non-commercial and commercial applications.
+See
+[LICENSE](https://github.com/InsightSoftwareConsortium/ITK/blob/master/LICENSE)
+and
+[NOTICE](https://github.com/InsightSoftwareConsortium/ITK/blob/master/NOTICE)
 files for details.
+
+Citation
+--------
+
+To cite ITK, please reference, as appropriate:
+
+### The papers
+
+> McCormick M, Liu X, Jomier J, Marion C, Ibanez L. ITK: enabling reproducible research and open science. Front Neuroinform. 2014;8:13. Published 2014 Feb 20. doi:10.3389/fninf.2014.00013
+
+> Yoo TS, Ackerman MJ, Lorensen WE, Schroeder W, Chalana V, Aylward S, Metaxas D, Whitaker R. Engineering and Algorithm Design for an Image Processing API: A Technical Report on ITK – The Insight Toolkit. In Proc. of Medicine Meets Virtual Reality, J. Westwood, ed., IOS Press Amsterdam pp 586-592 (2002).
+
+### The books
+
+> Johnson, McCormick, Ibanez. "The ITK Software Guide: Design and Functionality." Fourth Edition. Published by Kitware, Inc. 2015 ISBN: 9781-930934-28-3.
+
+> Johnson, McCormick, Ibanez. "The ITK Software Guide: Introduction and Development Guidelines." Fourth Edition. Published by Kitware, Inc. 2015 ISBN: 9781-930934-27-6.
+
+### Specific software version
+
+[![DOI](https://zenodo.org/badge/800928.svg)](https://zenodo.org/badge/latestdoi/800928)
+
+Once your work has been published, please create a pull request to add
+the publication to the
+[ITKBibliography.bib](https://github.com/InsightSoftwareConsortium/insightsoftwareconsortium.org/blob/insightsoftwareconsortium-org/citations/ITKBibliography.bib)
+file.

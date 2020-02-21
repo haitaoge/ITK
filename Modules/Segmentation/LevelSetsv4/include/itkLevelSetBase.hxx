@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ namespace itk
 template <typename TInput, unsigned int VDimension, typename TOutput, typename TDomain>
 LevelSetBase<TInput, VDimension, TOutput, TDomain>::LevelSetBase()
 
-{}
+  = default;
 
 // ----------------------------------------------------------------------------
 template <typename TInput, unsigned int VDimension, typename TOutput, typename TDomain>

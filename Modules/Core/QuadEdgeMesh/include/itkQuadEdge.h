@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -114,7 +114,8 @@
 
 namespace itk
 {
-/** \class QuadEdge
+/**
+ *\class QuadEdge
  * \brief Base class for the implementation of a quad-edge data structure as
  * proposed in "Guibas and Stolfi 1985"
  *

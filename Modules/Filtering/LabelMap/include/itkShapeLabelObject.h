@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@
 
 namespace itk
 {
-/** \class ShapeLabelObject
+/**
+ *\class ShapeLabelObject
  *  \brief A Label object to store the common attributes related to the shape of the object
  *
  * ShapeLabelObject stores  the common attributes related to the shape of the object

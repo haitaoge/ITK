@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,7 +21,8 @@
 #include "itkImageToImageFilter.h"
 namespace itk
 {
-/** \class ZeroCrossingImageFilter
+/**
+ *\class ZeroCrossingImageFilter
  * \brief This filter finds the closest pixel to the zero-crossings
  * (sign changes) in a signed itk::Image.
  *

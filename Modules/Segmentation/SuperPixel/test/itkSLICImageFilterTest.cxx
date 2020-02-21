@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ void
 iterationEventCallback(itk::Object * object, const itk::EventObject & event, void *)
 {
   static unsigned int iterationCount = 0;
-  const TFilterType * slicFilter = dynamic_cast<const TFilterType *>(object);
+  const auto *        slicFilter = dynamic_cast<const TFilterType *>(object);
   if (!itk::IterationEvent().CheckEvent(&event) || !slicFilter)
   {
     return;

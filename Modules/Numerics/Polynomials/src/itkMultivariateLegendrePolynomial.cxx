@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -238,12 +238,6 @@ MultivariateLegendrePolynomial ::GetNumberOfCoefficients(unsigned int dimension,
     denominator *= i;
   }
   return numerator / denominator;
-}
-
-unsigned int
-MultivariateLegendrePolynomial ::GetNumberOfCoefficients()
-{
-  return m_NumberOfCoefficients;
 }
 
 std::ostream &

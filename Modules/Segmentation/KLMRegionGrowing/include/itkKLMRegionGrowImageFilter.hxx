@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@
 namespace itk
 {
 template <typename TInputImage, typename TOutputImage>
-KLMRegionGrowImageFilter<TInputImage, TOutputImage>::KLMRegionGrowImageFilter(void)
+KLMRegionGrowImageFilter<TInputImage, TOutputImage>::KLMRegionGrowImageFilter()
 
 {
   m_InitialRegionMean.set_size(InputImageVectorDimension);
@@ -394,9 +394,9 @@ KLMRegionGrowImageFilter<TInputImage, TOutputImage>::InitializeKLM()
   }
 
   m_BordersPointer.resize(numberOfBorders);
-  for (unsigned int k = 0; k < m_BordersPointer.size(); k++)
+  for (auto & k : m_BordersPointer)
   {
-    m_BordersPointer[k] = KLMSegmentationBorder::New();
+    k = KLMSegmentationBorder::New();
   }
 
   /* the following initialization of the borders ensures that

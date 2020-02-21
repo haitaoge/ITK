@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@
 
 namespace itk
 {
-/** \class PathToChainCodePathFilter
+/**
+ *\class PathToChainCodePathFilter
  * \brief Filter that produces a chain code version of a path.
  *
  * PathToChainCodePathFilter produces a chain code representation of a path.

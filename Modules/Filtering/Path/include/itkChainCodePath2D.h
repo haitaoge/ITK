@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,7 +26,8 @@
 
 namespace itk
 {
-/** \class ChainCodePath2D
+/**
+ *\class ChainCodePath2D
  * \brief  Represent a 2D path as a sequence of connected image index offsets
  *
  * This class is intended to represent sequences of connected indices in a 2D

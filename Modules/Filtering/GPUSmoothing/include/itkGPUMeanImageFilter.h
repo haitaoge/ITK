@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,7 +26,8 @@
 
 namespace itk
 {
-/** \class GPUMeanImageFilter
+/**
+ *\class GPUMeanImageFilter
  *
  * \brief GPU-enabled implementation of the MeanImageFilter.
  *
@@ -92,7 +93,8 @@ private:
   int m_MeanFilterGPUKernelHandle;
 };
 
-/** \class GPUMeanImageFilterFactory
+/**
+ *\class GPUMeanImageFilterFactory
  *
  * \brief Object Factory implementation for GPUMeanImageFilter
  * \ingroup ITKGPUSmoothing

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@
 
 namespace itk
 {
-/** \class FFTWComplexToComplexFFTImageFilter
+/**
+ *\class FFTWComplexToComplexFFTImageFilter
  *
  *  \brief Implements an API to enable the Fourier transform or the inverse
  *  Fourier transform of images with complex valued voxels to be computed using
@@ -127,7 +128,7 @@ public:
 
 protected:
   FFTWComplexToComplexFFTImageFilter();
-  ~FFTWComplexToComplexFFTImageFilter() override {}
+  ~FFTWComplexToComplexFFTImageFilter() override = default;
 
   void
   UpdateOutputData(DataObject * output) override;

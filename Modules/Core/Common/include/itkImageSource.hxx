@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -275,10 +275,10 @@ ITK_THREAD_RETURN_FUNCTION_CALL_CONVENTION
 ImageSource<TOutputImage>::ThreaderCallback(void * arg)
 {
   using ThreadInfo = MultiThreaderBase::WorkUnitInfo;
-  ThreadInfo *   threadInfo = static_cast<ThreadInfo *>(arg);
-  ThreadIdType   threadId = threadInfo->WorkUnitID;
-  ThreadIdType   threadCount = threadInfo->NumberOfWorkUnits;
-  ThreadStruct * str = (ThreadStruct *)(threadInfo->UserData);
+  auto *       threadInfo = static_cast<ThreadInfo *>(arg);
+  ThreadIdType threadId = threadInfo->WorkUnitID;
+  ThreadIdType threadCount = threadInfo->NumberOfWorkUnits;
+  auto *       str = (ThreadStruct *)(threadInfo->UserData);
 
   // execute the actual method with appropriate output region
   // first find out how many pieces extent can be split into.

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -29,7 +29,8 @@ namespace itk
 {
 namespace Statistics
 {
-/** \class ImageToHistogramFilter
+/**
+ *\class ImageToHistogramFilter
  *  \brief This class generates a histogram from an image.
  *
  *  The concept of Histogram in ITK is quite generic. It has been designed to
@@ -154,7 +155,7 @@ protected:
   unsigned int
   GetNumberOfInputRequestedRegions() override;
 
-  virtual void
+  void
   ThreadedStreamedGenerateData(const RegionType &) override;
   virtual void
   ThreadedComputeMinimumAndMaximum(const RegionType & inputRegionForThread);

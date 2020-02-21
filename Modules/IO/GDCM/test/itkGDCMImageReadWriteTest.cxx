@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -61,7 +61,7 @@ internalMain(const std::string &       inputImage,
              itk::GDCMImageIO::Pointer gdcmImageIO)
 {
   const unsigned int numberOfComponents = gdcmImageIO->GetNumberOfComponents();
-  using IOPixelType = itk::GDCMImageIO::IOPixelType;
+  using IOPixelType = itk::IOPixelEnum;
   IOPixelType pixelType = gdcmImageIO->GetPixelType();
 
   switch (pixelType)

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -520,7 +520,7 @@ ResampleImageFilter<TInputImage, TOutputImage, TInterpolatorPrecisionType, TTran
   }
 
   // Get pointers to the input and output
-  InputImageType * input = const_cast<InputImageType *>(this->GetInput());
+  auto * input = const_cast<InputImageType *>(this->GetInput());
 
   // Some interpolators need to look at their images in GetRadius()
   m_Interpolator->SetInputImage(input);

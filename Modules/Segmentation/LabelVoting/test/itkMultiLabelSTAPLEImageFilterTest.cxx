@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ itkMultiLabelSTAPLEImageFilterTest(int, char *[])
   // Correct combinations of input images
   const unsigned int combinationABC[8] = { 0, 1, 2, 3, 4, 5, 6, 9 };
   const unsigned int combinationAB[8] = { 8, 1, 8, 8, 4, 8, 8, 8 };
-  const unsigned int combinationABundecided255[8] = { 8, 1, 8, 8, 4, 8, 8, 8 };
+  const unsigned int combinationABundecided255[8] = { 255, 1, 255, 255, 4, 255, 255, 255 };
 
   // Declare the type of the index to access images
   using myIndexType = itk::Index<myDimension>;

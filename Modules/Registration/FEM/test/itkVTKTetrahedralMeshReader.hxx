@@ -43,8 +43,7 @@ VTKTetrahedralMeshReader<TOutputMesh>::VTKTetrahedralMeshReader()
 // Destructor
 //
 template <typename TOutputMesh>
-VTKTetrahedralMeshReader<TOutputMesh>::~VTKTetrahedralMeshReader()
-{}
+VTKTetrahedralMeshReader<TOutputMesh>::~VTKTetrahedralMeshReader() = default;
 
 template <typename TOutputMesh>
 void
@@ -52,9 +51,9 @@ VTKTetrahedralMeshReader<TOutputMesh>::GenerateData()
 {
   OutputMeshType * outputMesh = this->GetOutput();
 
-  outputMesh->SetCellsAllocationMethod(MeshClassCellsAllocationMethodEnum::CellsAllocatedDynamicallyCellByCell);
+  outputMesh->SetCellsAllocationMethod(MeshEnums::MeshClassCellsAllocationMethod::CellsAllocatedDynamicallyCellByCell);
 
-  if (m_FileName == "")
+  if (m_FileName.empty())
   {
     itkExceptionMacro(<< "No input FileName");
   }

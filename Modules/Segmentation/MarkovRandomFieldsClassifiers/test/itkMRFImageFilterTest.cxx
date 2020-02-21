@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -430,6 +430,15 @@ itkMRFImageFilterTest(int, char *[])
   {
     std::cout << "MRF labeller Test failed. Label sum is " << sum << " and not 22." << std::endl;
     return EXIT_FAILURE;
+  }
+
+  // Test streaming enumeration for MRFImageFilterEnums::MRFStop elements
+  const std::set<itk::MRFImageFilterEnums::MRFStop> allMRFStop{
+    itk::MRFImageFilterEnums::MRFStop::MaximumNumberOfIterations, itk::MRFImageFilterEnums::MRFStop::ErrorTolerance
+  };
+  for (const auto & ee : allMRFStop)
+  {
+    std::cout << "STREAMED ENUM VALUE MRFImageFilterEnums::MRFStop: " << ee << std::endl;
   }
 
   return EXIT_SUCCESS;

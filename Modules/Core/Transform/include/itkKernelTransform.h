@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -31,7 +31,8 @@
 
 namespace itk
 {
-/** \class KernelTransform
+/**
+ *\class KernelTransform
  * Intended to be a base class for elastic body spline and thin plate spline.
  * This is implemented in as straightforward a manner as possible from the
  * IEEE TMI paper by Davis, Khotanzad, Flamig, and Harms, Vol. 16,

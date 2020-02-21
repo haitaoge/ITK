@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -36,7 +36,8 @@ namespace itk
 {
 namespace Functor
 {
-/** \class SimilarVectorsFunctor
+/**
+ *\class SimilarVectorsFunctor
  *
  *  \brief A connected components filter that labels the
  *         objects in a vector image.  Two vectors are pointing
@@ -94,7 +95,8 @@ protected:
 };
 } // end namespace Functor
 
-/** \class VectorConnectedComponentImageFilter
+/**
+ *\class VectorConnectedComponentImageFilter
  *
  *  \brief A connected components filter that labels the
  *         objects in a vector image.  Two vectors are pointing

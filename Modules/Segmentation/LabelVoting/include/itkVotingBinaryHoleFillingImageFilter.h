@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,7 +23,8 @@
 
 namespace itk
 {
-/** \class VotingBinaryHoleFillingImageFilter
+/**
+ *\class VotingBinaryHoleFillingImageFilter
  * \brief Fills in holes and cavities by applying a voting operation on each pixel.
  *
  *

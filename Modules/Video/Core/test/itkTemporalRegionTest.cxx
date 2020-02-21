@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -83,7 +83,8 @@ itkTemporalRegionTest(int, char *[])
   CHECK_FOR_VALUE(regionB.GetFrameDuration(), testFrameDuration);
 
   // Check the region type
-  CHECK_FOR_VALUE(regionA.GetRegionType(), itk::TemporalRegion::ITK_STRUCTURED_REGION);
+  CHECK_FOR_VALUE(static_cast<int>(regionA.GetRegionType()),
+                  static_cast<int>(itk::TemporalRegion::RegionEnum::ITK_STRUCTURED_REGION));
 
   return EXIT_SUCCESS;
 }

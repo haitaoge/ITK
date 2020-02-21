@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -177,9 +177,9 @@ itkDiffusionTensor3DReconstructionImageFilterTest(int, char *[])
       for (const auto & i : expectedResult)
       {
         std::cout << "\t";
-        for (unsigned int j = 0; j < 3; j++)
+        for (double j : i)
         {
-          std::cout << i[j] << " ";
+          std::cout << j << " ";
         }
         std::cout << std::endl;
       }
@@ -188,5 +188,18 @@ itkDiffusionTensor3DReconstructionImageFilterTest(int, char *[])
     }
     std::cout << "[PASSED]" << std::endl;
   }
+
+  // Test streaming enumeration for DiffusionTensor3DReconstructionImageFilterEnums::GradientImageFormat elements
+  const std::set<itk::DiffusionTensor3DReconstructionImageFilterEnums::GradientImageFormat> allGradientImageFormat{
+    itk::DiffusionTensor3DReconstructionImageFilterEnums::GradientImageFormat::GradientIsInASingleImage,
+    itk::DiffusionTensor3DReconstructionImageFilterEnums::GradientImageFormat::GradientIsInManyImages,
+    itk::DiffusionTensor3DReconstructionImageFilterEnums::GradientImageFormat::Else
+  };
+  for (const auto & ee : allGradientImageFormat)
+  {
+    std::cout << "STREAMED ENUM VALUE DiffusionTensor3DReconstructionImageFilterEnums::GradientImageFormat: " << ee
+              << std::endl;
+  }
+
   return result;
 }

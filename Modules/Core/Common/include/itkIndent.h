@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -76,7 +76,7 @@ public:
   /** Determine the next indentation level. Keep indenting by two until the
    * a maximum of forty spaces is reached.  */
   Indent
-  GetNextIndent();
+  GetNextIndent() const;
 
   /** Print out the indentation. Basically output a bunch of spaces.  */
   friend ITKCommon_EXPORT std::ostream &

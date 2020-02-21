@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@
 
 namespace itk
 {
-/** \class FrequencyHalfHermitianFFTLayoutImageRegionConstIteratorWithIndex
+/**
+ *\class FrequencyHalfHermitianFFTLayoutImageRegionConstIteratorWithIndex
  * \brief A multi-dimensional iterator templated over image type that walks
  * pixels within a region and is specialized to keep track of its image index
  * location.
@@ -150,7 +151,6 @@ public:
    * particular region of that image. */
   FrequencyHalfHermitianFFTLayoutImageRegionConstIteratorWithIndex(const TImage * ptr, const RegionType & region)
     : ImageRegionConstIteratorWithIndex<TImage>(ptr, region)
-    , m_ActualXDimensionIsOdd(false)
   {
     this->Init();
   }
@@ -163,7 +163,6 @@ public:
    * ImageIterator to a ImageRegionIteratorWithIndex. */
   explicit FrequencyHalfHermitianFFTLayoutImageRegionConstIteratorWithIndex(const Superclass & it)
     : ImageRegionConstIteratorWithIndex<TImage>(it)
-    , m_ActualXDimensionIsOdd(false)
   {
     this->Init();
   }

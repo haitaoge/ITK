@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -31,7 +31,8 @@ namespace itk
 {
 namespace VideoSourceTest
 {
-/** \class DummyVideoSource
+/**
+ *\class DummyVideoSource
  * Provide dummy implementation of VideoSource that just sets all pixels to 1
  */
 template <typename TOutputVideoStream>

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -36,8 +36,8 @@ StochasticFractalDimensionImageFilter<TInputImage, TMaskImage, TOutputImage>::St
 }
 
 template <typename TInputImage, typename TMaskImage, typename TOutputImage>
-StochasticFractalDimensionImageFilter<TInputImage, TMaskImage, TOutputImage>::~StochasticFractalDimensionImageFilter()
-{}
+StochasticFractalDimensionImageFilter<TInputImage, TMaskImage, TOutputImage>::~StochasticFractalDimensionImageFilter() =
+  default;
 
 template <typename TInputImage, typename TMaskImage, typename TOutputImage>
 void

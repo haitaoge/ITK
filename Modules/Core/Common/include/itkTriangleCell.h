@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -71,10 +71,10 @@ public:
   static constexpr unsigned int CellDimension = 2;
 
   /** Implement the standard CellInterface. */
-  CellGeometry
+  CellGeometryEnum
   GetType() const override
   {
-    return Superclass::TRIANGLE_CELL;
+    return CellGeometryEnum::TRIANGLE_CELL;
   }
   void
   MakeCopy(CellAutoPointer &) const override;
@@ -131,7 +131,7 @@ public:
                    InterpolationWeightType *) override;
 
   /** Cell visitor interface. */
-  itkCellVisitMacro(Superclass::TRIANGLE_CELL);
+  itkCellVisitMacro(CellGeometryEnum::TRIANGLE_CELL);
 
   /** \brief Compute Area to a TriangleCell given a PointsContainer.  */
   CoordRepType
@@ -150,7 +150,7 @@ public:
   TriangleCell()
     : m_PointIds(NumberOfPoints, NumericTraits<PointIdentifier>::max())
   {}
-#if defined(__GNUC__) && (__GNUC__ > 5)
+#if defined(__GNUC__) && (__GNUC__ > 5) || defined(__clang__)
   ~TriangleCell() override = default;
 #else
   ~TriangleCell() override{};

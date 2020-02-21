@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -39,7 +39,8 @@ itkRegularSphereMeshSourceTest2(int, char *[])
 
   MeshType::Pointer mesh1 = source1->GetOutput();
 
-  if (mesh1->GetCellsAllocationMethod() != itk::MeshClassCellsAllocationMethodEnum::CellsAllocatedDynamicallyCellByCell)
+  if (mesh1->GetCellsAllocationMethod() !=
+      itk::MeshEnums::MeshClassCellsAllocationMethod::CellsAllocatedDynamicallyCellByCell)
   {
     std::cerr << "mesh1->GetCellsAllocationMethod() != MeshType::CellsAllocatedDynamicallyCellByCell" << std::endl;
     return EXIT_FAILURE;

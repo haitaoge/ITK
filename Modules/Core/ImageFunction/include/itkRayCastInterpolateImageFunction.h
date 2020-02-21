@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@
 
 namespace itk
 {
-/** \class RayCastInterpolateImageFunction
+/**
+ *\class RayCastInterpolateImageFunction
  * \brief Projective interpolation of an image at specified positions.
  *
  * RayCastInterpolateImageFunction casts rays through a 3-dimensional

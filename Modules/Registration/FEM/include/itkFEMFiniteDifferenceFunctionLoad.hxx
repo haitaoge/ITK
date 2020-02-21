@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -29,14 +29,7 @@ template <typename TMoving, typename TFixed>
 FiniteDifferenceFunctionLoad<TMoving, TFixed>::FiniteDifferenceFunctionLoad()
   : m_MovingImage(nullptr)
   , m_FixedImage(nullptr)
-  , m_NumberOfIntegrationPoints(0)
-  , m_SolutionIndex(1)
-  , m_SolutionIndex2(0)
   , m_Gamma(NumericTraits<Float>::ZeroValue())
-  , m_Solution(nullptr)
-  , m_GradSigma(0.0f)
-  , m_Sign(1.0f)
-  , m_WhichMetric(0.0f)
 {
   m_MovingSize.Fill(0);
   m_FixedSize.Fill(0);

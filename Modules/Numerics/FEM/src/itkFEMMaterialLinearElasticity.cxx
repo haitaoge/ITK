@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -45,14 +45,7 @@ MaterialLinearElasticity::CreateAnother() const
 /**
  * Default constructor
  */
-MaterialLinearElasticity::MaterialLinearElasticity()
-  : m_YoungModulus(100.0)
-  , m_CrossSectionalArea(1.0)
-  , m_MomentOfInertia(1.0)
-  , m_PoissonRatio(0.2)
-  , m_Thickness(1.0)
-  , m_DensityHeatCapacity(1.0)
-{}
+MaterialLinearElasticity::MaterialLinearElasticity() = default;
 
 void
 MaterialLinearElasticity::SetCrossSectionalArea(double a)

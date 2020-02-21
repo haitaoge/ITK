@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,7 +23,8 @@
 
 namespace itk
 {
-/** \class ImageToPathFilter
+/**
+ *\class ImageToPathFilter
  * \brief Base class for filters that take an image as input and produce an path as output.
  *
  * ImageToPathFilter is the base class for all process objects that output

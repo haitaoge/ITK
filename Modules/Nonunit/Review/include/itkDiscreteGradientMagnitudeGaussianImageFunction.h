@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -98,12 +98,13 @@ public:
   using OperatorImageFunctionType = NeighborhoodOperatorImageFunction<InputImageType, TOutput>;
   using OperatorImageFunctionPointer = typename OperatorImageFunctionType::Pointer;
 
-  /** Interpolation modes */
-  enum InterpolationModeType
-  {
-    NearestNeighbourInterpolation,
-    LinearInterpolation
-  };
+  using InterpolationModeEnum = itk::GaussianDerivativeOperatorEnums::InterpolationMode;
+#if !defined(ITK_LEGACY_REMOVE)
+  /**Exposes enums values for backwards compatibility*/
+  static constexpr InterpolationModeEnum NearestNeighbourInterpolation =
+    InterpolationModeEnum::NearestNeighbourInterpolation;
+  static constexpr InterpolationModeEnum LinearInterpolation = InterpolationModeEnum::LinearInterpolation;
+#endif
 
 public:
   /** Evaluate the function in the given dimension at specified point */
@@ -170,8 +171,8 @@ public:
   itkGetConstMacro(MaximumKernelWidth, unsigned int);
 
   /** Set/Get the interpolation mode. */
-  itkSetMacro(InterpolationMode, InterpolationModeType);
-  itkGetConstMacro(InterpolationMode, InterpolationModeType);
+  itkSetEnumMacro(InterpolationMode, InterpolationModeEnum);
+  itkGetEnumMacro(InterpolationMode, InterpolationModeEnum);
 
   /** Set the input image.
    * \warning this method caches BufferedRegion information.
@@ -192,7 +193,7 @@ protected:
   DiscreteGradientMagnitudeGaussianImageFunction();
   DiscreteGradientMagnitudeGaussianImageFunction(const Self &) {}
 
-  ~DiscreteGradientMagnitudeGaussianImageFunction() override {}
+  ~DiscreteGradientMagnitudeGaussianImageFunction() override = default;
 
   void
   operator=(const Self &)
@@ -212,12 +213,12 @@ private:
 
   /** Difference between the areas under the curves of the continuous and
    * discrete Gaussian functions */
-  double m_MaximumError;
+  double m_MaximumError{ 0.005 };
 
   /** Maximum kernel size allowed.  This value is used to truncate a kernel
    *  that has grown too large.  A warning is given when the specified maximum
    *  error causes the kernel to exceed this size */
-  unsigned int m_MaximumKernelWidth;
+  unsigned int m_MaximumKernelWidth{ 30 };
 
   /** Array of derivative operators, one for each dimension and order.
    * First N zero-rder operators are stored, then N first-order making
@@ -231,13 +232,13 @@ private:
   OperatorImageFunctionPointer m_OperatorImageFunction;
 
   /** Flag for scale-space normalization of derivatives */
-  bool m_NormalizeAcrossScale;
+  bool m_NormalizeAcrossScale{ true };
 
   /** Flag to indicate whether to use image spacing */
-  bool m_UseImageSpacing;
+  bool m_UseImageSpacing{ true };
 
   /** Interpolation mode */
-  InterpolationModeType m_InterpolationMode;
+  InterpolationModeEnum m_InterpolationMode{ InterpolationModeEnum::NearestNeighbourInterpolation };
 };
 } // namespace itk
 

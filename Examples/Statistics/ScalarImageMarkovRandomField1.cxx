@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -367,11 +367,9 @@ main(int argc, char * argv[])
 
   // Software Guide : BeginCodeSnippet
   double totalWeight = 0;
-  for (std::vector<double>::const_iterator wcIt = weights.begin();
-       wcIt != weights.end();
-       ++wcIt)
+  for (double weight : weights)
   {
-    totalWeight += *wcIt;
+    totalWeight += weight;
   }
   for (double & weight : weights)
   {

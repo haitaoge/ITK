@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -39,7 +39,8 @@ public:
   ListNode * Previous;
 };
 
-/** \class CannyEdgeDetectionImageFilter
+/**
+ *\class CannyEdgeDetectionImageFilter
  * \brief This filter is an implementation of a Canny edge detector for
  * scalar-valued images.
  *

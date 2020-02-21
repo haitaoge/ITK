@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@ public:
   using InternalType = unsigned char;
   using ExternalType = unsigned char;
 
-  ThresholdingPixelAccessor(){};
+  ThresholdingPixelAccessor() = default;
 
   ExternalType
   Get(const InternalType & input) const

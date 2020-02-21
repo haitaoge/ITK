@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@
 #  include <fstream>
 #else
 #  define LOCAL_USE_FDSTREAM 1
-#  include "itkfdstream/fdstream.hpp"
+#  include "itkfdstream/fdstream.hxx"
 #endif
 
 namespace itk

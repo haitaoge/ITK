@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ itkXMLParserCharacterDataHandler(void * parser, const char * data, int length)
   static_cast<DOMNodeXMLReader *>(parser)->CharacterDataHandler(data, length);
 }
 
-DOMNodeXMLReader::DOMNodeXMLReader() {}
+DOMNodeXMLReader::DOMNodeXMLReader() = default;
 
 /**
  * Function called by Update() or end-users to generate the output DOM object

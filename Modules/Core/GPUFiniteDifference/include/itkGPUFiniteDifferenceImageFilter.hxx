@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -34,14 +34,14 @@ GPUFiniteDifferenceImageFilter<TInputImage, TOutputImage, TParentImageFilter>::G
   this->m_NumberOfIterations = NumericTraits<unsigned int>::max();
   m_MaximumRMSError = 0.0;
   m_RMSChange = 0.0;
-  m_State = FilterStateType::UNINITIALIZED;
+  m_State = GPUFiniteDifferenceFilterEnum::UNINITIALIZED;
   m_ManualReinitialization = false;
   this->InPlaceOff();
 }
 
 template <typename TInputImage, typename TOutputImage, typename TParentImageFilter>
-GPUFiniteDifferenceImageFilter<TInputImage, TOutputImage, TParentImageFilter>::~GPUFiniteDifferenceImageFilter()
-{}
+GPUFiniteDifferenceImageFilter<TInputImage, TOutputImage, TParentImageFilter>::~GPUFiniteDifferenceImageFilter() =
+  default;
 
 template <typename TInputImage, typename TOutputImage, typename TParentImageFilter>
 void
@@ -56,7 +56,7 @@ GPUFiniteDifferenceImageFilter<TInputImage, TOutputImage, TParentImageFilter>::G
     itkWarningMacro("Output pixel type MUST be float or double to prevent computational errors");
   }
 
-  if (this->GetState() == FilterStateType::UNINITIALIZED)
+  if (this->GetState() == GPUFiniteDifferenceFilterEnum::UNINITIALIZED)
   {
     // Allocate the output image
     // this->AllocateOutputs();
@@ -194,9 +194,9 @@ GPUFiniteDifferenceImageFilter<TInputImage, TOutputImage, TParentImageFilter>::R
   TimeStepType oMin = NumericTraits<TimeStepType>::ZeroValue();
   bool         flag = false;
 
-  typename std::vector<TimeStepType>::const_iterator t_it = timeStepList.begin();
-  typename std::vector<TimeStepType>::const_iterator t_end = timeStepList.end();
-  typename std::vector<bool>::const_iterator         v_it = valid.begin();
+  auto t_it = timeStepList.begin();
+  auto t_end = timeStepList.end();
+  auto v_it = valid.begin();
 
   // grab first valid value
   while (t_it != t_end)

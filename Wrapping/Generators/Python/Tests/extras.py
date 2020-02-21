@@ -1,6 +1,6 @@
 #==========================================================================
 #
-#   Copyright Insight Software Consortium
+#   Copyright NumFOCUS
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -328,8 +328,65 @@ try:
     assert arr2[0,0] == 2
     # and make sure that the matrix hasn't changed.
     assert m_itk(0,0) == 1
-
 except ImportError:
     print("NumPy not imported. Skipping BridgeNumPy tests")
     # Numpy is not available, do not run the Bridge NumPy tests
+    pass
+
+# xarray conversion
+try:
+    import xarray as xr
+    import numpy as np
+    print('Testing xarray conversion')
+
+    image = itk.imread(filename)
+    image.SetSpacing((0.1, 0.2))
+    image.SetOrigin((30., 44.))
+    theta = np.radians(30)
+    cosine = np.cos(theta)
+    sine = np.sin(theta)
+    rotation = np.array(((cosine, -sine), (sine, cosine)))
+    image.SetDirection(rotation)
+
+    data_array = itk.xarray_from_image(image)
+    assert data_array.dims[0] == 'y'
+    assert data_array.dims[1] == 'x'
+    assert data_array.dims[2] == 'c'
+    assert np.array_equal(data_array.values, itk.array_from_image(image))
+    assert len(data_array.coords['x']) == 256
+    assert len(data_array.coords['y']) == 256
+    assert len(data_array.coords['c']) == 3
+    assert data_array.coords['x'][0] == 30.0
+    assert data_array.coords['x'][1] == 30.1
+    assert data_array.coords['y'][0] == 44.0
+    assert data_array.coords['y'][1] == 44.2
+    assert data_array.coords['c'][0] == 0
+    assert data_array.coords['c'][1] == 1
+    assert data_array.attrs['direction'][0,0] == cosine
+    assert data_array.attrs['direction'][0,1] == sine
+    assert data_array.attrs['direction'][1,0] == -sine
+    assert data_array.attrs['direction'][1,1] == cosine
+
+    round_trip = itk.image_from_xarray(data_array)
+    assert np.array_equal(itk.array_from_image(round_trip), itk.array_from_image(image))
+    spacing = round_trip.GetSpacing()
+    assert np.isclose(spacing[0], 0.1)
+    assert np.isclose(spacing[1], 0.2)
+    origin = round_trip.GetOrigin()
+    assert np.isclose(origin[0], 30.0)
+    assert np.isclose(origin[1], 44.0)
+    direction = round_trip.GetDirection()
+    assert np.isclose(direction(0,0), cosine)
+    assert np.isclose(direction(0,1), -sine)
+    assert np.isclose(direction(1,0), sine)
+    assert np.isclose(direction(1,1), cosine)
+
+    wrong_order = data_array.swap_dims({'y':'z'})
+    try:
+        round_trip = itk.image_from_xarray(wrong_order)
+        assert False
+    except ValueError:
+        pass
+except ImportError:
+    print('xarray not imported. Skipping xarray conversion tests')
     pass

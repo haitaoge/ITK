@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@
 
 namespace itk
 {
-/** \class GaussianSpatialObject
+/**
+ *\class GaussianSpatialObject
  *
  * \brief Represents a multivariate Gaussian function.
  *
@@ -63,7 +64,7 @@ public:
   /** Reset the spatial object to its initial condition, yet preserves
    *   Id, Parent, and Child information */
   void
-  Clear(void) override;
+  Clear() override;
 
   /** The Radius determines the bounding box, and which points are
    * considered to be inside the SpatialObject.  All points with

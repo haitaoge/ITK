@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,7 +25,6 @@ namespace itk
 template <typename TInputMesh, typename TOutputMesh, typename TSolverTraits>
 LaplacianDeformationQuadEdgeMeshFilter<TInputMesh, TOutputMesh, TSolverTraits>::LaplacianDeformationQuadEdgeMeshFilter()
   : m_CoefficientsMethod(nullptr)
-  , m_AreaComputationType(NONE)
 {}
 
 template <typename TInputMesh, typename TOutputMesh, typename TSolverTraits>
@@ -211,7 +210,7 @@ LaplacianDeformationQuadEdgeMeshFilter<TInputMesh, TOutputMesh, TSolverTraits>::
 
     if (degree == 0)
     {
-      RowIterator rIt = ioRow.find(vId);
+      auto rIt = ioRow.find(vId);
 
       if (rIt == ioRow.end())
       {
@@ -248,7 +247,7 @@ LaplacianDeformationQuadEdgeMeshFilter<TInputMesh, TOutputMesh, TSolverTraits>::
 
           if (degree < iDegree)
           {
-            if (m_AreaComputationType != NONE)
+            if (m_AreaComputationType != AreaEnum::NONE)
             {
               AreaMapConstIterator mixedIt = m_MixedAreaMap.find(vId);
               OutputCoordRepType   mixedArea = NumericTraits<OutputCoordRepType>::OneValue();
@@ -259,7 +258,7 @@ LaplacianDeformationQuadEdgeMeshFilter<TInputMesh, TOutputMesh, TSolverTraits>::
               }
               else
               {
-                if (m_AreaComputationType == MIXEDAREA)
+                if (m_AreaComputationType == AreaEnum::MIXEDAREA)
                 {
                   mixedArea = this->ComputeMixedAreaForGivenVertex(vId);
                 }

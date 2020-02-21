@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,7 +26,8 @@
 
 namespace itk
 {
-/** \class DCMTKSeriesFileNames
+/**
+ *\class DCMTKSeriesFileNames
  * \brief Generate a sequence of filenames from a DICOM series.
  *
  * This class generate a sequence of files whose filenames points to
@@ -147,7 +148,7 @@ public:
    *   multiple 3D volumes - as can occur with perfusion and DTI imaging
    */
   bool
-  GetUseSeriesDetails()
+  GetUseSeriesDetails() const
   {
     return m_UseSeriesDetails;
   }

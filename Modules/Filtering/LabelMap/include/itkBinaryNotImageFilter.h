@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@
 namespace itk
 {
 
-/** \class BinaryNotImageFilter
+/**
+ *\class BinaryNotImageFilter
  * \brief Implements the BinaryNot logical operator pixel-wise between two images.
  *
  * This class is parameterized over the types of the two
@@ -71,7 +72,7 @@ public:
     return !(*this != other);
   }
   inline TPixel
-  operator()(const TPixel & A)
+  operator()(const TPixel & A) const
   {
     bool a = (A == m_ForegroundValue);
     if (!a)

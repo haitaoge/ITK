@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -136,7 +136,7 @@ public:
   }
 
   /** This class uses a constant timestep of 1. */
-  virtual TimeStepType
+  TimeStepType
   ComputeGlobalTimeStep(void * itkNotUsed(GlobalData)) const override
   {
     return m_TimeStep;
@@ -147,7 +147,7 @@ public:
   void *
   GetGlobalDataPointer() const override
   {
-    GlobalDataStruct * global = new GlobalDataStruct();
+    auto * global = new GlobalDataStruct();
 
     global->m_SumOfSquaredDifference = 0.0;
     global->m_NumberOfPixelsProcessed = 0L;
@@ -175,12 +175,12 @@ public:
 
   /** This method is called by a finite difference solver image filter at
    * each pixel that does not lie on a data set boundary */
-  virtual PixelType
+  PixelType
   ComputeUpdate(const NeighborhoodType & neighborhood,
                 void *                   globalData,
                 const FloatOffsetType &  offset = FloatOffsetType(0.0)) override;
 
-  virtual void
+  void
   GPUComputeUpdate(const DisplacementFieldTypePointer output, DisplacementFieldTypePointer update, void * gd) override;
 
   /** Get the metric value. The metric value is the mean square difference
@@ -225,7 +225,7 @@ public:
 
 protected:
   GPUDemonsRegistrationFunction();
-  ~GPUDemonsRegistrationFunction() override {}
+  ~GPUDemonsRegistrationFunction() override = default;
 
   void
   PrintSelf(std::ostream & os, Indent indent) const override;

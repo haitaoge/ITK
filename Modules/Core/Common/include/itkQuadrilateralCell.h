@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -66,10 +66,10 @@ public:
   static constexpr unsigned int NumberOfDerivatives = 8;
 
   /** Implement the standard CellInterface. */
-  CellGeometry
+  CellGeometryEnum
   GetType() const override
   {
-    return Superclass::QUADRILATERAL_CELL;
+    return CellGeometryEnum::QUADRILATERAL_CELL;
   }
   void
   MakeCopy(CellAutoPointer &) const override;
@@ -127,7 +127,7 @@ public:
                    InterpolationWeightType * weight) override;
 
   /** Visitor interface */
-  itkCellVisitMacro(Superclass::QUADRILATERAL_CELL);
+  itkCellVisitMacro(CellGeometryEnum::QUADRILATERAL_CELL);
 
   /** Constructor and destructor */
   QuadrilateralCell()
@@ -138,7 +138,7 @@ public:
     }
   }
 
-#if defined(__GNUC__) && (__GNUC__ > 5)
+#if defined(__GNUC__) && (__GNUC__ > 5) || defined(__clang__)
   ~QuadrilateralCell() override = default;
 #else
   ~QuadrilateralCell() override{};

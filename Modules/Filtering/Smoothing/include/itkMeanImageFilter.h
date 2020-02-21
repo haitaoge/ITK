@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,12 +21,14 @@
 #include "itkBoxImageFilter.h"
 #include "itkImage.h"
 #include "itkNumericTraits.h"
+#include "itkVariableLengthVector.h"
 
 #include <vector>
 
 namespace itk
 {
-/** \class MeanImageFilter
+/**
+ *\class MeanImageFilter
  * \brief Applies an averaging filter to an image
  *
  * Computes an image where a given pixel is the mean value of the
@@ -106,12 +108,21 @@ protected:
   DynamicThreadedGenerateData(const OutputImageRegionType & outputRegionForThread) override;
 
 private:
-  template <typename TPixelAccessPolicy>
+  template <typename TPixelAccessPolicy, typename TPixelType>
   static void
   GenerateDataInSubregion(const TInputImage &                              inputImage,
                           TOutputImage &                                   outputImage,
                           const ImageRegion<InputImageDimension> &         imageRegion,
-                          const std::vector<Offset<InputImageDimension>> & neighborhoodOffsets);
+                          const std::vector<Offset<InputImageDimension>> & neighborhoodOffsets,
+                          const TPixelType *);
+
+  template <typename TPixelAccessPolicy, typename TValue>
+  static void
+  GenerateDataInSubregion(const TInputImage &                              inputImage,
+                          TOutputImage &                                   outputImage,
+                          const ImageRegion<InputImageDimension> &         imageRegion,
+                          const std::vector<Offset<InputImageDimension>> & neighborhoodOffsets,
+                          const VariableLengthVector<TValue> *);
 };
 } // end namespace itk
 

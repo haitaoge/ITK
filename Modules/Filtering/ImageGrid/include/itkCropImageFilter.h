@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@
 
 namespace itk
 {
-/** \class CropImageFilter
+/**
+ *\class CropImageFilter
  * \brief Decrease the image size by cropping the image by an itk::Size at
  * both the upper and lower bounds of the largest possible region.
  *
@@ -110,6 +111,9 @@ protected:
 
   void
   GenerateOutputInformation() override;
+
+  void
+  VerifyInputInformation() ITKv5_CONST override;
 
 private:
   SizeType m_UpperBoundaryCropSize;

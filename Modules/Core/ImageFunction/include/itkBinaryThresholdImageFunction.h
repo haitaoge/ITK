@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@
 
 namespace itk
 {
-/** \class BinaryThresholdImageFunction
+/**
+ *\class BinaryThresholdImageFunction
  * \brief Returns true is the value of an image lies within a range
  *        of thresholds
  * This ImageFunction returns true (or false) if the pixel value lies

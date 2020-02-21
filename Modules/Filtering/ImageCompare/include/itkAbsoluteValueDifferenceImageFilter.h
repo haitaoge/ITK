@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,7 +23,8 @@
 
 namespace itk
 {
-/** \class AbsoluteValueDifferenceImageFilter
+/**
+ *\class AbsoluteValueDifferenceImageFilter
  * \brief Implements pixel-wise the computation of absolute value difference.
  *
  * This filter is parameterized over the types of the two

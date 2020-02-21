@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@ namespace itk
 {
 namespace Accessor
 {
-/** \class RGBToLuminancePixelAccessor
+/**
+ *\class RGBToLuminancePixelAccessor
  * \brief Give access to Luminance of a color pixel type.
  *
  * RGBToLuminancePixelAccessor is templated over an internal type and an
@@ -63,7 +64,8 @@ public:
 };
 } // end namespace Accessor
 
-/** \class RGBToLuminanceImageAdaptor
+/**
+ *\class RGBToLuminanceImageAdaptor
  * \brief Presents a color image as being composed of the Luminance of its pixels.
  *
  * Additional casting is performed according to the input and output image

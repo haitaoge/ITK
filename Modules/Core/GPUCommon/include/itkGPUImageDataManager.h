@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -82,8 +82,8 @@ public:
   MakeGPUBufferUpToDate();
 
 protected:
-  GPUImageDataManager() {}
-  ~GPUImageDataManager() override {}
+  GPUImageDataManager() = default;
+  ~GPUImageDataManager() override = default;
 
 private:
   WeakPointer<ImageType> m_Image; // WeakPointer has to be used here

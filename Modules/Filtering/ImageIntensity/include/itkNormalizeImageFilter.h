@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@
 
 namespace itk
 {
-/** \class NormalizeImageFilter
+/**
+ *\class NormalizeImageFilter
  * \brief Normalize an image by setting its mean to zero and variance to one.
  *
  * NormalizeImageFilter shifts and scales an image so that the pixels

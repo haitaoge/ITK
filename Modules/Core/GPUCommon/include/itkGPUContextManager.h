@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ public:
   GetCommandQueue(int i);
 
   unsigned int
-  GetNumberOfCommandQueues()
+  GetNumberOfCommandQueues() const
   {
     return m_NumberOfDevices;
   }
@@ -60,7 +60,7 @@ public:
 
 private:
   GPUContextManager();
-  ~GPUContextManager();
+  ~GPUContextManager() override;
 
   cl_platform_id     m_Platform;
   cl_context         m_Context;

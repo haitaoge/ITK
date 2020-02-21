@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -158,8 +158,8 @@ private:
   IndexValueType
   GetSliceIndex(IndexValueType index) const;
 
-  SliceIndexType *       m_SliceIndex;
-  ImageIOBase::ByteOrder m_MachineByteOrder;
+  SliceIndexType * m_SliceIndex;
+  IOByteOrderEnum  m_MachineByteOrder;
 };
 } // end namespace itk
 

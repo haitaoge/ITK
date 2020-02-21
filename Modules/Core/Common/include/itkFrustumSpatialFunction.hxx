@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ namespace itk
 {
 template <unsigned int VDimension, typename TInput>
 FrustumSpatialFunction<VDimension, TInput>::FrustumSpatialFunction()
-  : m_RotationPlane(RotationPlaneEnum::RotateInXZPlane)
 {
   m_Apex.Fill(0.0f);
 }
@@ -130,6 +129,7 @@ FrustumSpatialFunction<VDimension, TInput>::PrintSelf(std::ostream & os, Indent 
   os << indent << "BottomPlane: " << m_BottomPlane << std::endl;
   os << indent << "RotationPlane: " << m_RotationPlane << std::endl;
 }
+
 } // end namespace itk
 
 #endif

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -31,7 +31,8 @@ namespace itk
 {
 namespace Statistics
 {
-/** \class KdTreeBasedKmeansEstimator
+/**
+ *\class KdTreeBasedKmeansEstimator
  * \brief fast k-means algorithm implementation using k-d tree structure
  *
  * It returns k mean vectors that are centroids of k-clusters
@@ -166,14 +167,15 @@ protected:
   void
   FillClusterLabels(KdTreeNodeType * node, int closestIndex);
 
-  /** \class CandidateVector
+  /**
+   *\class CandidateVector
    * \brief Candidate Vector
    * \ingroup ITKStatistics
    */
   class CandidateVector
   {
   public:
-    CandidateVector() {}
+    CandidateVector() = default;
 
     struct Candidate
     {

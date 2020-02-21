@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@
 
 namespace itk
 {
-/** \class ParametricBlindLeastSquaresDeconvolutionImageFilter
+/**
+ *\class ParametricBlindLeastSquaresDeconvolutionImageFilter
  *
  * \brief Least-squares blind deconvolution filter that also estimates
  * the parameters of a user-supplied parametric point-spread function.
@@ -151,7 +152,7 @@ private:
   class ITK_TEMPLATE_EXPORT ParametricBlindLeastSquaresDeconvolutionImageUpdate
   {
   public:
-    ParametricBlindLeastSquaresDeconvolutionImageUpdate() {}
+    ParametricBlindLeastSquaresDeconvolutionImageUpdate() = default;
     ~ParametricBlindLeastSquaresDeconvolutionImageUpdate() = default;
 
     bool

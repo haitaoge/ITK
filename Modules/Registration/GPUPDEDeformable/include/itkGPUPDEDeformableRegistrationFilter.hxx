@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -62,8 +62,6 @@ GPUPDEDeformableRegistrationFilter<TFixedImage, TMovingImage, TDisplacementField
   defines << "#define OUTPIXELTYPE ";
   GetTypenameInString(typeid(DeformationScalarType), defines);
 
-  std::cout << "Defines: " << defines.str() << std::endl;
-
   using GPUCodeType = const char *;
   GPUCodeType GPUSource = GPUPDEDeformableRegistrationFilter::GetOpenCLSource();
 
@@ -107,8 +105,7 @@ GPUPDEDeformableRegistrationFilter<TFixedImage, TMovingImage, TDisplacementField
   }
 
   // update variables in the equation object
-  GPUPDEDeformableRegistrationFunctionType * f =
-    dynamic_cast<GPUPDEDeformableRegistrationFunctionType *>(this->GetDifferenceFunction().GetPointer());
+  auto * f = dynamic_cast<GPUPDEDeformableRegistrationFunctionType *>(this->GetDifferenceFunction().GetPointer());
 
   if (!f)
   {
@@ -255,8 +252,7 @@ GPUPDEDeformableRegistrationFilter<TFixedImage, TMovingImage, TDisplacementField
   delete m_ImageSizes;
   m_ImageSizes = nullptr;
 
-  GPUPDEDeformableRegistrationFunctionType * f =
-    dynamic_cast<GPUPDEDeformableRegistrationFunctionType *>(this->GetDifferenceFunction().GetPointer());
+  auto * f = dynamic_cast<GPUPDEDeformableRegistrationFunctionType *>(this->GetDifferenceFunction().GetPointer());
   f->GPUReleaseMetricData();
 
   // update the cpu buffer from gpu
@@ -275,10 +271,9 @@ GPUPDEDeformableRegistrationFilter<TFixedImage, TMovingImage, TDisplacementField
   this->AllocateSmoothingBuffer();
 
   FixedImageConstPointer fixedImage = this->GetFixedImage();
-  unsigned int           numPixels = (unsigned int)(fixedImage->GetLargestPossibleRegion().GetNumberOfPixels());
+  auto                   numPixels = (unsigned int)(fixedImage->GetLargestPossibleRegion().GetNumberOfPixels());
 
-  GPUPDEDeformableRegistrationFunctionType * f =
-    dynamic_cast<GPUPDEDeformableRegistrationFunctionType *>(this->GetDifferenceFunction().GetPointer());
+  auto * f = dynamic_cast<GPUPDEDeformableRegistrationFunctionType *>(this->GetDifferenceFunction().GetPointer());
   f->GPUAllocateMetricData(numPixels);
 }
 
@@ -338,9 +333,9 @@ GPUPDEDeformableRegistrationFilter<TFixedImage, TMovingImage, TDisplacementField
     blockSize = blockSize <= 64 ? blockSize : 64;
     // std::cout << "indir=" << indir << " blockSize=" << blockSize << std::endl;
 
-    for (int i = 0; i < 3; i++)
+    for (unsigned long & i : localSize)
     {
-      localSize[i] = 1;
+      i = 1;
     }
     localSize[indir] = blockSize;
 

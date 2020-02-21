@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -107,12 +107,12 @@ public:
 
   /** Support comparisons of time stamp objects directly.  */
   bool
-  operator>(TimeStamp & ts)
+  operator>(TimeStamp & ts) const
   {
     return (m_ModifiedTime > ts.m_ModifiedTime);
   }
   bool
-  operator<(TimeStamp & ts)
+  operator<(TimeStamp & ts) const
   {
     return (m_ModifiedTime < ts.m_ModifiedTime);
   }

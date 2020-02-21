@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -134,5 +134,18 @@ itkDeformableSimplexMesh3DGradientConstraintForceFilterTest(int, char *[])
 
 
   std::cout << "[TEST DONE]" << std::endl;
+
+  // Test streaming enumeration for DeformableSimplexMesh3DGradientConstraintForceFilterEnums::SIDE elements
+  const std::set<itk::DeformableSimplexMesh3DGradientConstraintForceFilterEnums::SIDE> allSIDE{
+    itk::DeformableSimplexMesh3DGradientConstraintForceFilterEnums::SIDE::NORMAL,
+    itk::DeformableSimplexMesh3DGradientConstraintForceFilterEnums::SIDE::INVERSE,
+    itk::DeformableSimplexMesh3DGradientConstraintForceFilterEnums::SIDE::BOTH
+  };
+  for (const auto & ee : allSIDE)
+  {
+    std::cout << "STREAMED ENUM VALUE DeformableSimplexMesh3DGradientConstraintForceFilterEnums::SIDE: " << ee
+              << std::endl;
+  }
+
   return EXIT_SUCCESS;
 }

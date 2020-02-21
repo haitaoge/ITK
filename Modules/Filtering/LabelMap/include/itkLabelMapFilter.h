@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -33,7 +33,8 @@
 
 namespace itk
 {
-/** \class LabelMapFilter
+/**
+ *\class LabelMapFilter
  * \brief Base class for filters that take an image as input and overwrite that image as the output
  *
  * LabelMapFilter is the base class for all process objects whose

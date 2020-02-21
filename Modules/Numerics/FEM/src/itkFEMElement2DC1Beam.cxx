@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -41,7 +41,6 @@ Element2DC1Beam::CreateAnother() const
 
 Element2DC1Beam ::Element2DC1Beam()
   : Superclass()
-  , m_mat(nullptr)
 {}
 
 Element2DC1Beam ::Element2DC1Beam(NodeIDType n1_, NodeIDType n2_, Material::ConstPointer m_)

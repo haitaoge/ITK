@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@
 
 namespace itk
 {
-/** \class WienerDeconvolutionImageFilter
+/**
+ *\class WienerDeconvolutionImageFilter
  * \brief The Wiener deconvolution image filter is designed to restore an
  * image convolved with a blurring kernel while keeping noise
  * enhancement to a minimum.
@@ -145,7 +146,7 @@ template <typename TPixel>
 class ITK_TEMPLATE_EXPORT WienerDeconvolutionFunctor
 {
 public:
-  WienerDeconvolutionFunctor() {}
+  WienerDeconvolutionFunctor() = default;
   ~WienerDeconvolutionFunctor() = default;
   WienerDeconvolutionFunctor(const WienerDeconvolutionFunctor & f)
     : m_NoisePowerSpectralDensityConstant(f.m_NoisePowerSpectralDensityConstant)

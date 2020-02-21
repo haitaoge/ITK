@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -154,7 +154,7 @@ protected:
     m_GradientStep = 1.0;
   }
 
-  ~GPUPDEDeformableRegistrationFunction() override {}
+  ~GPUPDEDeformableRegistrationFunction() override = default;
 
   void
   PrintSelf(std::ostream & os, Indent indent) const override

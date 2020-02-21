@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -77,13 +77,13 @@ public:
   using EdgeInfoDQ = std::deque<EdgeInfo>;
 
   /** Need to add POLYGON_CELL into CellInterface. */
-  itkCellVisitMacro(Superclass::POLYGON_CELL);
+  itkCellVisitMacro(CellGeometryEnum::POLYGON_CELL);
 
   /** Implement the standard CellInterface. */
-  CellGeometry
+  CellGeometryEnum
   GetType() const override
   {
-    return Superclass::POLYGON_CELL;
+    return CellGeometryEnum::POLYGON_CELL;
   }
   void
   MakeCopy(CellAutoPointer &) const override;

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ public:
   /** Get/Set the number of work units to create. TBBMultiThreader
    * does not limit the number of work units. This number is
    * only respected by SetSingleMethod/SingleMethodExecute. */
-  virtual void
+  void
   SetNumberOfWorkUnits(ThreadIdType numberOfWorkUnits) override;
 
   /** Execute the SingleMethod (as define by SetSingleMethod) using

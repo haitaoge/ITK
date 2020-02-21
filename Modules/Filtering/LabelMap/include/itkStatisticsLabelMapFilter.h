@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@
 
 namespace itk
 {
-/** \class StatisticsLabelMapFilter
+/**
+ *\class StatisticsLabelMapFilter
  * \brief The valuator class for the StatisticsLabelObject
  *
  * StatisticsLabelMapFilter can be used to set the attributes values

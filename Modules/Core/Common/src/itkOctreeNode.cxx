@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -37,13 +37,13 @@ OctreeNode::~OctreeNode()
 }
 
 OctreeNode &
-OctreeNode::GetChild(const enum LeafIdentifier ChildID) const
+OctreeNode::GetChild(const LeafIdentifierEnum ChildID) const
 {
   return *m_Branch->GetLeaf(ChildID);
 }
 
 OctreeNode &
-OctreeNode::GetChild(const enum LeafIdentifier ChildID)
+OctreeNode::GetChild(const LeafIdentifierEnum ChildID)
 {
   return *m_Branch->GetLeaf(ChildID);
 }

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ Indent::New()
  * max of forty.
  */
 Indent
-Indent ::GetNextIndent()
+Indent ::GetNextIndent() const
 {
   int indent = m_Indent + ITK_STD_INDENT;
 

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@
 
 namespace itk
 {
-/** \class ReflectiveImageRegionConstIterator
+/**
+ *\class ReflectiveImageRegionConstIterator
  * \brief Multi-dimensional image iterator which only walks a region.
  *
  * ReflectiveImageRegionConstIterator is a templated class to represent a

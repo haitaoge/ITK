@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -65,8 +65,8 @@ public:
   using TimeStepType = typename GPUSuperclass::TimeStepType;
 
 protected:
-  GPUAnisotropicDiffusionImageFilter() {}
-  ~GPUAnisotropicDiffusionImageFilter() override {}
+  GPUAnisotropicDiffusionImageFilter() = default;
+  ~GPUAnisotropicDiffusionImageFilter() override = default;
   void
   PrintSelf(std::ostream & os, Indent indent) const override;
 

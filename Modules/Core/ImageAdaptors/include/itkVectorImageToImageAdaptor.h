@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@ namespace itk
 {
 namespace Accessor
 {
-/** \class VectorImageToImagePixelAccessor
+/**
+ *\class VectorImageToImagePixelAccessor
  * \brief Extract components from a VectorImage.
  *
  * This accessor is used to extract components from a VectorImage. It is used
@@ -121,7 +122,8 @@ private:
 };
 } // end namespace Accessor
 
-/** \class VectorImageToImageAdaptor
+/**
+ *\class VectorImageToImageAdaptor
  * \brief Presents a VectorImage and extracts a component from it into an image.
  *
  * The class is expected to be templated over a pixel type and dimension. These

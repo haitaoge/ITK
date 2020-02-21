@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -54,11 +54,11 @@ itkLaplacianDeformationQuadEdgeMeshFilterWithSoftConstraintsTest(int argc, char 
   filter->SetLambda(1.);
   if (std::stoi(argv[3]) == 1)
   {
-    filter->SetAreaComputationType(FilterType::MIXEDAREA);
+    filter->SetAreaComputationType(FilterType::AreaEnum::MIXEDAREA);
   }
   else
   {
-    filter->SetAreaComputationType(FilterType::NONE);
+    filter->SetAreaComputationType(FilterType::AreaEnum::NONE);
   }
 
 

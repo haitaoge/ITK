@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -28,7 +28,8 @@
 
 namespace itk
 {
-/** \class GradientVectorFlowImageFilter
+/**
+ *\class GradientVectorFlowImageFilter
  * \brief
  * This class computes a diffusion of the gradient vectors for graylevel or binary
  * edge map derive from the image. It enlarges the capture range of the gradient

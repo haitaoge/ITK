@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@
 
 namespace itk
 {
-/** \class TikhonovDeconvolutionImageFilter
+/**
+ *\class TikhonovDeconvolutionImageFilter
  * \brief An inverse deconvolution filter regularized in the Tikhonov sense.
  *
  * The Tikhonov deconvolution filter is the inverse deconvolution
@@ -122,7 +123,7 @@ template <typename TInput1, typename TInput2, typename TOutput>
 class ITK_TEMPLATE_EXPORT TikhonovDeconvolutionFunctor
 {
 public:
-  TikhonovDeconvolutionFunctor() {}
+  TikhonovDeconvolutionFunctor() = default;
   ~TikhonovDeconvolutionFunctor() = default;
   TikhonovDeconvolutionFunctor(const TikhonovDeconvolutionFunctor & f)
     : m_RegularizationConstant(f.m_RegularizationConstant)

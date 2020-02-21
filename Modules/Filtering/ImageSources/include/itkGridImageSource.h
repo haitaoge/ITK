@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,7 +27,8 @@
 
 namespace itk
 {
-/** \class GridImageSource
+/**
+ *\class GridImageSource
  * \brief Generate an n-dimensional image of a grid.
  *
  * GridImageSource generates an image of a grid.

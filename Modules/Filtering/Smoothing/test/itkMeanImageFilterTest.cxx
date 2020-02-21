@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,10 +20,14 @@
 #include "itkMeanImageFilter.h"
 #include "itkTextOutput.h"
 #include "itkTestingMacros.h"
+#include "itkVectorImage.h"
 
 int
 itkMeanImageFilterTest(int, char *[])
 {
+  using VectorImageType = itk::VectorImage<float, 3>;
+  itk::MeanImageFilter<VectorImageType, VectorImageType>::New();
+
   // Comment the following if you want to use the itk text output window
   itk::OutputWindow::SetInstance(itk::TextOutput::New());
 

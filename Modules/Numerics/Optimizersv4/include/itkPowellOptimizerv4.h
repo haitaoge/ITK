@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@
 
 namespace itk
 {
-/** \class PowellOptimizerv4
+/**
+ *\class PowellOptimizerv4
  * \brief Implements Powell optimization using Brent line search.
  *
  * The code in this class was adapted from the Wikipedia and the

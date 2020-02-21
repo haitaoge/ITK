@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -218,15 +218,11 @@ ConnectedRegionsMeshFilter<TInputMesh, TOutputMesh>::GenerateData()
     m_NumberOfCellsInRegion = 0;
     if (m_ExtractionMode == PointSeededRegions)
     {
-      InputMeshCellLinksContainerConstPointer cellLinks;
-      cellLinks = input->GetCellLinks();
-      InputMeshCellLinksContainer                          links;
-      typename std::set<InputMeshCellIdentifier>::iterator citer;
-
-      for (auto i = m_SeedList.begin(); i != m_SeedList.end(); ++i)
+      auto cellLinks = input->GetCellLinks();
+      for (const auto & i : m_SeedList)
       {
-        links = cellLinks->ElementAt(*i);
-        for (citer = links.begin(); citer != links.end(); ++citer)
+        auto links = cellLinks->ElementAt(i);
+        for (auto citer = links.cbegin(); citer != links.cend(); ++citer)
         {
           m_Wave->push_back(*citer);
         }
@@ -235,22 +231,21 @@ ConnectedRegionsMeshFilter<TInputMesh, TOutputMesh>::GenerateData()
     // use the seeds directly
     else if (m_ExtractionMode == CellSeededRegions)
     {
-      for (auto i = m_SeedList.begin(); i != m_SeedList.end(); ++i)
+      for (auto & i : m_SeedList)
       {
-        m_Wave->push_back(*i);
+        m_Wave->push_back(i);
       }
     }
     // find the closest point and get the cells using it as the seeds
     else if (m_ExtractionMode == ClosestPointRegion)
     {
       // find the closest point
-      double                   minDist2 = NumericTraits<double>::max(), dist2;
+      double                   minDist2 = NumericTraits<double>::max();
       InputMeshPointIdentifier minId = 0;
-      InputMeshPointType       x;
       for (PointsContainerConstIterator piter = inPts->Begin(); piter != inPts->End(); ++piter)
       {
-        x = piter->Value();
-        dist2 = x.SquaredEuclideanDistanceTo(m_ClosestPoint);
+        const auto   x = piter->Value();
+        const double dist2 = x.SquaredEuclideanDistanceTo(m_ClosestPoint);
         if (dist2 < minDist2)
         {
           minId = piter.Index();
@@ -261,11 +256,9 @@ ConnectedRegionsMeshFilter<TInputMesh, TOutputMesh>::GenerateData()
       // get the cells using the closest point and use them as seeds
       InputMeshCellLinksContainerConstPointer cellLinks;
       cellLinks = input->GetCellLinks();
-      InputMeshCellLinksContainer                          links;
-      typename std::set<InputMeshCellIdentifier>::iterator citer;
 
-      links = cellLinks->ElementAt(minId);
-      for (citer = links.begin(); citer != links.end(); ++citer)
+      auto links = cellLinks->ElementAt(minId);
+      for (auto citer = links.cbegin(); citer != links.cend(); ++citer)
       {
         m_Wave->push_back(*citer);
       }
@@ -390,9 +383,9 @@ ConnectedRegionsMeshFilter<TInputMesh, TOutputMesh>::GenerateData()
   if (this->GetDebug())
   {
     SizeValueType count = 0;
-    for (auto ii = m_RegionSizes.begin(); ii != m_RegionSizes.end(); ++ii)
+    for (const auto & m_RegionSize : m_RegionSizes)
     {
-      count += *ii;
+      count += m_RegionSize;
     }
     itkDebugMacro(<< "Total #of cells accounted for: " << count);
     itkDebugMacro(<< "Extracted " << output->GetNumberOfCells() << " cells");

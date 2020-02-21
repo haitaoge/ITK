@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -433,11 +433,11 @@ TriangleMeshToBinaryImageFilter<TInputMesh, TOutputImage>::RasterizeTriangles()
 
     switch (nextCell->GetType())
     {
-      case CellType::VERTEX_CELL:
-      case CellType::LINE_CELL:
+      case CellGeometryEnum::VERTEX_CELL:
+      case CellGeometryEnum::LINE_CELL:
         break;
-      case CellType::TRIANGLE_CELL:
-      case CellType::POLYGON_CELL:
+      case CellGeometryEnum::TRIANGLE_CELL:
+      case CellGeometryEnum::POLYGON_CELL:
       {
         coords.clear();
         while (pointIt != nextCell->PointIdsEnd())

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,17 +20,17 @@
 namespace itk
 {
 std::ostream &
-operator<<(std::ostream & out, const RotationPlaneEnum value)
+operator<<(std::ostream & out, const FrustumSpatialFunctionEnums::RotationPlane value)
 {
   return out << [value] {
     switch (value)
     {
-      case RotationPlaneEnum::RotateInXZPlane:
-        return "FrustumSpatialFunction< VDimension, TInput >::FrustumRotationPlaneType::RotateInXZPlane";
-      case RotationPlaneEnum::RotateInYZPlane:
-        return "FrustumSpatialFunction< VDimension, TInput >::FrustumRotationPlaneType::RotateInYZPlane";
+      case FrustumSpatialFunctionEnums::RotationPlane::RotateInXZPlane:
+        return "FrustumSpatialFunctionEnums::RotationPlane::RotateInXZPlane";
+      case FrustumSpatialFunctionEnums::RotationPlane::RotateInYZPlane:
+        return "FrustumSpatialFunctionEnums::RotationPlane::RotateInYZPlane";
       default:
-        return "INVALID VALUE FOR RotationPlaneType";
+        return "INVALID VALUE FOR RotationPlaneEnum";
     }
   }();
 }

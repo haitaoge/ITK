@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ ObjectStore<TObjectType>::ObjectStore()
 {
   m_Size = 0;
   m_LinearGrowthSize = 1024;
-  m_GrowthStrategy = EXPONENTIAL_GROWTH;
+  m_GrowthStrategy = GrowthStrategyEnum::EXPONENTIAL_GROWTH;
 }
 
 template <typename TObjectType>
@@ -103,7 +103,7 @@ template <typename TObjectType>
 SizeValueType
 ObjectStore<TObjectType>::GetGrowthSize()
 {
-  if ((m_GrowthStrategy == EXPONENTIAL_GROWTH) && (m_Size != 0))
+  if ((m_GrowthStrategy == GrowthStrategyEnum::EXPONENTIAL_GROWTH) && (m_Size != 0))
   {
     return m_Size;
   }

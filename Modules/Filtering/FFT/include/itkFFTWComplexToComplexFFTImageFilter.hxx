@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -72,7 +72,7 @@ FFTWComplexToComplexFFTImageFilter<TImage>::BeforeThreadedGenerateData()
   const typename OutputImageType::SizeType & inputSize = input->GetLargestPossibleRegion().GetSize();
 
   int transformDirection = 1;
-  if (this->GetTransformDirection() == Superclass::INVERSE)
+  if (this->GetTransformDirection() == Superclass::TransformDirectionEnum::INVERSE)
   {
     transformDirection = -1;
   }
@@ -109,7 +109,7 @@ FFTWComplexToComplexFFTImageFilter<TImage>::DynamicThreadedGenerateData(
   const OutputImageRegionType & outputRegionForThread)
 {
   // Normalize the output if backward transform
-  if (this->GetTransformDirection() == Superclass::INVERSE)
+  if (this->GetTransformDirection() == Superclass::TransformDirectionEnum::INVERSE)
   {
     using IteratorType = ImageRegionIterator<OutputImageType>;
     SizeValueType totalOutputSize = this->GetOutput()->GetRequestedRegion().GetNumberOfPixels();

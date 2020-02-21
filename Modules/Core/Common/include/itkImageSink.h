@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -188,7 +188,7 @@ protected:
 
 
 private:
-  unsigned int          m_NumberOfStreamDivisions;
+  unsigned int          m_NumberOfStreamDivisions{ 1 };
   RegionSplitterPointer m_RegionSplitter;
   InputImageRegionType  m_CurrentInputRegion;
 
@@ -196,8 +196,8 @@ private:
    *  Tolerances for checking whether input images are defined to
    *  occupy the same physical space.
    */
-  double m_CoordinateTolerance;
-  double m_DirectionTolerance;
+  double m_CoordinateTolerance{ Self::GetGlobalDefaultCoordinateTolerance() };
+  double m_DirectionTolerance{ Self::GetGlobalDefaultDirectionTolerance() };
 };
 
 } // namespace itk

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -78,7 +78,7 @@ public:
   itkNewMacro(Self);
 
 protected:
-  CommandIterationUpdate(){};
+  CommandIterationUpdate() = default;
 
 public:
   using OptimizerType = itk::LBFGSBOptimizer;
@@ -93,7 +93,7 @@ public:
   void
   Execute(const itk::Object * object, const itk::EventObject & event) override
   {
-    OptimizerPointer optimizer = static_cast<OptimizerPointer>(object);
+    auto optimizer = static_cast<OptimizerPointer>(object);
     if (!(itk::IterationEvent().CheckEvent(&event)))
     {
       return;
@@ -275,7 +275,7 @@ main(int argc, char * argv[])
 
   metric->SetNumberOfHistogramBins(50);
 
-  const unsigned int numberOfSamples = static_cast<unsigned int>(fixedRegion.GetNumberOfPixels() * 0.2F);
+  const auto numberOfSamples = static_cast<unsigned int>(fixedRegion.GetNumberOfPixels() * 0.2F);
 
   metric->SetNumberOfSpatialSamples(numberOfSamples);
 

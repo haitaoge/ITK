@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,7 +23,8 @@
 
 namespace itk
 {
-/** \class GaborKernelFunction
+/**
+ *\class GaborKernelFunction
  * \brief Gabor kernel used for various computer vision tasks.
  *
  * This class encapsulates a complex Gabor kernel used for

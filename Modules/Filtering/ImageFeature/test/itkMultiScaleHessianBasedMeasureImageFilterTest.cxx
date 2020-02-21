@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -213,7 +213,8 @@ itkMultiScaleHessianBasedMeasureImageFilterTest(int argc, char * argv[])
   if (argc > 9)
   {
     // Change sigma step to equispaced type and regnerate vesselness image
-    multiScaleEnhancementFilter->SetSigmaStepMethod(MultiScaleEnhancementFilterType::EquispacedSigmaSteps);
+    multiScaleEnhancementFilter->SetSigmaStepMethod(
+      MultiScaleEnhancementFilterType::SigmaStepMethodEnum::EquispacedSigmaSteps);
 
     try
     {
@@ -290,6 +291,17 @@ itkMultiScaleHessianBasedMeasureImageFilterTest(int argc, char * argv[])
   catch (const itk::ExceptionObject & e)
   {
     std::cerr << e << std::endl;
+  }
+
+  // Test streaming enumeration for MultiScaleHessianBasedMeasureImageFilterEnums::SigmaStepMethod elements
+  const std::set<itk::MultiScaleHessianBasedMeasureImageFilterEnums::SigmaStepMethod> allSigmaStepMethod{
+    itk::MultiScaleHessianBasedMeasureImageFilterEnums::SigmaStepMethod::EquispacedSigmaSteps,
+    itk::MultiScaleHessianBasedMeasureImageFilterEnums::SigmaStepMethod::LogarithmicSigmaSteps
+  };
+  for (const auto & ee : allSigmaStepMethod)
+  {
+    std::cout << "STREAMED ENUM VALUE MultiScaleHessianBasedMeasureImageFilterEnums::SigmaStepMethod: " << ee
+              << std::endl;
   }
 
   return EXIT_SUCCESS;

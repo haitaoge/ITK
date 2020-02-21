@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -171,7 +171,7 @@ public:
 
 protected:
   MIRegistrationFunction();
-  ~MIRegistrationFunction() override {}
+  ~MIRegistrationFunction() override = default;
   void
   PrintSelf(std::ostream & os, Indent indent) const override;
 
@@ -198,18 +198,18 @@ private:
   InterpolatorPointer m_MovingImageInterpolator;
 
   /** Threshold below which the denominator term is considered zero. */
-  double m_DenominatorThreshold;
+  double m_DenominatorThreshold{ 1e-9 };
 
   /** Threshold below which two intensity value are assumed to match. */
-  double m_IntensityDifferenceThreshold;
+  double m_IntensityDifferenceThreshold{ 0.001 };
 
-  mutable double m_MetricTotal;
+  mutable double m_MetricTotal{ 0.0 };
 
-  unsigned int m_NumberOfSamples;
-  unsigned int m_NumberOfBins;
-  float        m_Minnorm;
+  unsigned int m_NumberOfSamples{ 1 };
+  unsigned int m_NumberOfBins{ 4 };
+  float        m_Minnorm{ 1.0 };
 
-  bool m_DoInverse;
+  bool m_DoInverse{ false };
 };
 } // end namespace itk
 

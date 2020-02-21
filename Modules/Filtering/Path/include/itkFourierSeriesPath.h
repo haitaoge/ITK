@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@
 
 namespace itk
 {
-/** \class FourierSeriesPath
+/**
+ *\class FourierSeriesPath
  * \brief  Represent a closed path through ND Space by its frequency components
  *
  * This class is intended to represent closed parametric paths through an image

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -61,10 +61,10 @@ public:
   static constexpr unsigned int CellDimension = 1;
 
   /** Implement the standard CellInterface. */
-  CellGeometry
+  CellGeometryEnum
   GetType() const override
   {
-    return Superclass::LINE_CELL;
+    return CellGeometryEnum::LINE_CELL;
   }
   void
   MakeCopy(CellAutoPointer &) const override;
@@ -108,7 +108,7 @@ public:
   GetVertex(CellFeatureIdentifier, VertexAutoPointer &);
 
   /** Visitor interface */
-  itkCellVisitMacro(Superclass::LINE_CELL);
+  itkCellVisitMacro(CellGeometryEnum::LINE_CELL);
 
   LineCell()
   {

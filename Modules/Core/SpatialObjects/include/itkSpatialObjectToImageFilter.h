@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,7 +23,8 @@
 
 namespace itk
 {
-/** \class SpatialObjectToImageFilter
+/**
+ *\class SpatialObjectToImageFilter
  * \brief Base class for filters that take a SpatialObject
  *        as input and produce an image as output.
  *  By default, if the user does not specify the size of the output image,
@@ -89,6 +90,18 @@ public:
 
   const InputSpatialObjectType *
   GetInput(unsigned int idx);
+
+  /** Generate an output image that matches the origin,
+   * size, direction, and spacing of this image. */
+  template <class TReferenceImage>
+  void
+  SetReferenceImage(TReferenceImage * refImage)
+  {
+    this->SetOrigin(refImage->GetOrigin());
+    this->SetSpacing(refImage->GetSpacing());
+    this->SetDirection(refImage->GetDirection());
+    this->SetSize(refImage->GetLargestPossibleRegion().GetSize());
+  }
 
   /** Spacing (size of a pixel) of the output image. The
    * spacing is the geometric distance between image samples.

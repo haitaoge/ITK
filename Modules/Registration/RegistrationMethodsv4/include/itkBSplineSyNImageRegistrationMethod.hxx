@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -242,7 +242,7 @@ typename BSplineSyNImageRegistrationMethod<TFixedImage, TMovingImage, TOutputTra
   // smoothing operation is done using the BSplineScatteredDataPointSettoImageFilter so we
   // don't need to artificially zero out "missing" values.
 
-  if (this->m_Metric->GetMetricCategory() == MetricType::POINT_SET_METRIC)
+  if (this->m_Metric->GetMetricCategory() == ObjectToObjectMetricBaseTemplateEnums::MetricCategory::POINT_SET_METRIC)
   {
     const DisplacementVectorType zeroVector(0.0);
 

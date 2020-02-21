@@ -1,6 +1,6 @@
 #==========================================================================
 #
-#   Copyright Insight Software Consortium
+#   Copyright NumFOCUS
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -19,9 +19,10 @@
 import os
 import os.path
 import sys
+# Required to work around weird import error with xarray
+import pkg_resources
 import importlib
 import types
-import inspect
 import itkConfig
 import itkTemplate
 

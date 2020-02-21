@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -72,14 +72,12 @@ protected:
   /**
    * Default constructor
    */
-  FEMLightObject()
-    : m_GlobalNumber(-1)
-  {}
+  FEMLightObject() = default;
 
   /**
    * Virtual destructor
    */
-  ~FEMLightObject() override {}
+  ~FEMLightObject() override = default;
 
   void
   PrintSelf(std::ostream & os, Indent indent) const override;
@@ -100,7 +98,7 @@ protected:
    * If the GN is not required, it can be ignored. (normally you
    * need the GN when writing or reading objects to/from stream.
    */
-  int m_GlobalNumber;
+  int m_GlobalNumber{ -1 };
 };
 } // end namespace fem
 } // end namespace itk

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,21 +19,21 @@
 
 namespace itk
 {
-/** Define how to print enumerations. */
+/** Print enum values */
 std::ostream &
-operator<<(std::ostream & out, const GaussianOrderEnum value)
+operator<<(std::ostream & out, const RecursiveGaussianImageFilterEnums::GaussianOrder value)
 {
   return out << [value] {
     switch (value)
     {
-      case GaussianOrderEnum::ZeroOrder:
-        return "EnumType::ZeroOrder";
-      case GaussianOrderEnum::FirstOrder:
-        return "EnumType::FirstOrder";
-      case GaussianOrderEnum::SecondOrder:
-        return "EnumType::SecondOrder";
+      case RecursiveGaussianImageFilterEnums::GaussianOrder::ZeroOrder:
+        return "itk::RecursiveGaussianImageFilterEnums::GaussianOrder::ZeroOrder";
+      case RecursiveGaussianImageFilterEnums::GaussianOrder::FirstOrder:
+        return "itk::RecursiveGaussianImageFilterEnums::GaussianOrder::FirstOrder";
+      case RecursiveGaussianImageFilterEnums::GaussianOrder::SecondOrder:
+        return "itk::RecursiveGaussianImageFilterEnums::GaussianOrder::SecondOrder";
       default:
-        return "INVALID VALUE FOR EnumType";
+        return "INVALID VALUE FOR itk::RecursiveGaussianImageFilterEnums::GaussianOrder";
     }
   }();
 }

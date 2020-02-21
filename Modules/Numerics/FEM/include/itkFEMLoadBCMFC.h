@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -115,8 +115,7 @@ public:
 
   /** Default constructor */
   LoadBCMFC()
-    : m_Index(0)
-    , m_LeftHandSide()
+    : m_LeftHandSide()
     , m_RightHandSide()
   {}
 
@@ -139,7 +138,7 @@ public:
   /** Get the index variable for the multi freedom displacement constraint. This is used
   internally by itk::FEM::Solver*/
   int
-  GetIndex();
+  GetIndex() const;
 
   /** Add terms to the left hand side of multi freedom displacement constraint*/
   void
@@ -187,7 +186,7 @@ protected:
   // private:  // FIXME: CrankNicolsonSolver class, which is derived from Solver
   // class also needs access to Index.
   /** used internally by the Solver class */
-  int m_Index;
+  int m_Index{ 0 };
 
   LhsType m_LeftHandSide;
 

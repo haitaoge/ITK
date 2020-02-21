@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -107,7 +107,7 @@ EquivalencyTable::AddAndFlatten(unsigned long a, unsigned long b)
 void
 EquivalencyTable::Flatten()
 {
-  Iterator it = this->Begin();
+  auto it = this->Begin();
 
   while (it != this->End())
   {
@@ -123,7 +123,7 @@ EquivalencyTable::RecursiveLookup(const unsigned long a) const
   unsigned long last_ans = a;
 
   ConstIterator it;
-  ConstIterator hashEnd = m_HashMap.end();
+  auto          hashEnd = m_HashMap.end();
 
   while ((it = m_HashMap.find(ans)) != hashEnd)
   {

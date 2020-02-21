@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -982,7 +982,7 @@ Mesh<TPixelType, VDimension, TMeshTraits>::Mesh()
   m_CellLinksContainer = CellLinksContainer::New();
   m_BoundingBox = BoundingBoxType::New();
   m_BoundaryAssignmentsContainers = BoundaryAssignmentsContainerVector(MaxTopologicalDimension);
-  m_CellsAllocationMethod = MeshClassCellsAllocationMethodEnum::CellsAllocatedDynamicallyCellByCell;
+  m_CellsAllocationMethod = MeshEnums::MeshClassCellsAllocationMethod::CellsAllocatedDynamicallyCellByCell;
 }
 
 /**
@@ -1045,14 +1045,14 @@ Mesh<TPixelType, VDimension, TMeshTraits>::ReleaseCellsMemory()
         itkGenericExceptionMacro(<< "Cells Allocation Method was not specified. See SetCellsAllocationMethod()");
         break;
       }
-      case MeshClassCellsAllocationMethodEnum::CellsAllocatedAsStaticArray:
+      case MeshEnums::MeshClassCellsAllocationMethod::CellsAllocatedAsStaticArray:
       {
         // The cells will be naturally destroyed when
         // the original array goes out of scope.
         itkDebugMacro("CellsAllocatedAsStaticArray ");
         break;
       }
-      case MeshClassCellsAllocationMethodEnum::CellsAllocatedAsADynamicArray:
+      case MeshEnums::MeshClassCellsAllocationMethod::CellsAllocatedAsADynamicArray:
       {
         // the pointer to the first Cell is assumed to be the
         // base pointer of the array
@@ -1063,7 +1063,7 @@ Mesh<TPixelType, VDimension, TMeshTraits>::ReleaseCellsMemory()
         itkDebugMacro("CellsAllocatedAsADynamicArray");
         break;
       }
-      case MeshClassCellsAllocationMethodEnum::CellsAllocatedDynamicallyCellByCell:
+      case MeshEnums::MeshClassCellsAllocationMethod::CellsAllocatedDynamicallyCellByCell:
       {
         itkDebugMacro("CellsAllocatedDynamicallyCellByCell start");
         // It is assumed that every cell was allocated independently.
@@ -1128,6 +1128,30 @@ Mesh<TPixelType, VDimension, TMeshTraits>::Graft(const DataObject * data)
   // The cell allocation method must be maintained. The reference count
   // test on the container will prevent premature deletion of cells.
   this->m_CellsAllocationMethod = mesh->m_CellsAllocationMethod;
+}
+
+template <typename TPixelType, unsigned int VDimension, typename TMeshTraits>
+void
+Mesh<TPixelType, VDimension, TMeshTraits>::DeleteUnusedCellData()
+{
+
+  if (nullptr == this->GetCellData())
+  {
+    return;
+  }
+
+  std::vector<typename CellDataContainer::ElementIdentifier> cell_data_to_delete;
+  for (auto it = this->GetCellData()->Begin(); it != this->GetCellData()->End(); ++it)
+  {
+    if (!this->GetCells()->IndexExists(it.Index()))
+    {
+      cell_data_to_delete.push_back(it.Index());
+    }
+  }
+  for (const auto c : cell_data_to_delete)
+  {
+    this->GetCellData()->DeleteIndex(c);
+  }
 }
 } // end namespace itk
 

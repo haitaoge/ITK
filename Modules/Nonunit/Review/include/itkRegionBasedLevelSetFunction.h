@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -106,7 +106,7 @@ public:
       m_MaxGlobalChange = null_value;
     }
 
-    ~GlobalDataStruct() {}
+    ~GlobalDataStruct() = default;
 
     vnl_matrix_fixed<ScalarValueType, Self::ImageDimension, Self::ImageDimension> m_dxy;
 
@@ -377,7 +377,7 @@ public:
 
 protected:
   RegionBasedLevelSetFunction();
-  ~RegionBasedLevelSetFunction() override {}
+  ~RegionBasedLevelSetFunction() override = default;
 
   /** The initial level set image */
   InputImageConstPointer m_InitialImage;

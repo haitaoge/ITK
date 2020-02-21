@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -28,7 +28,8 @@ namespace itk
 // Forward reference because of circular dependencies
 class ITK_FORWARD_EXPORT TemporalDataObject;
 
-/** \class TemporalProcessObject
+/**
+ *\class TemporalProcessObject
  * \brief TemporalProcessObject implements a ProcessObject for the itk pipeline
  *        with the notion of a temporal region
  *

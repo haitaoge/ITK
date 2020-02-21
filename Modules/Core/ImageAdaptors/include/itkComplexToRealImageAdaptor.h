@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@ namespace itk
 {
 namespace Accessor
 {
-/** \class ComplexToRealPixelAccessor
+/**
+ *\class ComplexToRealPixelAccessor
  * \brief Give access to the Real part of a std::complex<> value.
  *
  * ComplexToRealPixelAccessor is templated over an internal type and an
@@ -63,7 +64,8 @@ public:
 };
 } // end namespace Accessor
 
-/** \class ComplexToRealImageAdaptor
+/**
+ *\class ComplexToRealImageAdaptor
  * \brief Presents a complex image as being composed of real() part of
  *        its pixels.
  *

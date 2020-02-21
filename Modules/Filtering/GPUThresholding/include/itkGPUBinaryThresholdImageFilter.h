@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ public:
     m_InsideValue = NumericTraits<TOutput>::max();
   }
 
-  ~GPUBinaryThreshold() {}
+  ~GPUBinaryThreshold() override = default;
 
   void
   SetLowerThreshold(const TInput & thresh)
@@ -67,7 +67,7 @@ public:
   /** Setup GPU kernel arguments for this functor.
    * Returns current argument index to set additional arguments in the GPU kernel */
   int
-  SetGPUKernelArguments(GPUKernelManager::Pointer KernelManager, int KernelHandle)
+  SetGPUKernelArguments(GPUKernelManager::Pointer KernelManager, int KernelHandle) override
   {
     KernelManager->SetKernelArg(KernelHandle, 0, sizeof(TInput), &(m_LowerThreshold));
     KernelManager->SetKernelArg(KernelHandle, 1, sizeof(TInput), &(m_UpperThreshold));
@@ -134,7 +134,7 @@ public:
 
 protected:
   GPUBinaryThresholdImageFilter();
-  ~GPUBinaryThresholdImageFilter() override {}
+  ~GPUBinaryThresholdImageFilter() override = default;
 
   /** This method is used to set the state of the filter before
    * multi-threading. */

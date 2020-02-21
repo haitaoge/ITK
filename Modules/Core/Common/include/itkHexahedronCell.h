@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -75,10 +75,10 @@ public:
   static constexpr unsigned int CellDimension = 3;
 
   /** Implement the standard CellInterface. */
-  CellGeometry
+  CellGeometryEnum
   GetType() const override
   {
-    return Superclass::HEXAHEDRON_CELL;
+    return CellGeometryEnum::HEXAHEDRON_CELL;
   }
   void
   MakeCopy(CellAutoPointer &) const override;
@@ -141,7 +141,7 @@ public:
                    InterpolationWeightType *) override;
 
   /** Visitor interface */
-  itkCellVisitMacro(Superclass::HEXAHEDRON_CELL);
+  itkCellVisitMacro(CellGeometryEnum::HEXAHEDRON_CELL);
 
 protected:
   /** Store the number of points needed for a hexahedron. */

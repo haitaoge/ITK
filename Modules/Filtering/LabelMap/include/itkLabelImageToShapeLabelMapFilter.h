@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@
 
 namespace itk
 {
-/** \class LabelImageToShapeLabelMapFilter
+/**
+ *\class LabelImageToShapeLabelMapFilter
  * \brief Converts a label image to a label map and valuates the shape attributes
  *
  *  A convenient class that converts a label image to a label map and valuates the shape attribute at once.

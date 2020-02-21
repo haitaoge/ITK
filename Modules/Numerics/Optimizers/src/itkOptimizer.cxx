@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ namespace itk
  * Constructor
  */
 
-Optimizer ::Optimizer() {}
+Optimizer ::Optimizer() = default;
 
 /**
  * Set scaling as an array of factors

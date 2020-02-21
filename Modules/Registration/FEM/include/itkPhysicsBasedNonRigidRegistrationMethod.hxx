@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -32,11 +32,6 @@ namespace fem
 template <typename TFixedImage, typename TMovingImage, typename TMaskImage, typename TMesh, typename TDeformationField>
 PhysicsBasedNonRigidRegistrationMethod<TFixedImage, TMovingImage, TMaskImage, TMesh, TDeformationField>::
   PhysicsBasedNonRigidRegistrationMethod()
-  : m_SelectFraction(0.1)
-  , m_NonConnectivity(0)
-  , // VERTEX_CONNECTIVITY
-  m_ApproximationSteps(10)
-  , m_OutlierRejectionSteps(10)
 {
   this->m_BlockRadius.Fill(2);
   this->m_SearchRadius.Fill(5);
@@ -60,8 +55,7 @@ PhysicsBasedNonRigidRegistrationMethod<TFixedImage, TMovingImage, TMaskImage, TM
 
 template <typename TFixedImage, typename TMovingImage, typename TMaskImage, typename TMesh, typename TDeformationField>
 PhysicsBasedNonRigidRegistrationMethod<TFixedImage, TMovingImage, TMaskImage, TMesh, TDeformationField>::
-  ~PhysicsBasedNonRigidRegistrationMethod()
-{}
+  ~PhysicsBasedNonRigidRegistrationMethod() = default;
 
 template <typename TFixedImage, typename TMovingImage, typename TMaskImage, typename TMesh, typename TDeformationField>
 void

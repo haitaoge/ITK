@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,7 +27,32 @@
 
 namespace itk
 {
-/** \class NiftiImageIO
+
+
+/** \class Analyze75Flavor
+ * \ingroup ITKIONIFTI
+ * Enum used to define way to treat legacy Analyze75 files
+ */
+enum class Analyze75Flavor : uint8_t
+{
+  /** Behavior introduced in ITK4.0 by NIFTI reader interpreting Analyze files */
+  AnalyzeITK4 = 4,
+  /** Will ignore orientation code and negative pixel dimensions */
+  AnalyzeFSL = 3,
+  /** Will ignore orientation code and respect negative pixel dimensions */
+  AnalyzeSPM = 2,
+  /** Same as AnalyzeITK4 but will show warning about deprecated file format (Default)*/
+  AnalyzeITK4Warning = 1,
+  /** Reject Analyze files as potentially wrong  */
+  AnalyzeReject = 0
+};
+
+/** Define how to print enumerations */
+extern ITKIONIFTI_EXPORT std::ostream &
+                         operator<<(std::ostream & out, const Analyze75Flavor value);
+
+/**
+ *\class NiftiImageIO
  *
  * \author Hans J. Johnson, The University of Iowa 2002
  * \brief Class that defines how to read Nifti file format.
@@ -71,11 +96,12 @@ public:
     OtherOrError = -1,
   };
 
+
   /** Reads the file to determine if it can be read with this ImageIO implementation,
    * and to determine what kind of file it is (Analyze vs NIfTI). Note that the value
    * of LegacyAnalyze75Mode is ignored by this method.
    * \param FileNameToRead The name of the file to test for reading.
-   * \return Returns one of the FileType enumerations.
+   * \return Returns one of the IOFileEnum enumerations.
    */
   FileType
   DetermineFileType(const char * FileNameToRead);
@@ -131,10 +157,10 @@ public:
 
   /** A mode to allow the Nifti filter to read and write to the LegacyAnalyze75 format as interpreted by
    * the nifti library maintainers.  This format does not properly respect the file orientation fields.
-   * By default this is set to true.
+   * By default this is set by configuration option ITK_NIFTI_IO_ANALYZE_FLAVOR
    */
-  itkSetMacro(LegacyAnalyze75Mode, bool);
-  itkGetConstMacro(LegacyAnalyze75Mode, bool);
+  itkSetMacro(LegacyAnalyze75Mode, Analyze75Flavor);
+  itkGetConstMacro(LegacyAnalyze75Mode, Analyze75Flavor);
 
 protected:
   NiftiImageIO();
@@ -159,7 +185,7 @@ private:
   getQFormCodeFromDictionary() const;
 
   bool
-  MustRescale();
+  MustRescale() const;
 
   void
   DefineHeaderObjectDataType();
@@ -186,10 +212,12 @@ private:
   double m_RescaleSlope{ 1.0 };
   double m_RescaleIntercept{ 0.0 };
 
-  IOComponentType m_OnDiskComponentType{ UNKNOWNCOMPONENTTYPE };
+  IOComponentEnum m_OnDiskComponentType{ IOComponentEnum::UNKNOWNCOMPONENTTYPE };
 
-  bool m_LegacyAnalyze75Mode{ true };
+  Analyze75Flavor m_LegacyAnalyze75Mode;
 };
+
+
 } // end namespace itk
 
 #endif // itkNiftiImageIO_h

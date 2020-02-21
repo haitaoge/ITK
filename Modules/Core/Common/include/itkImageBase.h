@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -870,7 +870,7 @@ protected:
   Graft(const DataObject * data) override;
 
 private:
-  OffsetValueType m_OffsetTable[VImageDimension + 1];
+  OffsetValueType m_OffsetTable[VImageDimension + 1]{};
 
   RegionType m_LargestPossibleRegion;
   RegionType m_RequestedRegion;

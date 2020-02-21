@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -32,7 +32,6 @@ namespace itk
 template <typename TInputImage, typename TOutputImage>
 ConnectedThresholdImageFilter<TInputImage, TOutputImage>::ConnectedThresholdImageFilter()
   : m_ReplaceValue(NumericTraits<OutputImagePixelType>::OneValue())
-  , m_Connectivity(FaceConnectivity)
 {
   typename InputPixelObjectType::Pointer lower = InputPixelObjectType::New();
   lower->Set(NumericTraits<InputImagePixelType>::NonpositiveMin());
@@ -244,7 +243,7 @@ ConnectedThresholdImageFilter<TInputImage, TOutputImage>::GenerateData()
 
   ProgressReporter progress(this, 0, region.GetNumberOfPixels());
 
-  if (this->m_Connectivity == FaceConnectivity)
+  if (this->m_Connectivity == ConnectivityEnum::FaceConnectivity)
   {
     using IteratorType = FloodFilledImageFunctionConditionalIterator<OutputImageType, FunctionType>;
     IteratorType it(outputImage, function, m_Seeds);
@@ -257,7 +256,7 @@ ConnectedThresholdImageFilter<TInputImage, TOutputImage>::GenerateData()
       progress.CompletedPixel(); // potential exception thrown here
     }
   }
-  else if (this->m_Connectivity == FullConnectivity)
+  else if (this->m_Connectivity == ConnectivityEnum::FullConnectivity)
   {
     // Use the fully connected iterator here. The fully connected iterator
     // below is a superset of the above. However, it is reported to be 20%

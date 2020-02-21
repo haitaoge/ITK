@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -165,7 +165,7 @@ LinearSystemWrapperDenseVNL::GetSolutionValue(unsigned int i, unsigned int solut
 void
 LinearSystemWrapperDenseVNL::Solve()
 {
-  if ((m_Matrices->size() == 0) || (m_Vectors->size() == 0) || (m_Solutions->size() == 0))
+  if ((m_Matrices->empty()) || (m_Vectors->empty()) || (m_Solutions->empty()))
   {
     throw FEMException(__FILE__, __LINE__, "FEM error!");
   }

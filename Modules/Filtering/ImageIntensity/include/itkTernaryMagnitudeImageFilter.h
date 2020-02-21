@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -55,7 +55,8 @@ public:
 };
 } // namespace Functor
 
-/** \class TernaryMagnitudeImageFilter
+/**
+ *\class TernaryMagnitudeImageFilter
  * \brief Compute the pixel-wise magnitude of three images.
  *
  * This class is templated over the types of the three

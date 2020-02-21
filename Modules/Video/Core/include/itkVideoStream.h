@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@
 namespace itk
 {
 
-/** \class VideoStream
+/**
+ *\class VideoStream
  * \brief A DataObject that holds a buffered portion of a video
  *
  * The function of VideoStream is to provide an Image-specific subclass of

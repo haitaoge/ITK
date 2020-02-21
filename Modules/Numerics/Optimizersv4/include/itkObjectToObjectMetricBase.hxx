@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@ ObjectToObjectMetricBaseTemplate<TInternalComputationValueType>::PrintSelf(std::
 {
   Superclass::PrintSelf(os, indent);
   os << indent << "Value: " << m_Value << std::endl;
-  os << indent << "GradientSourceType: ";
+  os << indent << "GradientSourceEnum: ";
   switch (m_GradientSource)
   {
     case GradientSourceEnum::GRADIENT_SOURCE_FIXED:

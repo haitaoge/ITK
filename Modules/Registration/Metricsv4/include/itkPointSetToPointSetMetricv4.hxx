@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ PointSetToPointSetMetricv4<TFixedPointSet, TMovingPointSet, TInternalComputation
   this->m_FixedTransformedPointSetTime = this->GetMTime();
 
   // We iterate over the fixed points to calculate the value and derivative.
-  this->SetGradientSource(GradientSourceEnum::GRADIENT_SOURCE_FIXED);
+  this->SetGradientSource(ObjectToObjectMetricBaseTemplateEnums::GradientSource::GRADIENT_SOURCE_FIXED);
 
   this->m_HaveWarnedAboutNumberOfValidPoints = false;
 

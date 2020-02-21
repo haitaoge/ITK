@@ -295,6 +295,23 @@ if (ITKV3_COMPATIBILITY)
   message(FATAL_ERROR "ITKV3_COMPATIBILITY is removed starting in ITK version 5.0, this option is no longer valid.")
 endif()
 
+# Chose flavour of Analyze reader
+set(ITK_NIFTI_IO_ANALYZE_FLAVOR_DOC_STRING "Which flavour of Analyze reader to use by default")
+
+set(ITK_NIFTI_IO_ANALYZE_FLAVOR "ITK4Warning" CACHE STRING ${ITK_NIFTI_IO_ANALYZE_FLAVOR_DOC_STRING})
+
+set_property(CACHE ITK_NIFTI_IO_ANALYZE_FLAVOR PROPERTY STRINGS ITK4Warning ITK4 SPM FSL Reject)
+
+if( NOT ("${ITK_NIFTI_IO_ANALYZE_FLAVOR}" STREQUAL "ITK4Warning" OR
+         "${ITK_NIFTI_IO_ANALYZE_FLAVOR}" STREQUAL "ITK4" OR
+         "${ITK_NIFTI_IO_ANALYZE_FLAVOR}" STREQUAL "SPM" OR
+         "${ITK_NIFTI_IO_ANALYZE_FLAVOR}" STREQUAL "FSL" OR
+         "${ITK_NIFTI_IO_ANALYZE_FLAVOR}" STREQUAL "Reject"
+         ) )
+  set(ITK_NIFTI_IO_ANALYZE_FLAVOR "ITK4Warning" CACHE STRING ${ITK_NIFTI_IO_ANALYZE_FLAVOR_DOC_STRING} FORCE)
+endif()
+
+
 #-----------------------------------------------------------------------------
 # ITK build classes that are in the review process
 # ITK_USE_REVIEW is deprecated, only kept for backward compatibility
@@ -442,6 +459,11 @@ mark_as_advanced(ITK_USE_FLOAT_SPACE_PRECISION)
 option(DISABLE_MODULE_TESTS "Disable all ITK module tests in `test` folder" OFF)
 mark_as_advanced(DISABLE_MODULE_TESTS)
 
+#-----------------------------------------------------------------------------
+# Configure Eigen3 before ITKModuleEnablement
+# No download or build is performed. Generates Targets and Config.cmake files for Eigen
+include(itkExternal_Eigen3)
+
 #----------------------------------------------------------------------
 # Make sure remote modules are downloaded before sorting out the module
 # dependencies.
@@ -452,7 +474,6 @@ include(ITKModuleEnablement)
 
 # Setup clang-format for code style enforcement
 include(ITKClangFormatSetup)
-
 #----------------------------------------------------------------------
 # Generate ITKConfig.cmake for the build tree.
 set(ITK_CONFIG_CODE "
@@ -511,6 +532,63 @@ else()
 endif()
 
 install(FILES "LICENSE" "NOTICE" "README.md" DESTINATION ${ITK_INSTALL_DOC_DIR} COMPONENT Runtime)
+
+if(BUILD_TESTING OR ITK_BUILD_DOCUMENTATION OR ITK_WRAP_PYTHON)
+  # Prefer to use more robust FindPython3 module if greater than cmake 3.12.0
+  if("${CMAKE_VERSION}" VERSION_LESS_EQUAL "3.12.0")
+    # Use of PythonInterp and PythonLibs is deprecated since cmake version 3.12.0
+    # Only use deprecated mechanisms for older versions of cmake
+    set(Python_ADDITIONAL_VERSIONS 3.9 3.8 3.7 3.6 3.5)
+    find_package(PythonInterp)
+    if(ITK_WRAP_PYTHON)
+      find_package(PythonLibs REQUIRED)
+      # check for version mismatch.
+      if(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND
+          AND NOT(PYTHON_VERSION_STRING VERSION_EQUAL PYTHONLIBS_VERSION_STRING))
+        message(FATAL_ERROR "Python executable (\"${PYTHON_VERSION_STRING}\") and library (\"${PYTHONLIBS_VERSION_STRING}\") version mismatch.")
+      endif()
+    endif()
+    if(PYTHON_VERSION_STRING VERSION_LESS 3.5)
+      # if python version is less than 3.5, unset so that it appears that no python version is found.
+      # to emulate the same behavior as find(Python3 ..) from cmake 3.12.0+
+      unset(PYTHON_EXECUTABLE)
+      unset(PYTHONINTERP_FOUND)
+      unset(PYTHON_VERSION_STRING)
+      unset(PYTHON_INCLUDE_DIRS)
+    else()
+      ## For forward compatibility with cmake 3.12.0 or greater, emulate variable names from FindPython3.cmake
+      set(Python3_EXECUTABLE ${PYTHON_EXECUTABLE})
+      set(Python3_Interpreter_FOUND ${PYTHONINTERP_FOUND})
+      set(Python3_VERSION ${PYTHON_VERSION_STRING})
+
+      set(Python3_Development_FOUND ${PYTHONLIBS_FOUND})
+      set(Python3_INCLUDE_DIRS ${PYTHON_INCLUDE_DIRS})
+      set(Python3_LIBRARIES    ${PYTHON_LIBRARIES})
+    endif()
+  else()
+    if(ITK_WRAP_PYTHON)
+      if(DEFINED Python3_EXECUTABLE)
+        set(_specified_Python3_EXECUTABLE ${Python3_EXECUTABLE})
+      endif()
+      find_package(Python3 COMPONENTS Interpreter Development)
+      set(Python3_EXECUTABLE ${_specified_Python3_EXECUTABLE} CACHE INTERNAL
+        "Path to the Python interpreter" FORCE)
+    else()
+      find_package(Python3 COMPONENTS Interpreter)
+    endif()
+    if(NOT Python3_EXECUTABLE AND _Python3_EXECUTABLE)
+      set(Python3_EXECUTABLE ${_Python3_EXECUTABLE} CACHE INTERNAL
+        "Path to the Python interpreter" FORCE)
+    endif()
+  endif()
+
+  if(ITK_WRAP_PYTHON AND Python3_VERSION VERSION_LESS 3.5)
+    message(FATAL_ERROR "Python versions less than 3.5 are not supported for wrapping. Python version: \"${Python3_VERSION}\".")
+  endif()
+  if(ITK_WRAP_PYTHON AND NOT Python3_INCLUDE_DIRS)
+    message(FATAL_ERROR "Python version ${Python3_VERSION} development environment not found for wrapping.")
+  endif()
+endif()
 
 if(BUILD_TESTING)
   # If building the testing, write the test costs (i.e. time to run)

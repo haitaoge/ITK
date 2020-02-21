@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@
 
 namespace itk
 {
-/** \class ShapeRelabelLabelMapFilter
+/**
+ *\class ShapeRelabelLabelMapFilter
  * \brief Relabels objects according to their shape attributes.
  *
  * The ShapeRelabelImageFilter relabels a label collection image according to the shape attributes of

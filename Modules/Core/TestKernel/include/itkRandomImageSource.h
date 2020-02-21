@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -33,7 +33,8 @@
 
 namespace itk
 {
-/** \class RandomImageSource
+/**
+ *\class RandomImageSource
  * \brief Generate an n-dimensional image of random pixel values.
  *
  * RandomImageSource generates an image of random pixel values.

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -100,16 +100,16 @@ TestClampFromTo()
 
   it.GoToBegin();
   ot.GoToBegin();
+  constexpr auto expectedMin = static_cast<double>(itk::NumericTraits<TOutputPixelType>::NonpositiveMin());
+  constexpr auto expectedMax = static_cast<double>(itk::NumericTraits<TOutputPixelType>::max());
   while (!it.IsAtEnd())
   {
-    TInputPixelType  inValue = it.Value();
-    TOutputPixelType outValue = ot.Value();
+    const TInputPixelType  inValue = it.Value();
+    const TOutputPixelType outValue = ot.Value();
+
+    const auto dInValue = static_cast<double>(inValue);
+
     TOutputPixelType expectedValue;
-
-    auto   dInValue = static_cast<double>(inValue);
-    double expectedMin = itk::NumericTraits<TOutputPixelType>::NonpositiveMin();
-    double expectedMax = itk::NumericTraits<TOutputPixelType>::max();
-
     if (dInValue < expectedMin)
     {
       expectedValue = itk::NumericTraits<TOutputPixelType>::NonpositiveMin();

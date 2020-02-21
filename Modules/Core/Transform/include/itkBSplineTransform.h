@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -262,7 +262,7 @@ public:
 
   /** Function to retrieve the transform domain origin. */
   virtual OriginType
-  GetTransformDomainOrigin(void) const;
+  GetTransformDomainOrigin() const;
 
   /** Function to specify the transform domain physical dimensions. */
   virtual void
@@ -270,7 +270,7 @@ public:
 
   /** Function to retrieve the transform domain physical dimensions. */
   virtual PhysicalDimensionsType
-  GetTransformDomainPhysicalDimensions(void) const;
+  GetTransformDomainPhysicalDimensions() const;
 
   /** Function to specify the transform domain direction. */
   virtual void
@@ -278,7 +278,7 @@ public:
 
   /** Function to retrieve the transform domain direction. */
   virtual DirectionType
-  GetTransformDomainDirection(void) const;
+  GetTransformDomainDirection() const;
 
   /** Function to specify the transform domain mesh size. */
   virtual void
@@ -286,7 +286,7 @@ public:
 
   /** Function to retrieve the transform domain mesh size. */
   virtual MeshSizeType
-  GetTransformDomainMeshSize(void) const;
+  GetTransformDomainMeshSize() const;
 
 protected:
   /** Print contents of an BSplineTransform. */
@@ -302,14 +302,14 @@ private:
   SetCoefficientImageInformationFromFixedParameters() override;
 
   /** Methods have empty implementations */
-  virtual void
+  void
   SetFixedParametersGridSizeFromTransformDomainInformation() const override{};
-  virtual void
+  void
   SetFixedParametersGridOriginFromTransformDomainInformation() const override{};
-  virtual void
+  void
   SetFixedParametersGridSpacingFromTransformDomainInformation() const override
   {}
-  virtual void
+  void
   SetFixedParametersGridDirectionFromTransformDomainInformation() const override{};
 
   /** Check if a continuous index is inside the valid region. */

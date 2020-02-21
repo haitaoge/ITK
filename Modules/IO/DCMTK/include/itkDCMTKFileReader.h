@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -63,9 +63,8 @@ class ITK_FORWARD_EXPORT DCMTKSequence;
 class ITKIODCMTK_EXPORT DCMTKItem
 {
 public:
-  DCMTKItem()
-    : m_DcmItem(nullptr)
-  {}
+  DCMTKItem() = default;
+
   void
   SetDcmItem(DcmItem * item);
   int
@@ -75,15 +74,13 @@ public:
                const bool           throwException = true) const;
 
 private:
-  DcmItem * m_DcmItem;
+  DcmItem * m_DcmItem{ nullptr };
 };
 
 class ITKIODCMTK_EXPORT DCMTKSequence
 {
 public:
-  DCMTKSequence()
-    : m_DcmSequenceOfItems(nullptr)
-  {}
+  DCMTKSequence() = default;
   void
   SetDcmSequenceOfItems(DcmSequenceOfItems * seq);
   int
@@ -240,7 +237,7 @@ public:
   }
 
 private:
-  DcmSequenceOfItems * m_DcmSequenceOfItems;
+  DcmSequenceOfItems * m_DcmSequenceOfItems{ nullptr };
 };
 
 class ITKIODCMTK_EXPORT DCMTKFileReader
@@ -248,13 +245,7 @@ class ITKIODCMTK_EXPORT DCMTKFileReader
 public:
   using Self = DCMTKFileReader;
 
-  DCMTKFileReader()
-    : m_DFile(nullptr)
-    , m_Dataset(nullptr)
-    , m_Xfer(EXS_Unknown)
-    , m_FrameCount(0)
-    , m_FileNumber(-1L)
-  {}
+  DCMTKFileReader() = default;
   ~DCMTKFileReader();
 
   void
@@ -481,9 +472,9 @@ public:
   int
   GetDimensions(unsigned short & rows, unsigned short & columns) const;
 
-  ImageIOBase::IOComponentType
+  IOComponentEnum
   GetImageDataType() const;
-  ImageIOBase::IOPixelType
+  IOPixelEnum
   GetImagePixelType() const;
 
   int
@@ -509,11 +500,11 @@ public:
 
 private:
   std::string      m_FileName;
-  DcmFileFormat *  m_DFile;
-  DcmDataset *     m_Dataset;
-  E_TransferSyntax m_Xfer;
-  Sint32           m_FrameCount;
-  long             m_FileNumber;
+  DcmFileFormat *  m_DFile{ nullptr };
+  DcmDataset *     m_Dataset{ nullptr };
+  E_TransferSyntax m_Xfer{ EXS_Unknown };
+  Sint32           m_FrameCount{ 0 };
+  long             m_FileNumber{ -1L };
 };
 
 extern bool

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@
 #include "itkMetaDataObject.h"
 #include "itkSpatialOrientationAdapter.h"
 #include <nifti1_io.h>
+
+#include "itkNiftiImageIOConfigurePrivate.h"
 
 namespace itk
 {
@@ -446,7 +448,7 @@ public:
 NiftiImageIO::NiftiImageIO()
   : m_NiftiImageHolder(new NiftiImageProxy(nullptr))
   , m_NiftiImage(*m_NiftiImageHolder.get())
-
+  , m_LegacyAnalyze75Mode{ ITK_NIFTI_IO_ANALYZE_FLAVOR_DEFAULT }
 {
   this->SetNumberOfDimensions(3);
   nifti_set_debug_level(0); // suppress error messages
@@ -481,7 +483,7 @@ NiftiImageIO ::CanWriteFile(const char * FileNameToWrite)
 }
 
 bool
-NiftiImageIO::MustRescale()
+NiftiImageIO::MustRescale() const
 {
   return std::abs(this->m_RescaleSlope) > std::numeric_limits<double>::epsilon() &&
          (std::abs(this->m_RescaleSlope - 1.0) > std::numeric_limits<double>::epsilon() ||
@@ -542,7 +544,7 @@ NiftiImageIO::Read(void * buffer)
   unsigned int numComponents = this->GetNumberOfComponents();
   //
   // special case for images of vector pixels
-  if (numComponents > 1 && this->GetPixelType() != COMPLEX)
+  if (numComponents > 1 && this->GetPixelType() != IOPixelEnum::COMPLEX)
   {
     // nifti always sticks vec size in dim 4, so have to shove
     // other dims out of the way
@@ -606,41 +608,43 @@ NiftiImageIO::Read(void * buffer)
     auto * _data = static_cast<float *>(malloc(numElts * sizeof(float)));
     switch (this->m_OnDiskComponentType)
     {
-      case CHAR:
+      case IOComponentEnum::CHAR:
         CastCopy<char>(_data, data, numElts);
         break;
-      case UCHAR:
+      case IOComponentEnum::UCHAR:
         CastCopy<unsigned char>(_data, data, numElts);
         break;
-      case SHORT:
+      case IOComponentEnum::SHORT:
         CastCopy<short>(_data, data, numElts);
         break;
-      case USHORT:
+      case IOComponentEnum::USHORT:
         CastCopy<unsigned short>(_data, data, numElts);
         break;
-      case INT:
+      case IOComponentEnum::INT:
         CastCopy<int>(_data, data, numElts);
         break;
-      case UINT:
+      case IOComponentEnum::UINT:
         CastCopy<unsigned int>(_data, data, numElts);
         break;
-      case LONG:
+      case IOComponentEnum::LONG:
         CastCopy<long>(_data, data, numElts);
         break;
-      case ULONG:
+      case IOComponentEnum::ULONG:
         CastCopy<unsigned long>(_data, data, numElts);
         break;
-      case LONGLONG:
+      case IOComponentEnum::LONGLONG:
         CastCopy<long long>(_data, data, numElts);
         break;
-      case ULONGLONG:
+      case IOComponentEnum::ULONGLONG:
         CastCopy<unsigned long long>(_data, data, numElts);
         break;
-      case FLOAT:
+      case IOComponentEnum::FLOAT:
         itkExceptionMacro(<< "FLOAT pixels do not need Casting to float");
-      case DOUBLE:
+      case IOComponentEnum::DOUBLE:
         itkExceptionMacro(<< "DOUBLE pixels do not need Casting to float");
-      case UNKNOWNCOMPONENTTYPE:
+      case IOComponentEnum::LDOUBLE:
+        itkExceptionMacro(<< "LDOUBLE pixels do not need Casting to float");
+      case IOComponentEnum::UNKNOWNCOMPONENTTYPE:
         itkExceptionMacro(<< "Bad OnDiskComponentType UNKNOWNCOMPONENTTYPE");
     }
     //
@@ -654,8 +658,8 @@ NiftiImageIO::Read(void * buffer)
   }
   //
   // if single or complex, nifti layout == itk layout
-  if (numComponents == 1 || this->GetPixelType() == COMPLEX || this->GetPixelType() == RGB ||
-      this->GetPixelType() == RGBA)
+  if (numComponents == 1 || this->GetPixelType() == IOPixelEnum::COMPLEX || this->GetPixelType() == IOPixelEnum::RGB ||
+      this->GetPixelType() == IOPixelEnum::RGBA)
   {
     const size_t NumBytes = numElts * pixelSize;
     memcpy(buffer, data, NumBytes);
@@ -681,8 +685,8 @@ NiftiImageIO::Read(void * buffer)
     // as per ITK bug 0007485
     // NIfTI is lower triangular, ITK is upper triangular.
     int * vecOrder;
-    if (this->GetPixelType() == ImageIOBase::DIFFUSIONTENSOR3D ||
-        this->GetPixelType() == ImageIOBase::SYMMETRICSECONDRANKTENSOR)
+    if (this->GetPixelType() == IOPixelEnum::DIFFUSIONTENSOR3D ||
+        this->GetPixelType() == IOPixelEnum::SYMMETRICSECONDRANKTENSOR)
     {
       //      vecOrder = LowerToUpperOrder(SymMatDim(numComponents));
       vecOrder = UpperToLowerOrder(SymMatDim(numComponents));
@@ -736,45 +740,45 @@ NiftiImageIO::Read(void * buffer)
   {
     switch (this->m_ComponentType)
     {
-      case CHAR:
+      case IOComponentEnum::CHAR:
         RescaleFunction(static_cast<char *>(buffer), this->m_RescaleSlope, this->m_RescaleIntercept, numElts);
         break;
-      case UCHAR:
+      case IOComponentEnum::UCHAR:
         RescaleFunction(static_cast<unsigned char *>(buffer), this->m_RescaleSlope, this->m_RescaleIntercept, numElts);
         break;
-      case SHORT:
+      case IOComponentEnum::SHORT:
         RescaleFunction(static_cast<short *>(buffer), this->m_RescaleSlope, this->m_RescaleIntercept, numElts);
         break;
-      case USHORT:
+      case IOComponentEnum::USHORT:
         RescaleFunction(static_cast<unsigned short *>(buffer), this->m_RescaleSlope, this->m_RescaleIntercept, numElts);
         break;
-      case INT:
+      case IOComponentEnum::INT:
         RescaleFunction(static_cast<int *>(buffer), this->m_RescaleSlope, this->m_RescaleIntercept, numElts);
         break;
-      case UINT:
+      case IOComponentEnum::UINT:
         RescaleFunction(static_cast<unsigned int *>(buffer), this->m_RescaleSlope, this->m_RescaleIntercept, numElts);
         break;
-      case LONG:
+      case IOComponentEnum::LONG:
         RescaleFunction(static_cast<long *>(buffer), this->m_RescaleSlope, this->m_RescaleIntercept, numElts);
         break;
-      case ULONG:
+      case IOComponentEnum::ULONG:
         RescaleFunction(static_cast<unsigned long *>(buffer), this->m_RescaleSlope, this->m_RescaleIntercept, numElts);
         break;
-      case LONGLONG:
+      case IOComponentEnum::LONGLONG:
         RescaleFunction(static_cast<long long *>(buffer), this->m_RescaleSlope, this->m_RescaleIntercept, numElts);
         break;
-      case ULONGLONG:
+      case IOComponentEnum::ULONGLONG:
         RescaleFunction(
           static_cast<unsigned long long *>(buffer), this->m_RescaleSlope, this->m_RescaleIntercept, numElts);
         break;
-      case FLOAT:
+      case IOComponentEnum::FLOAT:
         RescaleFunction(static_cast<float *>(buffer), this->m_RescaleSlope, this->m_RescaleIntercept, numElts);
         break;
-      case DOUBLE:
+      case IOComponentEnum::DOUBLE:
         RescaleFunction(static_cast<double *>(buffer), this->m_RescaleSlope, this->m_RescaleIntercept, numElts);
         break;
       default:
-        if (this->GetPixelType() == SCALAR)
+        if (this->GetPixelType() == IOPixelEnum::SCALAR)
         {
           itkExceptionMacro(<< "Datatype: " << this->GetComponentTypeAsString(this->m_ComponentType)
                             << " not supported");
@@ -791,9 +795,9 @@ NiftiImageIO::DetermineFileType(const char * FileNameToRead)
   //      == 1 for a nifti file (header+data in 1 file)
   //      == 0 for an analyze 7.5 file,
   //      == -1 for an error,
-  const int image_FTYPE = is_nifti_file(FileNameToRead);
+  const int imageFTYPE = is_nifti_file(FileNameToRead);
 
-  return static_cast<NiftiImageIO::FileType>(image_FTYPE);
+  return static_cast<NiftiImageIO::FileType>(imageFTYPE);
 }
 
 // This method will only test if the header looks like an
@@ -807,13 +811,12 @@ NiftiImageIO ::CanReadFile(const char * FileNameToRead)
   //      == 1 for a nifti file (header+data in 1 file)
   //      == 0 for an analyze 7.5 file,
   //      == -1 for an error,
-  const int image_FTYPE = is_nifti_file(FileNameToRead);
-
-  if (image_FTYPE > 0)
+  const int imageFTYPE = is_nifti_file(FileNameToRead);
+  if (imageFTYPE > 0)
   {
     return true;
   }
-  else if (image_FTYPE == 0 && (this->GetLegacyAnalyze75Mode() == true))
+  else if (imageFTYPE == 0 && (this->GetLegacyAnalyze75Mode() != Analyze75Flavor::AnalyzeReject))
   {
     return true;
   }
@@ -991,6 +994,23 @@ NiftiImageIO::SetImageIOMetadataFromNIfTI()
 void
 NiftiImageIO ::ReadImageInformation()
 {
+  const int image_FTYPE = is_nifti_file(this->GetFileName());
+  if (image_FTYPE == 0)
+  {
+    if (this->GetLegacyAnalyze75Mode() == Analyze75Flavor::AnalyzeReject)
+    {
+      itkExceptionMacro(<< this->GetFileName()
+                        << " is Analyze file and reader is instructed to reject it, specify preferred Analyze flavor "
+                           "using SetLegacyAnalyze75Mode ");
+    }
+    else
+    {
+      if (this->GetLegacyAnalyze75Mode() == Analyze75Flavor::AnalyzeITK4Warning)
+        itkWarningMacro(<< this->GetFileName() << " is Analyze file and it's deprecated ");
+      // to disable this message, specify preferred Analyze flavor using SetLegacyAnalyze75Mode
+    }
+  }
+
   this->m_NiftiImage = nifti_image_read(this->GetFileName(), false);
   static std::string prev;
   if (prev != this->GetFileName())
@@ -1066,74 +1086,74 @@ NiftiImageIO ::ReadImageInformation()
   switch (this->m_NiftiImage->datatype)
   {
     case NIFTI_TYPE_INT8:
-      this->m_ComponentType = CHAR;
-      this->m_PixelType = SCALAR;
+      this->m_ComponentType = IOComponentEnum::CHAR;
+      this->m_PixelType = IOPixelEnum::SCALAR;
       break;
     case NIFTI_TYPE_UINT8:
-      this->m_ComponentType = UCHAR;
-      this->m_PixelType = SCALAR;
+      this->m_ComponentType = IOComponentEnum::UCHAR;
+      this->m_PixelType = IOPixelEnum::SCALAR;
       break;
     case NIFTI_TYPE_INT16:
-      this->m_ComponentType = SHORT;
-      this->m_PixelType = SCALAR;
+      this->m_ComponentType = IOComponentEnum::SHORT;
+      this->m_PixelType = IOPixelEnum::SCALAR;
       break;
     case NIFTI_TYPE_UINT16:
-      this->m_ComponentType = USHORT;
-      this->m_PixelType = SCALAR;
+      this->m_ComponentType = IOComponentEnum::USHORT;
+      this->m_PixelType = IOPixelEnum::SCALAR;
       break;
     case NIFTI_TYPE_INT32:
-      this->m_ComponentType = INT;
-      this->m_PixelType = SCALAR;
+      this->m_ComponentType = IOComponentEnum::INT;
+      this->m_PixelType = IOPixelEnum::SCALAR;
       break;
     case NIFTI_TYPE_UINT32:
-      this->m_ComponentType = UINT;
-      this->m_PixelType = SCALAR;
+      this->m_ComponentType = IOComponentEnum::UINT;
+      this->m_PixelType = IOPixelEnum::SCALAR;
       break;
     case NIFTI_TYPE_INT64:
       // if long is big enough, use long
       if (sizeof(long) == 8)
       {
-        this->m_ComponentType = LONG;
+        this->m_ComponentType = IOComponentEnum::LONG;
       }
       else // long long is at least 64bits
       {
-        this->m_ComponentType = LONGLONG;
+        this->m_ComponentType = IOComponentEnum::LONGLONG;
       }
-      this->m_PixelType = SCALAR;
+      this->m_PixelType = IOPixelEnum::SCALAR;
       break;
     case NIFTI_TYPE_UINT64:
       // if unsigned long is big enough, use unsigned long
       if (sizeof(unsigned long) == 8)
       {
-        this->m_ComponentType = ULONG;
+        this->m_ComponentType = IOComponentEnum::ULONG;
       }
       else // unsigned long long is at least 64bits
       {
-        this->m_ComponentType = ULONGLONG;
+        this->m_ComponentType = IOComponentEnum::ULONGLONG;
       }
-      this->m_PixelType = SCALAR;
+      this->m_PixelType = IOPixelEnum::SCALAR;
       break;
     case NIFTI_TYPE_FLOAT32:
-      this->m_ComponentType = FLOAT;
-      this->m_PixelType = SCALAR;
+      this->m_ComponentType = IOComponentEnum::FLOAT;
+      this->m_PixelType = IOPixelEnum::SCALAR;
       break;
     case NIFTI_TYPE_FLOAT64:
-      this->m_ComponentType = DOUBLE;
-      this->m_PixelType = SCALAR;
+      this->m_ComponentType = IOComponentEnum::DOUBLE;
+      this->m_PixelType = IOPixelEnum::SCALAR;
       break;
     case NIFTI_TYPE_COMPLEX64:
-      this->m_ComponentType = FLOAT;
-      this->m_PixelType = COMPLEX;
+      this->m_ComponentType = IOComponentEnum::FLOAT;
+      this->m_PixelType = IOPixelEnum::COMPLEX;
       this->SetNumberOfComponents(2);
       break;
     case NIFTI_TYPE_COMPLEX128:
-      this->m_ComponentType = DOUBLE;
-      this->m_PixelType = COMPLEX;
+      this->m_ComponentType = IOComponentEnum::DOUBLE;
+      this->m_PixelType = IOPixelEnum::COMPLEX;
       this->SetNumberOfComponents(2);
       break;
     case NIFTI_TYPE_RGB24:
-      this->m_ComponentType = UCHAR;
-      this->m_PixelType = RGB;
+      this->m_ComponentType = IOComponentEnum::UCHAR;
+      this->m_PixelType = IOPixelEnum::RGB;
       this->SetNumberOfComponents(3);
       // TODO:  Need to be able to read/write RGB images into ITK.
       //    case DT_RGB:
@@ -1141,8 +1161,8 @@ NiftiImageIO ::ReadImageInformation()
       // image.setDataType( uiig::DATA_RGBQUAD );
       break;
     case NIFTI_TYPE_RGBA32:
-      this->m_ComponentType = UCHAR;
-      this->m_PixelType = RGBA;
+      this->m_ComponentType = IOComponentEnum::UCHAR;
+      this->m_PixelType = IOPixelEnum::RGBA;
       this->SetNumberOfComponents(4);
       break;
     default:
@@ -1154,10 +1174,10 @@ NiftiImageIO ::ReadImageInformation()
   switch (this->m_NiftiImage->intent_code)
   {
     case NIFTI_INTENT_SYMMATRIX:
-      this->SetPixelType(SYMMETRICSECONDRANKTENSOR);
+      this->SetPixelType(IOPixelEnum::SYMMETRICSECONDRANKTENSOR);
       break;
     case NIFTI_INTENT_VECTOR:
-      this->SetPixelType(VECTOR);
+      this->SetPixelType(IOPixelEnum::VECTOR);
       break;
     case NIFTI_INTENT_NONE:
     case NIFTI_INTENT_CORREL:
@@ -1225,12 +1245,13 @@ NiftiImageIO ::ReadImageInformation()
   // to ImageFileReader to float
   if (this->MustRescale())
   {
-    if (this->m_ComponentType == CHAR || this->m_ComponentType == UCHAR || this->m_ComponentType == SHORT ||
-        this->m_ComponentType == USHORT || this->m_ComponentType == INT || this->m_ComponentType == UINT ||
-        this->m_ComponentType == LONG || this->m_ComponentType == ULONG || this->m_ComponentType == LONGLONG ||
-        this->m_ComponentType == ULONGLONG)
+    if (this->m_ComponentType == IOComponentEnum::CHAR || this->m_ComponentType == IOComponentEnum::UCHAR ||
+        this->m_ComponentType == IOComponentEnum::SHORT || this->m_ComponentType == IOComponentEnum::USHORT ||
+        this->m_ComponentType == IOComponentEnum::INT || this->m_ComponentType == IOComponentEnum::UINT ||
+        this->m_ComponentType == IOComponentEnum::LONG || this->m_ComponentType == IOComponentEnum::ULONG ||
+        this->m_ComponentType == IOComponentEnum::LONGLONG || this->m_ComponentType == IOComponentEnum::ULONGLONG)
     {
-      this->m_ComponentType = FLOAT;
+      this->m_ComponentType = IOComponentEnum::FLOAT;
     }
   }
   //
@@ -1261,39 +1282,51 @@ NiftiImageIO ::ReadImageInformation()
       timingscale = 1e-6;
       break;
   }
+  // see http://www.grahamwideman.com/gw/brain/analyze/formatdoc.htm
+  bool ignore_negative_pixdim =
+    this->m_NiftiImage->nifti_type == 0 && this->GetLegacyAnalyze75Mode() == Analyze75Flavor::AnalyzeFSL;
+
   const int dims = this->GetNumberOfDimensions();
   switch (dims)
   {
     case 7:
       this->SetDimensions(6, this->m_NiftiImage->nw);
       // NOTE: Scaling is not defined in this dimension
-      this->SetSpacing(6, this->m_NiftiImage->dw);
+      this->SetSpacing(6, ignore_negative_pixdim ? std::abs(this->m_NiftiImage->dw) : this->m_NiftiImage->dw);
       ITK_FALLTHROUGH;
     case 6:
       this->SetDimensions(5, this->m_NiftiImage->nv);
       // NOTE: Scaling is not defined in this dimension
-      this->SetSpacing(5, this->m_NiftiImage->dv);
+      this->SetSpacing(5, ignore_negative_pixdim ? std::abs(this->m_NiftiImage->dv) : this->m_NiftiImage->dv);
       ITK_FALLTHROUGH;
     case 5:
       this->SetDimensions(4, this->m_NiftiImage->nu);
       // NOTE: Scaling is not defined in this dimension
-      this->SetSpacing(4, this->m_NiftiImage->du);
+      this->SetSpacing(4, ignore_negative_pixdim ? std::abs(this->m_NiftiImage->du) : this->m_NiftiImage->du);
       ITK_FALLTHROUGH;
     case 4:
       this->SetDimensions(3, this->m_NiftiImage->nt);
-      this->SetSpacing(3, this->m_NiftiImage->dt * timingscale);
+      this->SetSpacing(3,
+                       ignore_negative_pixdim ? std::abs(this->m_NiftiImage->dt * timingscale)
+                                              : this->m_NiftiImage->dt * timingscale);
       ITK_FALLTHROUGH;
     case 3:
       this->SetDimensions(2, this->m_NiftiImage->nz);
-      this->SetSpacing(2, this->m_NiftiImage->dz * spacingscale);
+      this->SetSpacing(2,
+                       ignore_negative_pixdim ? std::abs(this->m_NiftiImage->dz * spacingscale)
+                                              : this->m_NiftiImage->dz * spacingscale);
       ITK_FALLTHROUGH;
     case 2:
       this->SetDimensions(1, this->m_NiftiImage->ny);
-      this->SetSpacing(1, this->m_NiftiImage->dy * spacingscale);
+      this->SetSpacing(1,
+                       ignore_negative_pixdim ? std::abs(this->m_NiftiImage->dy * spacingscale)
+                                              : this->m_NiftiImage->dy * spacingscale);
       ITK_FALLTHROUGH;
     case 1:
       this->SetDimensions(0, this->m_NiftiImage->nx);
-      this->SetSpacing(0, this->m_NiftiImage->dx * spacingscale);
+      this->SetSpacing(0,
+                       ignore_negative_pixdim ? std::abs(this->m_NiftiImage->dx * spacingscale)
+                                              : this->m_NiftiImage->dx * spacingscale);
       break;
     default:
       itkExceptionMacro(<< this->GetFileName() << " has " << dims << " dimensions, and is not supported or invalid!");
@@ -1469,12 +1502,12 @@ NiftiImageIO ::WriteImageInformation()
       this->m_NiftiImage->pixdim[1] = this->m_NiftiImage->dx = static_cast<float>(this->GetSpacing(0));
       this->m_NiftiImage->nvox *= this->m_NiftiImage->dim[1];
   }
-
   const unsigned int numComponents = this->GetNumberOfComponents();
 
   // TODO:  Also need to check for RGB images where numComponets=3
-  if (numComponents > 1 && !(this->GetPixelType() == COMPLEX && numComponents == 2) &&
-      !(this->GetPixelType() == RGB && numComponents == 3) && !(this->GetPixelType() == RGBA && numComponents == 4))
+  if (numComponents > 1 && !(this->GetPixelType() == IOPixelEnum::COMPLEX && numComponents == 2) &&
+      !(this->GetPixelType() == IOPixelEnum::RGB && numComponents == 3) &&
+      !(this->GetPixelType() == IOPixelEnum::RGBA && numComponents == 4))
   {
     this->m_NiftiImage->ndim = 5;   // This must be 5 for NIFTI_INTENT_VECTOR
                                     // images.
@@ -1487,8 +1520,8 @@ NiftiImageIO ::WriteImageInformation()
     }
     //
     // support symmetric matrix type
-    if (this->GetPixelType() == ImageIOBase::DIFFUSIONTENSOR3D ||
-        this->GetPixelType() == ImageIOBase::SYMMETRICSECONDRANKTENSOR)
+    if (this->GetPixelType() == IOPixelEnum::DIFFUSIONTENSOR3D ||
+        this->GetPixelType() == IOPixelEnum::SYMMETRICSECONDRANKTENSOR)
     {
       this->m_NiftiImage->intent_code = NIFTI_INTENT_SYMMATRIX;
     }
@@ -1530,31 +1563,31 @@ NiftiImageIO ::WriteImageInformation()
   //     -----------------------------------------------------
   switch (this->GetComponentType())
   {
-    case UCHAR:
+    case IOComponentEnum::UCHAR:
       this->m_NiftiImage->datatype = NIFTI_TYPE_UINT8;
       this->m_NiftiImage->nbyper = 1;
       break;
-    case CHAR:
+    case IOComponentEnum::CHAR:
       this->m_NiftiImage->datatype = NIFTI_TYPE_INT8;
       this->m_NiftiImage->nbyper = 1;
       break;
-    case USHORT:
+    case IOComponentEnum::USHORT:
       this->m_NiftiImage->datatype = NIFTI_TYPE_UINT16;
       this->m_NiftiImage->nbyper = 2;
       break;
-    case SHORT:
+    case IOComponentEnum::SHORT:
       this->m_NiftiImage->datatype = NIFTI_TYPE_INT16;
       this->m_NiftiImage->nbyper = 2;
       break;
-    case UINT:
+    case IOComponentEnum::UINT:
       this->m_NiftiImage->datatype = NIFTI_TYPE_UINT32;
       this->m_NiftiImage->nbyper = 4;
       break;
-    case INT:
+    case IOComponentEnum::INT:
       this->m_NiftiImage->datatype = NIFTI_TYPE_INT32;
       this->m_NiftiImage->nbyper = 4;
       break;
-    case ULONG:
+    case IOComponentEnum::ULONG:
       switch (sizeof(unsigned long))
       {
         case 4:
@@ -1569,7 +1602,7 @@ NiftiImageIO ::WriteImageInformation()
           itkExceptionMacro(<< "'unsigned long' type is neither 32 or 64 bits.");
       }
       break;
-    case LONG:
+    case IOComponentEnum::LONG:
       switch (sizeof(long))
       {
         case 4:
@@ -1584,23 +1617,23 @@ NiftiImageIO ::WriteImageInformation()
           itkExceptionMacro(<< "'long' type is neither 32 or 64 bits.");
       }
       break;
-    case ULONGLONG:
+    case IOComponentEnum::ULONGLONG:
       this->m_NiftiImage->datatype = NIFTI_TYPE_UINT64;
       this->m_NiftiImage->nbyper = 8;
       break;
-    case LONGLONG:
+    case IOComponentEnum::LONGLONG:
       this->m_NiftiImage->datatype = NIFTI_TYPE_INT64;
       this->m_NiftiImage->nbyper = 8;
       break;
-    case FLOAT:
+    case IOComponentEnum::FLOAT:
       this->m_NiftiImage->datatype = NIFTI_TYPE_FLOAT32;
       this->m_NiftiImage->nbyper = 4;
       break;
-    case DOUBLE:
+    case IOComponentEnum::DOUBLE:
       this->m_NiftiImage->datatype = NIFTI_TYPE_FLOAT64;
       this->m_NiftiImage->nbyper = 8;
       break;
-    case UNKNOWNCOMPONENTTYPE:
+    case IOComponentEnum::UNKNOWNCOMPONENTTYPE:
     default:
     {
       itkExceptionMacro(<< "More than one component per pixel not supported");
@@ -1608,26 +1641,26 @@ NiftiImageIO ::WriteImageInformation()
   }
   switch (this->GetPixelType())
   {
-    case VECTOR: // NOTE: VECTOR is un-rolled by nifti to look like a
-                 // multi-dimensional scalar image
-    case SCALAR:
+    case IOPixelEnum::VECTOR: // NOTE: VECTOR is un-rolled by nifti to look like a
+                              // multi-dimensional scalar image
+    case IOPixelEnum::SCALAR:
       break;
-    case RGB:
+    case IOPixelEnum::RGB:
       this->m_NiftiImage->nbyper *= 3;
       this->m_NiftiImage->datatype = NIFTI_TYPE_RGB24;
       break;
-    case RGBA:
+    case IOPixelEnum::RGBA:
       this->m_NiftiImage->nbyper *= 4;
       this->m_NiftiImage->datatype = NIFTI_TYPE_RGBA32;
       break;
-    case COMPLEX:
+    case IOPixelEnum::COMPLEX:
       this->m_NiftiImage->nbyper *= 2;
       switch (this->GetComponentType())
       {
-        case FLOAT:
+        case IOComponentEnum::FLOAT:
           this->m_NiftiImage->datatype = NIFTI_TYPE_COMPLEX64;
           break;
-        case DOUBLE:
+        case IOComponentEnum::DOUBLE:
           this->m_NiftiImage->datatype = NIFTI_TYPE_COMPLEX128;
           break;
         default:
@@ -1636,15 +1669,15 @@ NiftiImageIO ::WriteImageInformation()
         }
       }
       break;
-    case SYMMETRICSECONDRANKTENSOR:
-    case DIFFUSIONTENSOR3D:
+    case IOPixelEnum::SYMMETRICSECONDRANKTENSOR:
+    case IOPixelEnum::DIFFUSIONTENSOR3D:
       break;
-    case OFFSET:
-    case POINT:
-    case COVARIANTVECTOR:
-    case FIXEDARRAY:
-    case MATRIX:
-    case UNKNOWNPIXELTYPE:
+    case IOPixelEnum::OFFSET:
+    case IOPixelEnum::POINT:
+    case IOPixelEnum::COVARIANTVECTOR:
+    case IOPixelEnum::FIXEDARRAY:
+    case IOPixelEnum::MATRIX:
+    case IOPixelEnum::UNKNOWNPIXELTYPE:
     default:
       itkExceptionMacro(<< "Can not process this pixel type for writing into nifti");
   }
@@ -1714,7 +1747,8 @@ NiftiImageIO::SetImageIOOrientationFromNIfTI(unsigned short int dims)
       m_Origin[2] = 0.0;
     }
 
-    if (this->m_NiftiImage->nifti_type == 0)
+    if (this->m_NiftiImage->nifti_type == 0 && this->GetLegacyAnalyze75Mode() != Analyze75Flavor::AnalyzeITK4 &&
+        this->GetLegacyAnalyze75Mode() != Analyze75Flavor::AnalyzeITK4Warning)
     { // only do this for Analyze file format
       SpatialOrientationAdapter::DirectionType   dir;
       SpatialOrientationAdapter::OrientationType orient;
@@ -1758,7 +1792,7 @@ NiftiImageIO::SetImageIOOrientationFromNIfTI(unsigned short int dims)
     return;
   }
 
-  // not an Analyze file.
+  // not an Analyze file, but this route will be taken when ITK4 Analyze behaviour is needed
   // scale image data based on slope/intercept
   //
   // qform or sform
@@ -1971,8 +2005,9 @@ NiftiImageIO ::Write(const void * buffer)
   // Write the image Information before writing data
   this->WriteImageInformation();
   const unsigned int numComponents = this->GetNumberOfComponents();
-  if (numComponents == 1 || (numComponents == 2 && this->GetPixelType() == COMPLEX) ||
-      (numComponents == 3 && this->GetPixelType() == RGB) || (numComponents == 4 && this->GetPixelType() == RGBA))
+  if (numComponents == 1 || (numComponents == 2 && this->GetPixelType() == IOPixelEnum::COMPLEX) ||
+      (numComponents == 3 && this->GetPixelType() == IOPixelEnum::RGB) ||
+      (numComponents == 4 && this->GetPixelType() == IOPixelEnum::RGBA))
   {
     // Need a const cast here so that we don't have to copy the memory
     // for writing.
@@ -2014,8 +2049,8 @@ NiftiImageIO ::Write(const void * buffer)
     // so on read, step sequentially through the source vector, but
     // reverse the order of vec[2] and vec[3]
     int * vecOrder;
-    if (this->GetPixelType() == ImageIOBase::DIFFUSIONTENSOR3D ||
-        this->GetPixelType() == ImageIOBase::SYMMETRICSECONDRANKTENSOR)
+    if (this->GetPixelType() == IOPixelEnum::DIFFUSIONTENSOR3D ||
+        this->GetPixelType() == IOPixelEnum::SYMMETRICSECONDRANKTENSOR)
     {
       vecOrder = UpperToLowerOrder(SymMatDim(numComponents));
     }
@@ -2062,4 +2097,28 @@ NiftiImageIO ::Write(const void * buffer)
     delete[] nifti_buf;
   }
 }
+
+/** Define how to print enumerations */
+std::ostream &
+operator<<(std::ostream & out, const Analyze75Flavor value)
+{
+  return out << [value] {
+    switch (value)
+    {
+      case Analyze75Flavor::AnalyzeReject:
+        return "Analyze75Flavor::AnalyzeReject";
+      case Analyze75Flavor::AnalyzeITK4:
+        return "Analyze75Flavor::AnalyzeITK4";
+      case Analyze75Flavor::AnalyzeITK4Warning:
+        return "Analyze75Flavor::AnalyzeITK4Warning";
+      case Analyze75Flavor::AnalyzeSPM:
+        return "Analyze75Flavor::AnalyzeSPM";
+      case Analyze75Flavor::AnalyzeFSL:
+        return "Analyze75Flavor::AnalyzeFSL";
+      default:
+        return "INVALID VALUE FOR Analyze75Flavor";
+    }
+  }();
+}
+
 } // end namespace itk

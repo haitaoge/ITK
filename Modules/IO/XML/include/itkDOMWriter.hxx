@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ DOMWriter<TInput>::DOMWriter()
   this->m_Logger->SetLevelForFlushing(
     Logger::PriorityLevelEnum::MUSTFLUSH); // never flush (MUSTFLUSH actually leads to no flush, a bug in Logger)
   // some other settings
-  this->m_Logger->SetTimeStampFormat(Logger::HUMANREADABLE);
+  this->m_Logger->SetTimeStampFormat(Logger::TimeStampFormatEnum::HUMANREADABLE);
   this->m_Logger->SetHumanReadableFormat("%Y-%b-%d %H:%M:%S"); // time stamp format
 }
 

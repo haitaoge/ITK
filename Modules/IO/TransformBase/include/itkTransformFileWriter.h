@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -117,9 +117,9 @@ private:
 
   std::string            m_FileName;
   ConstTransformListType m_TransformList;
-  bool                   m_AppendMode;
+  bool                   m_AppendMode{ false };
   /** Should we compress the data? */
-  bool                              m_UseCompression;
+  bool                              m_UseCompression{ false };
   typename TransformIOType::Pointer m_TransformIO;
 };
 

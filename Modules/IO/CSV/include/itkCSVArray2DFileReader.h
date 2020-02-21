@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@
 namespace itk
 {
 
-/** \class CSVArray2DFileReader
+/**
+ *\class CSVArray2DFileReader
  * \brief Parses csv files and stores the data in a itkCSVArray2DDataObject.
  *
  * CSVArray2DFileReader is used for reading csv files. This reader should

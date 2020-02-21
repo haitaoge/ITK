@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -74,13 +74,15 @@ itkFFTConvolutionImageFilterTestInt(int argc, char * argv[])
     if (outputRegionMode == "SAME")
     {
       convolver->SetOutputRegionModeToSame();
-      ITK_TEST_SET_GET_VALUE(itk::ConvolutionImageFilterOutputRegionEnum::SAME, convolver->GetOutputRegionMode());
+      ITK_TEST_SET_GET_VALUE(itk::ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion::SAME,
+                             convolver->GetOutputRegionMode());
       std::cout << "OutputRegionMode set to SAME." << std::endl;
     }
     else if (outputRegionMode == "VALID")
     {
       convolver->SetOutputRegionModeToValid();
-      ITK_TEST_SET_GET_VALUE(itk::ConvolutionImageFilterOutputRegionEnum::VALID, convolver->GetOutputRegionMode());
+      ITK_TEST_SET_GET_VALUE(itk::ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion::VALID,
+                             convolver->GetOutputRegionMode());
       std::cout << "OutputRegionMode set to VALID." << std::endl;
     }
     else

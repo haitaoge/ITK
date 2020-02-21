@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@
 
 namespace itk
 {
-/** \class GE4ImageIOFactory
+/**
+ *\class GE4ImageIOFactory
  * \brief Create instances of GE4ImageIO objects using an object factory.
  * \ingroup ITKIOGE
  */

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@
 
 #ifndef itkFEMLoadNode_h
 #define itkFEMLoadNode_h
+
+#include <utility>
 
 #include "itkFEMLoadBase.h"
 #include "ITKFEMExport.h"
@@ -79,12 +81,11 @@ public:
   int
   GetNode() const;
 
-  LoadNode()
-    : m_Point(0)
-  {} // default constructor
+  LoadNode() = default;
+
   LoadNode(Element::ConstPointer element_, unsigned int pt_, vnl_vector<Float> F_)
     : m_Point(pt_)
-    , m_Force(F_)
+    , m_Force(std::move(F_))
   {
     this->m_Element = element_;
   }
@@ -101,7 +102,7 @@ protected:
   /**
    * Point within the element on which the force acts.
    */
-  unsigned int m_Point;
+  unsigned int m_Point{ 0 };
 
   /**
    * Force applied on the node. Dimension of F should equal

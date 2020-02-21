@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -150,8 +150,8 @@ FileFreeImageIO ::ReadImageInformation()
 
   this->SetNumberOfDimensions(sizeVector.size());
   this->SetNumberOfComponents(1);
-  this->SetPixelType(SCALAR);
-  this->SetComponentType(UCHAR);
+  this->SetPixelType(IOPixelEnum::SCALAR);
+  this->SetComponentType(IOComponentEnum::UCHAR);
   for (std::vector<std::string>::size_type i = 0; i < sizeVector.size(); i++)
   {
     this->SetDimensions(i, sizeVector[i]);

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -30,8 +30,7 @@ GPUImage<TPixel, VImageDimension>::GPUImage()
 }
 
 template <typename TPixel, unsigned int VImageDimension>
-GPUImage<TPixel, VImageDimension>::~GPUImage()
-{}
+GPUImage<TPixel, VImageDimension>::~GPUImage() = default;
 
 template <typename TPixel, unsigned int VImageDimension>
 void
@@ -182,7 +181,7 @@ GPUImage<TPixel, VImageDimension>::Graft(const Self * data)
 {
   using GPUImageDataManagerType = GPUImageDataManager<GPUImage>;
 
-  GPUImageDataManagerType * ptr = const_cast<GPUImageDataManagerType *>(data->GetDataManager());
+  auto * ptr = const_cast<GPUImageDataManagerType *>(data->GetDataManager());
 
   // call the superclass' implementation
   Superclass::Graft(ptr->GetImagePointer());

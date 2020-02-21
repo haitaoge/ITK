@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -773,7 +773,7 @@ public:
   FEMExceptionItpackSolver(const char * file, unsigned int lineNumber, std::string location, integer errorCode);
 
   /** Virtual destructor needed for subclasses. Has to have empty throw(). */
-  ~FEMExceptionItpackSolver() noexcept override {}
+  ~FEMExceptionItpackSolver() noexcept override = default;
 
   /** Type related information. */
   itkTypeMacro(FEMExceptionItpackSolver, FEMException);

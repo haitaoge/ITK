@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -34,7 +34,8 @@
 
 namespace itk
 {
-/** \class VTKImageImport
+/**
+ *\class VTKImageImport
  * \brief Connect the end of an VTK pipeline to an ITK image pipeline.
  *
  * VTKImageImport can be used at the beginning of an ITK image pipeline to
@@ -167,7 +168,7 @@ public:
 
 protected:
   VTKImageImport();
-  ~VTKImageImport() override {}
+  ~VTKImageImport() override = default;
   void
   PrintSelf(std::ostream & os, Indent indent) const override;
 

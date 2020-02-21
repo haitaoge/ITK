@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -44,8 +44,8 @@ GPUScalarAnisotropicDiffusionFunction<TImage>::GPUScalarAnisotropicDiffusionFunc
   defines << "#define DIM_" << ImageDimension << "\n";
 
   defines << "#define PIXELTYPE ";
+
   GetTypenameInString(typeid(typename TImage::PixelType), defines);
-  std::cout << "Defines: " << defines.str() << std::endl;
 
   const char * GPUSource = GPUScalarAnisotropicDiffusionFunction::GetOpenCLSource();
 
@@ -150,8 +150,8 @@ GPUScalarAnisotropicDiffusionFunction<TImage>::GPUCalculateAverageGradientMagnit
   kernelManager->LaunchKernel(kernelHandle, ImageDim, globalSize, localSize);
 
   // Read back intermediate sums from GPU and compute final value
-  double  sum = 0;
-  float * intermSum = new float[bufferSize];
+  double sum = 0;
+  auto * intermSum = new float[bufferSize];
 
   this->m_AnisotropicDiffusionFunctionGPUBuffer->SetCPUBufferPointer(intermSum);
   this->m_AnisotropicDiffusionFunctionGPUBuffer->SetCPUDirtyFlag(true); //

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -165,6 +165,17 @@ itkFastMarchingBaseTest(int argc, char * argv[])
 
       (void)output;
     }
+  }
+
+  // Test streaming enumeration for FastMarchingTraitsEnums::TopologyCheck elements
+  const std::set<itk::FastMarchingTraitsEnums::TopologyCheck> allTopologyCheck{
+    itk::FastMarchingTraitsEnums::TopologyCheck::Nothing,
+    itk::FastMarchingTraitsEnums::TopologyCheck::NoHandles,
+    itk::FastMarchingTraitsEnums::TopologyCheck::Strict
+  };
+  for (const auto & ee : allTopologyCheck)
+  {
+    std::cout << "STREAMED ENUM VALUE FastMarchingTraitsEnums::TopologyCheck: " << ee << std::endl;
   }
 
   if (exception_caught)

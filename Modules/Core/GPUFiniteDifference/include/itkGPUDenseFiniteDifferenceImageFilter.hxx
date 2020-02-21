@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -59,7 +59,6 @@ GPUDenseFiniteDifferenceImageFilter<TInputImage, TOutputImage, TParentImageFilte
 
   // assumes input and output pixel type is same
   defines << "#define PIXELDIM " << GetPixelDimension(typeid(typename TOutputImage::PixelType)) << "\n";
-  std::cout << "Defines: " << defines.str() << std::endl;
 
   const char * GPUSource = GPUDenseFiniteDifferenceImageFilter::GetOpenCLSource();
 
@@ -161,8 +160,7 @@ GPUDenseFiniteDifferenceImageFilter<TInputImage, TOutputImage, TParentImageFilte
   TimeStepType timeStep;
   void *       globalData;
 
-  GPUFiniteDifferenceFunction<OutputImageType> * df =
-    dynamic_cast<GPUFiniteDifferenceFunction<OutputImageType> *>(this->GetDifferenceFunction().GetPointer());
+  auto * df = dynamic_cast<GPUFiniteDifferenceFunction<OutputImageType> *>(this->GetDifferenceFunction().GetPointer());
 
   globalData = df->GetGlobalDataPointer();
   this->m_ComputeUpdateTime.Start();

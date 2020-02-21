@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -37,12 +37,11 @@ ImageSpatialObject<TDimension, PixelType>::ImageSpatialObject()
 
 /** Destructor */
 template <unsigned int TDimension, typename PixelType>
-ImageSpatialObject<TDimension, PixelType>::~ImageSpatialObject()
-{}
+ImageSpatialObject<TDimension, PixelType>::~ImageSpatialObject() = default;
 
 template <unsigned int TDimension, typename PixelType>
 void
-ImageSpatialObject<TDimension, PixelType>::Clear(void)
+ImageSpatialObject<TDimension, PixelType>::Clear()
 {
   Superclass::Clear();
 

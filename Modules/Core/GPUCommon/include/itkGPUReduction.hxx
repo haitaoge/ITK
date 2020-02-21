@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -127,8 +127,6 @@ GPUReduction<TElement>::GetReductionKernel(int whichKernel, int blockSize, int i
   defines << "#define T ";
   GetTypenameInString(typeid(TElement), defines);
 
-  std::cout << "Defines: " << defines.str() << std::endl;
-
   const char * GPUSource = GPUReduction::GetOpenCLSource();
 
   // load and build program
@@ -188,7 +186,7 @@ GPUReduction<TElement>::RandomTest()
   this->InitializeKernel(size);
 
   unsigned int bytes = size * sizeof(TElement);
-  TElement *   h_idata = (TElement *)malloc(bytes);
+  auto *       h_idata = (TElement *)malloc(bytes);
 
   for (int i = 0; i < size; i++)
   {
@@ -258,7 +256,7 @@ GPUReduction<TElement>::GPUGenerateData()
     cpuFinalThreshold = 1;
 
   // allocate output data for the result
-  TElement * h_odata = (TElement *)malloc(numBlocks * sizeof(TElement));
+  auto * h_odata = (TElement *)malloc(numBlocks * sizeof(TElement));
 
   GPUDataPointer odata = GPUDataManager::New();
   odata->SetBufferSize(numBlocks * sizeof(TElement));
@@ -325,7 +323,7 @@ GPUReduction<TElement>::GPUReduce(cl_int         n,
   this->m_GPUKernelManager->LaunchKernel(m_ReduceGPUKernelHandle, 1, globalSize, localSize);
 
   odata->SetCPUDirtyFlag(true);
-  TElement * h_odata = (TElement *)odata->GetCPUBufferPointer();
+  auto * h_odata = (TElement *)odata->GetCPUBufferPointer();
 
 #ifdef CPU_VERIFY
   idata->SetCPUDirtyFlag(true);

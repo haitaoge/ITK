@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -305,9 +305,9 @@ itkPeriodicBoundaryConditionTest(int, char *[])
   while (!testIter.IsAtEnd())
   {
     float sum = 0;
-    for (size_t j = 0; j < back.size(); ++j)
+    for (auto & j : back)
     {
-      const float d = testIter.GetPixel(back[j]);
+      const float d = testIter.GetPixel(j);
       sum += d * d;
     }
     ++testIter;

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,7 +27,8 @@
 
 namespace itk
 {
-/** \class GDCMSeriesFileNames
+/**
+ *\class GDCMSeriesFileNames
  * \brief Generate a sequence of filenames from a DICOM series.
  *
  * This class generates a sequence of files whose filenames point to
@@ -149,7 +150,7 @@ public:
    *   multiple 3D volumes - as can occur with perfusion and DTI imaging
    */
   bool
-  GetUseSeriesDetails()
+  GetUseSeriesDetails() const
   {
     return m_UseSeriesDetails;
   }
@@ -183,32 +184,32 @@ public:
   itkBooleanMacro(LoadPrivateTags);
 
 protected:
-  GDCMSeriesFileNames();
-  ~GDCMSeriesFileNames() override;
+  GDCMSeriesFileNames() = default;
+  ~GDCMSeriesFileNames() override { delete m_SerieHelper; }
   void
   PrintSelf(std::ostream & os, Indent indent) const override;
 
 private:
   /** Contains the input directory where the DICOM serie is found */
-  std::string m_InputDirectory;
+  std::string m_InputDirectory = "";
 
   /** Contains the output directory where the DICOM serie should be written */
-  std::string m_OutputDirectory;
+  std::string m_OutputDirectory = "";
 
   /** Internal structure to keep the list of input/output filenames */
   FileNamesContainerType m_InputFileNames;
   FileNamesContainerType m_OutputFileNames;
 
   /** Internal structure to order serie from one directory */
-  gdcm::SerieHelper * m_SerieHelper;
+  gdcm::SerieHelper * m_SerieHelper = new gdcm::SerieHelper();
 
   /** Internal structure to keep the list of series UIDs */
   SeriesUIDContainerType m_SeriesUIDs;
 
-  bool m_UseSeriesDetails;
-  bool m_Recursive;
-  bool m_LoadSequences;
-  bool m_LoadPrivateTags;
+  bool m_UseSeriesDetails = true;
+  bool m_Recursive = false;
+  bool m_LoadSequences = false;
+  bool m_LoadPrivateTags = false;
 };
 } // namespace itk
 

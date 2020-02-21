@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -55,9 +55,9 @@ itkOtsuMultipleThresholdsCalculatorTest(int, char *[])
   {
     HistogramType::MeasurementType measurement = iter.GetMeasurementVector()[0];
 
-    for (ValuesVectorType::const_iterator viter = values.begin(); viter != values.end(); ++viter)
+    for (float value : values)
     {
-      if (measurement > (*viter - range) && measurement < (*viter + range))
+      if (measurement > (value - range) && measurement < (value + range))
       {
         iter.SetFrequency(1);
       }

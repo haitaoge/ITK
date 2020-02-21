@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,7 +26,8 @@
 namespace itk
 {
 
-/** \class FFTPadImageFilter
+/**
+ *\class FFTPadImageFilter
  * \brief Pad an image to make it suitable for an FFT transformation
  *
  * FFT filters usually requires a specific image size. The size is decomposed

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -383,5 +383,17 @@ itkBSplineImageRegistrationTest(int argc, char * argv[])
       std::cerr << "Unsupported dimension" << std::endl;
       exit(EXIT_FAILURE);
   }
+
+  // Test streaming enumeration for ImageRegistrationMethodv4Enums::MetricSamplingStrategy elements
+  const std::set<itk::ImageRegistrationMethodv4Enums::MetricSamplingStrategy> allMetricSamplingStrategy{
+    itk::ImageRegistrationMethodv4Enums::MetricSamplingStrategy::NONE,
+    itk::ImageRegistrationMethodv4Enums::MetricSamplingStrategy::REGULAR,
+    itk::ImageRegistrationMethodv4Enums::MetricSamplingStrategy::RANDOM
+  };
+  for (const auto & ee : allMetricSamplingStrategy)
+  {
+    std::cout << "STREAMED ENUM VALUE ImageRegistrationMethodv4Enums::MetricSamplingStrategy: " << ee << std::endl;
+  }
+
   return EXIT_SUCCESS;
 }

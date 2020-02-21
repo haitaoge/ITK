@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -249,7 +249,7 @@ itkAutomaticTopologyQuadEdgeMeshSourceTest(int, char *[])
     CellAutoPointer cell;
     if (mesh->GetCell(i, cell))
     {
-      if (cell->GetType() == CellType::LINE_CELL)
+      if (cell->GetType() == itk::CellGeometryEnum::LINE_CELL)
       {
         std::cout << "Cell " << i << ":\n";
 

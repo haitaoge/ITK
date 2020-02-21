@@ -7,10 +7,6 @@ if("${CMAKE_BINARY_DIR}" MATCHES "^.* .*$")
 endif()
 
 ###############################################################################
-# Find python
-find_package(PythonInterp REQUIRED)
-
-###############################################################################
 # Build swig
 
 option(ITK_USE_SYSTEM_SWIG "Use system swig. If OFF, swig is built as an external project." OFF)
@@ -354,7 +350,7 @@ macro(itk_end_wrap_module_swig_interface)
   if(number_interface_files GREATER 0)
     add_custom_command(
       OUTPUT ${i_files} ${typedef_files} ${idx_files}
-      COMMAND ${PYTHON_EXECUTABLE} ${IGENERATOR}
+      COMMAND ${Python3_EXECUTABLE} ${IGENERATOR}
         ${mdx_opts}
         ${swig_libs}
         -w1 -w3 -w51 -w52 -w53 -w54

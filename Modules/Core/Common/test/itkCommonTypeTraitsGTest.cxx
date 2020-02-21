@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -98,9 +98,9 @@ TEST(CommonTypeTraits, ContinuousIndexIsPOD)
 /* Dummy class without noexcept move contructors. */
 struct NotNoexceptMove
 {
-  NotNoexceptMove() {}
+  NotNoexceptMove() = default;
   NotNoexceptMove(NotNoexceptMove &&) {}
-  NotNoexceptMove(const NotNoexceptMove &) {}
+  NotNoexceptMove(const NotNoexceptMove &) = default;
 };
 
 /* Check that move-constructing a FixedArray works as move-constructing an aggregate.

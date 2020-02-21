@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -42,27 +42,7 @@ namespace fem
 
 template <typename TMovingImage, typename TFixedImage, typename TFemObject>
 FEMRegistrationFilter<TMovingImage, TFixedImage, TFemObject>::FEMRegistrationFilter()
-  : m_DoLineSearchOnImageEnergy(1)
-  , m_LineSearchMaximumIterations(100)
-  , m_TotalIterations(0)
-  , m_MaxLevel(1)
-  , m_FileCount(0)
-  , m_CurrentLevel(0)
-  , m_WhichMetric(0)
-  , m_TimeStep(1)
-  , m_Energy(0.0)
-  , m_MinE(vnl_huge_val(0))
-  , m_MinJacobian(1.0)
-  , m_Alpha(1.0)
-  , m_UseLandmarks(false)
-  , m_UseMassMatrix(true)
-  , m_UseNormalizedGradient(false)
-  , m_CreateMeshFromImage(true)
-  , m_EmployRegridding(1)
-  , m_DescentDirection(positive)
-  , m_EnergyReductionFactor(0.0)
-  , m_MaximumError(0.1)
-  , m_MaximumKernelWidth(30)
+  : m_MinE(vnl_huge_val(0))
 {
   this->SetNumberOfRequiredInputs(2);
 
@@ -102,8 +82,7 @@ FEMRegistrationFilter<TMovingImage, TFixedImage, TFemObject>::FEMRegistrationFil
 }
 
 template <typename TMovingImage, typename TFixedImage, typename TFemObject>
-FEMRegistrationFilter<TMovingImage, TFixedImage, TFemObject>::~FEMRegistrationFilter()
-{}
+FEMRegistrationFilter<TMovingImage, TFixedImage, TFemObject>::~FEMRegistrationFilter() = default;
 
 template <typename TMovingImage, typename TFixedImage, typename TFemObject>
 void
@@ -332,9 +311,9 @@ FEMRegistrationFilter<TMovingImage, TFixedImage, TFemObject>::CreateMesh(unsigne
 
   if (m_UseLandmarks)
   {
-    for (unsigned int i = 0; i < m_LandmarkArray.size(); i++)
+    for (auto & i : m_LandmarkArray)
     {
-      m_FEMObject->AddNextLoad((m_LandmarkArray[i]));
+      m_FEMObject->AddNextLoad(i);
     }
   }
 
@@ -369,7 +348,7 @@ FEMRegistrationFilter<TMovingImage, TFixedImage, TFemObject>::ApplyImageLoads(TM
   m_Load->SetMetricRadius(r);
   m_Load->SetNumberOfIntegrationPoints(m_NumberOfIntegrationPoints[m_CurrentLevel]);
   m_Load->SetGlobalNumber(m_FEMObject->GetNumberOfLoads() + 1);
-  if (m_DescentDirection == positive)
+  if (m_DescentDirection == SignEnum::positive)
   {
     m_Load->SetDescentDirectionMinimize();
   }
@@ -555,7 +534,7 @@ FEMRegistrationFilter<TMovingImage, TFixedImage, TFemObject>::IterativeSolve(Sol
     solver->Update();
     m_Load->PrintCurrentEnergy();
 
-    if (m_DescentDirection == 1)
+    if (static_cast<int>(m_DescentDirection) == 1)
     {
       deltE = (LastE - m_Load->GetCurrentEnergy());
     }

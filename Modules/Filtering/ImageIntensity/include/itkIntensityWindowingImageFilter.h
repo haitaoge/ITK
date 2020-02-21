@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -117,7 +117,8 @@ private:
 };
 } // end namespace Functor
 
-/** \class IntensityWindowingImageFilter
+/**
+ *\class IntensityWindowingImageFilter
  * \brief Applies a linear transformation to the intensity levels of the
  * input Image that are inside a user-defined interval. Values below this
  * interval are mapped to a constant. Values over the interval are mapped

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -106,27 +106,21 @@ struct ObjectFactoryBasePrivate
     ::itk::ObjectFactoryBase::UnRegisterAllFactories();
     if (m_InternalFactories)
     {
-      for (std::list<itk::ObjectFactoryBase *>::iterator i = m_InternalFactories->begin();
-           i != m_InternalFactories->end();
-           ++i)
+      for (auto & m_InternalFactorie : *m_InternalFactories)
       {
-        (*i)->UnRegister();
+        m_InternalFactorie->UnRegister();
       }
       delete m_InternalFactories;
       m_InternalFactories = nullptr;
     }
   }
-  ObjectFactoryBasePrivate()
-    : m_RegisteredFactories(nullptr)
-    , m_InternalFactories(nullptr)
-    , m_Initialized(false)
-    , m_StrictVersionChecking(false)
-  {}
 
-  std::list<::itk::ObjectFactoryBase *> * m_RegisteredFactories;
-  std::list<::itk::ObjectFactoryBase *> * m_InternalFactories;
-  bool                                    m_Initialized;
-  bool                                    m_StrictVersionChecking;
+  ObjectFactoryBasePrivate() = default;
+
+  std::list<::itk::ObjectFactoryBase *> * m_RegisteredFactories{ nullptr };
+  std::list<::itk::ObjectFactoryBase *> * m_InternalFactories{ nullptr };
+  bool                                    m_Initialized{ false };
+  bool                                    m_StrictVersionChecking{ false };
 };
 
 ObjectFactoryBasePrivate *
@@ -926,7 +920,7 @@ ObjectFactoryBase ::GetClassOverrideWithNames()
 }
 
 /**
- * Retrun a list of descriptions for class overrides
+ * Return a list of descriptions for class overrides
  */
 std::list<std::string>
 ObjectFactoryBase ::GetClassOverrideDescriptions()
@@ -962,23 +956,4 @@ ObjectFactoryBase ::GetLibraryPath()
 }
 
 ObjectFactoryBasePrivate * ObjectFactoryBase::m_PimplGlobals;
-
-/** Print enumerations */
-std::ostream &
-operator<<(std::ostream & out, const ObjectFactoryBase::InsertionPositionEnum value)
-{
-  return out << [value] {
-    switch (value)
-    {
-      case ObjectFactoryBase::InsertionPositionEnum::INSERT_AT_FRONT:
-        return "ObjectFactoryBase::InsertionPositionEnum::INSERT_AT_FRONT";
-      case ObjectFactoryBase::InsertionPositionEnum::INSERT_AT_BACK:
-        return "ObjectFactoryBase::InsertionPositionEnum::INSERT_AT_BACK";
-      case ObjectFactoryBase::InsertionPositionEnum::INSERT_AT_POSITION:
-        return "ObjectFactoryBase::InsertionPositionEnum::INSERT_AT_POSITION";
-      default:
-        return "INVALID VALUE FOR ObjectFactoryBase::InsertionPositionEnum";
-    }
-  }();
-}
 } // end namespace itk

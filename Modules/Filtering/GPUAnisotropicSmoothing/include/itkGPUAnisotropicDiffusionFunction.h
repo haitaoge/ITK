@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -141,7 +141,7 @@ protected:
     m_TimeStep = 0.125f;          // default value
   }
 
-  ~GPUAnisotropicDiffusionFunction() override {}
+  ~GPUAnisotropicDiffusionFunction() override = default;
 
   void
   PrintSelf(std::ostream & os, Indent indent) const override

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -34,21 +34,19 @@ namespace itk
 
 struct ExceptionGlobals
 {
-  ExceptionGlobals()
-    : m_ExceptionAction(FloatingPointExceptions::ABORT)
-    , m_Enabled(false){};
-  FloatingPointExceptions::ExceptionAction m_ExceptionAction;
-  bool                                     m_Enabled;
+  ExceptionGlobals() = default;
+  FloatingPointExceptions::ExceptionActionEnum m_ExceptionAction{ FloatingPointExceptions::ExceptionActionEnum::ABORT };
+  bool                                         m_Enabled{ false };
 };
 
 void
-FloatingPointExceptions ::SetExceptionAction(ExceptionAction a)
+FloatingPointExceptions ::SetExceptionAction(FloatingPointExceptions::ExceptionActionEnum a)
 {
   itkInitGlobalsMacro(PimplGlobals);
   FloatingPointExceptions::m_PimplGlobals->m_ExceptionAction = a;
 }
 
-FloatingPointExceptions::ExceptionAction
+FloatingPointExceptions::ExceptionActionEnum
 FloatingPointExceptions::GetExceptionAction()
 {
   itkInitGlobalsMacro(PimplGlobals);
@@ -80,6 +78,23 @@ itkGetGlobalSimpleMacro(FloatingPointExceptions, ExceptionGlobals, PimplGlobals)
 
 ExceptionGlobals * FloatingPointExceptions::m_PimplGlobals;
 
+/** Print enum values */
+std::ostream &
+operator<<(std::ostream & out, const itk::FloatingPointExceptionsEnums::ExceptionAction value)
+{
+  return out << [value] {
+    switch (value)
+    {
+      case itk::FloatingPointExceptionsEnums::ExceptionAction::ABORT:
+        return "itk::FloatingPointExceptionsEnums::ExceptionAction::ABORT";
+      case itk::FloatingPointExceptionsEnums::ExceptionAction::EXIT:
+        return "itk::FloatingPointExceptionsEnums::ExceptionAction::EXIT";
+      default:
+        return "INVALID VALUE FOR itk::FloatingPointExceptionsEnums::ExceptionAction";
+    }
+  }();
+}
+
 } // namespace itk
 
 namespace
@@ -88,7 +103,7 @@ namespace
 void
 itkFloatingPointExceptionsAbortOrExit()
 {
-  if (itk::FloatingPointExceptions::GetExceptionAction() == itk::FloatingPointExceptions::ABORT)
+  if (itk::FloatingPointExceptions::GetExceptionAction() == itk::FloatingPointExceptions::ExceptionActionEnum::ABORT)
   {
     abort();
   }
@@ -104,7 +119,6 @@ itkFloatingPointExceptionsNotSupported()
   std::cerr << "FloatingPointExceptions are not supported on this platform." << std::endl;
   itkFloatingPointExceptionsAbortOrExit();
 }
-
 } // namespace
 
 #if defined(_WIN32)

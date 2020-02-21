@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,17 +24,30 @@
 
 namespace itk
 {
-/** \class ConvolutionImageFilterOutputRegionEnum
+/**\class ConvolutionImageFilterBaseEnums
+ * \brief Contains all enum classes used by ConvolutionImageFilterBase class.
  * \ingroup ITKConvolution
- * Output region mode type enumeration
  */
-enum class ConvolutionImageFilterOutputRegionEnum : uint8_t
+class ConvolutionImageFilterBaseEnums
 {
-  SAME = 0,
-  VALID
+public:
+  /**
+   *\class ConvolutionImageFilterOutputRegion
+   * \ingroup ITKConvolution
+   * Output region mode type enumeration
+   */
+  enum class ConvolutionImageFilterOutputRegion : uint8_t
+  {
+    SAME = 0,
+    VALID
+  };
 };
+/** Define how to print enumerations */
+extern ITKConvolution_EXPORT std::ostream &
+                             operator<<(std::ostream & out, const ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion value);
 
-/** \class ConvolutionImageFilterBase
+/**
+ *\class ConvolutionImageFilterBase
  * \brief Abstract base class for the convolution image filters.
  *
  * \ingroup ITKConvolution
@@ -94,8 +107,9 @@ public:
   itkBooleanMacro(Normalize);
 
   /** Reverse compatibility for enumerations */
-  using OutputRegionModeEnum = ConvolutionImageFilterOutputRegionEnum;
+  using OutputRegionModeEnum = ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion;
 #if !defined(ITK_LEGACY_REMOVE)
+  using OutputRegionModeType = ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion;
   // We need to expose the enum values at the class level
   // for backwards compatibility
   static constexpr OutputRegionModeEnum SAME = OutputRegionModeEnum::SAME;
@@ -145,12 +159,8 @@ private:
   DefaultBoundaryConditionType m_DefaultBoundaryCondition;
   BoundaryConditionPointerType m_BoundaryCondition;
 
-  OutputRegionModeEnum m_OutputRegionMode;
+  OutputRegionModeEnum m_OutputRegionMode{ ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion::SAME };
 };
-
-/** Define how to print enumerations */
-extern ITKConvolution_EXPORT std::ostream &
-                             operator<<(std::ostream & out, const ConvolutionImageFilterOutputRegionEnum value);
 } // end namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION

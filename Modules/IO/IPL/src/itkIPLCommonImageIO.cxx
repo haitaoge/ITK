@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -39,10 +39,11 @@ namespace itk
 // Default constructor
 IPLCommonImageIO::IPLCommonImageIO()
 {
-  m_SystemByteOrder = ByteSwapper<int>::SystemIsBigEndian() ? ImageIOBase::BigEndian : ImageIOBase::LittleEndian;
+  m_SystemByteOrder =
+    ByteSwapper<int>::SystemIsBigEndian() ? IOByteOrderEnum::BigEndian : IOByteOrderEnum::LittleEndian;
   m_ImageHeader = nullptr;
   m_FilenameList = new IPLFileNameList;
-  this->SetComponentType(ImageIOBase::SHORT);
+  this->SetComponentType(IOComponentEnum::SHORT);
 }
 
 IPLCommonImageIO::~IPLCommonImageIO()

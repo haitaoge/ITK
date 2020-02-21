@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -31,7 +31,8 @@
 
 namespace itk
 {
-/** \class TemporalRegion
+/**
+ *\class TemporalRegion
  * \brief Region subclass that holds a region in time
  *
  * A temporal region is represented using a starting point and a duration. Here
@@ -76,7 +77,7 @@ public:
   GetFrameDuration() const;
 
   /** Return RegionType (SRUCTURED_REGION) */
-  RegionType
+  RegionEnum
   GetRegionType() const override;
 
   /** Constructor */

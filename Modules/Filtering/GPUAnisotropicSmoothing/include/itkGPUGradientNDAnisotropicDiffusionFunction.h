@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@
 
 namespace itk
 {
-/** \class GPUGradientNDAnisotropicDiffusionFunction
+/**
+ *\class GPUGradientNDAnisotropicDiffusionFunction
  *
  * This class implements an N-dimensional version of the classic Perona-Malik
  * anisotropic diffusion equation for scalar-valued images on the GPU.  See
@@ -92,7 +93,7 @@ public:
   itkGetOpenCLSourceFromKernelMacro(GPUGradientNDAnisotropicDiffusionFunctionKernel);
 
   /** Compute the equation value. */
-  virtual void
+  void
   GPUComputeUpdate(const typename TImage::Pointer output, typename TImage::Pointer buffer, void * globalData) override;
 
   /** This method is called prior to each iteration of the solver. */
@@ -105,7 +106,7 @@ public:
 
 protected:
   GPUGradientNDAnisotropicDiffusionFunction();
-  ~GPUGradientNDAnisotropicDiffusionFunction() override {}
+  ~GPUGradientNDAnisotropicDiffusionFunction() override = default;
 
   /** Inner product function. */
   NeighborhoodInnerProduct<ImageType> m_InnerProduct;

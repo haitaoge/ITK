@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -167,17 +167,17 @@ public:
   itkNewMacro(Self);
 
   bool
-  GetHadStartEvent()
+  GetHadStartEvent() const
   {
     return m_HadStartEvent;
   }
   bool
-  GetHadIterationEvent()
+  GetHadIterationEvent() const
   {
     return m_HadIterationEvent;
   }
   bool
-  GetHadEndEvent()
+  GetHadEndEvent() const
   {
     return m_HadEndEvent;
   }
@@ -214,7 +214,7 @@ public:
   }
 
 protected:
-  EventChecker() {}
+  EventChecker() = default;
 
 private:
   bool m_HadStartEvent{ false };

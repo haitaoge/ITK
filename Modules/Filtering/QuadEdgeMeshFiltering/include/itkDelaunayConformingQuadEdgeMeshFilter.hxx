@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -68,7 +68,7 @@ DelaunayConformingQuadEdgeMeshFilter<TInputMesh, TOutputMesh>::InitializePriorit
 
       if (value > 0.0)
       {
-        PriorityQueueItemType * qi = new PriorityQueueItemType(edge, PriorityType(true, value));
+        auto * qi = new PriorityQueueItemType(edge, PriorityType(true, value));
         m_QueueMapper[edge] = qi;
         m_PriorityQueue->Push(qi);
       }
@@ -88,13 +88,34 @@ DelaunayConformingQuadEdgeMeshFilter<TInputMesh, TOutputMesh>::InitializePriorit
     }
     else
     {
-      PriorityQueueItemType * qi = new PriorityQueueItemType(edge, PriorityType(false, 0.0));
+      auto * qi = new PriorityQueueItemType(edge, PriorityType(false, 0.0));
       m_QueueMapper[edge] = qi;
       m_PriorityQueue->Push(qi);
     }
 
     ++const_edge_it;
   }
+}
+
+// ---------------------------------------------------------------------
+
+template <typename TInputMesh, typename TOutputMesh>
+void
+DelaunayConformingQuadEdgeMeshFilter<TInputMesh, TOutputMesh>::ReassignCellData(const OutputCellIdentifier & in,
+                                                                                const OutputCellIdentifier & out)
+{
+
+  if (nullptr == this->GetOutput()->GetCellData())
+  {
+    return;
+  }
+  if (!this->GetOutput()->GetCellData()->IndexExists(in))
+  {
+    return;
+  }
+  const auto cell_data = this->GetOutput()->GetCellData()->ElementAt(in);
+  this->GetOutput()->GetCellData()->DeleteIndex(in);
+  this->GetOutput()->GetCellData()->SetElement(out, cell_data);
 }
 
 // ---------------------------------------------------------------------
@@ -134,7 +155,15 @@ DelaunayConformingQuadEdgeMeshFilter<TInputMesh, TOutputMesh>::Process()
     delete m_QueueMapper[edge];
     m_QueueMapper.erase(edge);
 
+    const auto il_id = qe->GetLeft();  // Input Left ID
+    const auto ir_id = qe->GetRight(); // Input Right ID
     qe = m_FlipEdge->Evaluate(qe);
+    const auto ol_id = qe->GetLeft();  // Output Left ID
+    const auto or_id = qe->GetRight(); // Output Right ID
+
+    this->ReassignCellData(il_id, ol_id);
+    this->ReassignCellData(ir_id, or_id);
+
     if (qe != nullptr)
     {
       ++this->m_NumberOfEdgeFlips;
@@ -152,7 +181,7 @@ DelaunayConformingQuadEdgeMeshFilter<TInputMesh, TOutputMesh>::Process()
             auto queue_it = m_QueueMapper.find(edge);
             if (queue_it == m_QueueMapper.end())
             {
-              PriorityQueueItemType * qi = new PriorityQueueItemType(edge, PriorityType(true, value));
+              auto * qi = new PriorityQueueItemType(edge, PriorityType(true, value));
               m_QueueMapper[edge] = qi;
               m_PriorityQueue->Push(qi);
             }

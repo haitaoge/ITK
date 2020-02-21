@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -84,7 +84,6 @@ GPUDemonsRegistrationFunction<TFixedImage, TMovingImage, TDisplacementField>::GP
 
   defines << "#define OUTPIXELTYPE ";
   GetTypenameInString(typeid(typename TDisplacementField::PixelType::ValueType), defines);
-  std::cout << "Defines: " << defines.str() << std::endl;
 
   const char * GPUSource = GPUDemonsRegistrationFunction::GetOpenCLSource();
 
@@ -231,8 +230,8 @@ GPUDemonsRegistrationFunction<TFixedImage, TMovingImage, TDisplacementField>::GP
   DisplacementFieldTypePointer update,
   void *                       itkNotUsed(gd))
 {
-  TFixedImage *                            fixedImage = const_cast<TFixedImage *>(this->GetFixedImage());
-  TMovingImage *                           movingImage = const_cast<TMovingImage *>(this->GetMovingImage());
+  auto *                                   fixedImage = const_cast<TFixedImage *>(this->GetFixedImage());
+  auto *                                   movingImage = const_cast<TMovingImage *>(this->GetMovingImage());
   typename DisplacementFieldType::SizeType outSize = output->GetLargestPossibleRegion().GetSize();
 
   int imgSize[3];
@@ -312,7 +311,7 @@ GPUDemonsRegistrationFunction<TFixedImage, TMovingImage, TDisplacementField>::Co
   // Note: no need to check the index is within
   // fixed image buffer. This is done by the external filter.
   const IndexType index = it.GetIndex();
-  const double    fixedValue = (double)this->GetFixedImage()->GetPixel(index);
+  const auto      fixedValue = (double)this->GetFixedImage()->GetPixel(index);
 
   // Get moving image related information
   PointType mappedPoint;
@@ -365,7 +364,7 @@ GPUDemonsRegistrationFunction<TFixedImage, TMovingImage, TDisplacementField>::Co
   const double sqr_speedValue = itk::Math::sqr(speedValue);
 
   // update the metric
-  GlobalDataStruct * globalData = (GlobalDataStruct *)gd;
+  auto * globalData = (GlobalDataStruct *)gd;
   if (globalData)
   {
     globalData->m_SumOfSquaredDifference += sqr_speedValue;
@@ -398,7 +397,7 @@ template <typename TFixedImage, typename TMovingImage, typename TDisplacementFie
 void
 GPUDemonsRegistrationFunction<TFixedImage, TMovingImage, TDisplacementField>::ReleaseGlobalDataPointer(void * gd) const
 {
-  GlobalDataStruct * globalData = (GlobalDataStruct *)gd;
+  auto * globalData = (GlobalDataStruct *)gd;
 
   m_MetricCalculationLock.lock();
   m_SumOfSquaredDifference += globalData->m_SumOfSquaredDifference;

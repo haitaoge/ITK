@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -29,7 +29,8 @@
 
 namespace itk
 {
-/** \class Transform
+/**
+ *\class Transform
  * \brief Transform points and vectors from an input space to an output space.
  *
  * This abstract class defines the generic interface for a geometric
@@ -552,7 +553,7 @@ protected:
 
   Transform();
   Transform(NumberOfParametersType NumberOfParameters);
-#if defined(__GNUC__) && __GNUC__ < 6
+#if defined(__GNUC__) && __GNUC__ < 6 && !defined(__clang__)
   ~Transform() override{};
 #else
   ~Transform() override = default;

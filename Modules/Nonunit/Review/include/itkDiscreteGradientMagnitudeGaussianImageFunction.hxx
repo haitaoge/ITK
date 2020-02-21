@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,11 +26,6 @@ namespace itk
 /** Set the Input Image */
 template <typename TInputImage, typename TOutput>
 DiscreteGradientMagnitudeGaussianImageFunction<TInputImage, TOutput>::DiscreteGradientMagnitudeGaussianImageFunction()
-  : m_MaximumError(0.005)
-  , m_MaximumKernelWidth(30)
-  , m_NormalizeAcrossScale(true)
-  , m_UseImageSpacing(true)
-  , m_InterpolationMode(NearestNeighbourInterpolation)
 {
   m_Variance.Fill(1.0);
   m_OperatorImageFunction = OperatorImageFunctionType::New();
@@ -213,7 +208,7 @@ template <typename TInputImage, typename TOutput>
 typename DiscreteGradientMagnitudeGaussianImageFunction<TInputImage, TOutput>::OutputType
 DiscreteGradientMagnitudeGaussianImageFunction<TInputImage, TOutput>::Evaluate(const PointType & point) const
 {
-  if (m_InterpolationMode == NearestNeighbourInterpolation)
+  if (m_InterpolationMode == InterpolationModeEnum::NearestNeighbourInterpolation)
   {
     IndexType index;
     this->ConvertPointToNearestIndex(point, index);
@@ -233,7 +228,7 @@ typename DiscreteGradientMagnitudeGaussianImageFunction<TInputImage, TOutput>::O
 DiscreteGradientMagnitudeGaussianImageFunction<TInputImage, TOutput>::EvaluateAtContinuousIndex(
   const ContinuousIndexType & cindex) const
 {
-  if (m_InterpolationMode == NearestNeighbourInterpolation)
+  if (m_InterpolationMode == InterpolationModeEnum::NearestNeighbourInterpolation)
   {
     IndexType index;
     this->ConvertContinuousIndexToNearestIndex(cindex, index);

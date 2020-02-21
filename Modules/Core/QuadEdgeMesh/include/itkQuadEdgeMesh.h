@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -153,6 +153,8 @@ public:
   using PointIdList = std::vector<PointIdentifier>;
   using EdgeListType = std::list<QEPrimal *>;
   using EdgeListPointerType = EdgeListType *;
+
+  using MeshClassCellsAllocationMethodEnum = itk::MeshEnums::MeshClassCellsAllocationMethod;
 
   /** Reserved PointIdentifier designated to represent the absence of Point */
   static const PointIdentifier m_NoPoint;

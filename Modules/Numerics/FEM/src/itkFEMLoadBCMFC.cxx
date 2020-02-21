@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -44,7 +44,6 @@ LoadBCMFC::CreateAnother() const
  * Fix a DOF to a prescribed value
  */
 LoadBCMFC::LoadBCMFC(Element::ConstPointer element, int dof, vnl_vector<Element::Float> val)
-  : m_Index(0)
 {
   m_LeftHandSide.clear();
 
@@ -60,7 +59,7 @@ LoadBCMFC::SetIndex(int ind)
 }
 
 int
-LoadBCMFC::GetIndex()
+LoadBCMFC::GetIndex() const
 {
   return this->m_Index;
 }

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -50,13 +50,13 @@ public:
   void
   Register() const
   {
-    Object * obj = static_cast<Object *>(m_EnclosingFilter.GetPointer());
+    auto * obj = static_cast<Object *>(m_EnclosingFilter.GetPointer());
     obj->Register();
   }
   void
   UnRegister() const noexcept
   {
-    Object * obj = static_cast<Object *>(m_EnclosingFilter.GetPointer());
+    auto * obj = static_cast<Object *>(m_EnclosingFilter.GetPointer());
     obj->UnRegister();
   }
   static Pointer
@@ -236,12 +236,20 @@ protected:
   {
     // This checks whether the line encodings are really neighbors. The first
     // dimension gets ignored because the encodings are along that axis.
+    SizeValueType diffSum = 0;
     for (unsigned i = 1; i < OutputImageDimension; i++)
     {
-      if (Math::abs(A[i] - B[i]) > 1)
+      SizeValueType diff = Math::abs(A[i] - B[i]);
+      if (diff > 1)
       {
         return false;
       }
+      diffSum += diff;
+    }
+
+    if (!this->m_FullyConnected)
+    {
+      return (diffSum <= 1); // indices can differ only along one dimension
     }
     return true;
   }
@@ -477,7 +485,7 @@ protected:
     {
       if (!m_LineMap[thisIdx].empty())
       {
-        typename OffsetVectorType::const_iterator it = this->m_LineOffsets.begin();
+        auto it = this->m_LineOffsets.begin();
         while (it != this->m_LineOffsets.end())
         {
           OffsetValueType neighIdx = thisIdx + (*it);

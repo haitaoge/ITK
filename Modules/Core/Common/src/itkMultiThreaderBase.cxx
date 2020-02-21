@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -54,53 +54,39 @@ namespace itk
 struct MultiThreaderBaseGlobals
 {
   // Initialize static members.
-  MultiThreaderBaseGlobals()
-    : GlobalDefaultThreaderTypeIsInitialized(false)
-    ,
-  // Global value to control weather the threadpool implementation should
-  // be used. This defaults to the environmental variable
-  // ITK_GLOBAL_DEFAULT_THREADER. If that is not present, then
-  // ITK_USE_THREADPOOL is examined.
-#if defined(ITK_USE_TBB)
-    m_GlobalDefaultThreader(MultiThreaderBase::ThreaderEnum::TBB)
-    ,
-#elif defined(POOL_MULTI_THREADER_AVAILABLE)
-    m_GlobalDefaultThreader(MultiThreaderBase::ThreaderEnum::Pool)
-    ,
-#else
-    m_GlobalDefaultThreader(MultiThreaderBase::ThreaderEnum::Platform)
-    ,
-#endif
-    m_GlobalMaximumNumberOfThreads(ITK_MAX_THREADS)
-    ,
-    // Global default number of threads : 0 => Not initialized.
-    m_GlobalDefaultNumberOfThreads(0){};
+  MultiThreaderBaseGlobals() = default;
   // GlobalDefaultThreaderTypeIsInitialized is used only in this
   // file to ensure that the ITK_GLOBAL_DEFAULT_THREADER or
   // ITK_USE_THREADPOOL environmenal variables are
   // only used as a fall back option.  If the SetGlobalDefaultThreaderType
   // API is ever used by the developer, the developers choice is
   // respected over the environmental variable.
-  bool       GlobalDefaultThreaderTypeIsInitialized;
+  bool       GlobalDefaultThreaderTypeIsInitialized{ false };
   std::mutex globalDefaultInitializerLock;
 
   // Global value to control weather the threadpool implementation should
   // be used. This defaults to the environmental variable
   // ITK_GLOBAL_DEFAULT_THREADER. If that is not present, then
   // ITK_USE_THREADPOOL is examined.
-  MultiThreaderBase::ThreaderEnum m_GlobalDefaultThreader;
+#if defined(ITK_USE_TBB)
+  MultiThreaderBase::ThreaderEnum m_GlobalDefaultThreader{ MultiThreaderBase::ThreaderEnum::TBB };
+#elif defined(POOL_MULTI_THREADER_AVAILABLE)
+  MultiThreaderBase::ThreaderEnum m_GlobalDefaultThreader{ MultiThreaderBase::ThreaderEnum::Pool };
+#else
+  MultiThreaderBase::ThreaderEnum m_GlobalDefaultThreader{ MultiThreaderBase::ThreaderEnum::Platform };
+#endif
 
   // Global variable defining the maximum number of threads that can be used.
   //  The m_GlobalMaximumNumberOfThreads must always be less than or equal to
   //  ITK_MAX_THREADS and greater than zero. */
-  ThreadIdType m_GlobalMaximumNumberOfThreads;
+  ThreadIdType m_GlobalMaximumNumberOfThreads{ ITK_MAX_THREADS };
 
   //  Global variable defining the default number of threads to set at
   //  construction time of a MultiThreaderBase instance.  The
   //  m_GlobalDefaultNumberOfThreads must always be less than or equal to the
   //  m_GlobalMaximumNumberOfThreads and larger or equal to 1 once it has been
   //  initialized in the constructor of the first MultiThreaderBase instantiation.
-  ThreadIdType m_GlobalDefaultNumberOfThreads;
+  ThreadIdType m_GlobalDefaultNumberOfThreads{ 0 };
 };
 
 itkGetGlobalSimpleMacro(MultiThreaderBase, MultiThreaderBaseGlobals, PimplGlobals);
@@ -330,11 +316,9 @@ MultiThreaderBase::GetGlobalDefaultNumberOfThreads()
     }
     // first, check for environment variable
     std::string itkGlobalDefaultNumberOfThreadsEnv = "0";
-    for (std::vector<std::string>::const_iterator lit = ITK_NUMBER_OF_THREADS_ENV_LIST.begin();
-         lit != ITK_NUMBER_OF_THREADS_ENV_LIST.end();
-         ++lit)
+    for (const auto & lit : ITK_NUMBER_OF_THREADS_ENV_LIST)
     {
-      if (itksys::SystemTools::GetEnv(lit->c_str(), itkGlobalDefaultNumberOfThreadsEnv))
+      if (itksys::SystemTools::GetEnv(lit.c_str(), itkGlobalDefaultNumberOfThreadsEnv))
       {
         threadCount = static_cast<ThreadIdType>(atoi(itkGlobalDefaultNumberOfThreadsEnv.c_str()));
       }
@@ -432,8 +416,6 @@ MultiThreaderBase::New()
 
 
 MultiThreaderBase::MultiThreaderBase()
-  : m_SingleMethod{ nullptr }
-  , m_SingleData{ nullptr }
 {
   m_MaximumNumberOfThreads = MultiThreaderBase::GetGlobalDefaultNumberOfThreads();
   m_NumberOfWorkUnits = m_MaximumNumberOfThreads;
@@ -451,23 +433,23 @@ MultiThreaderBase ::SingleMethodProxy(void * arg)
   try
   {
     (*threadInfoStruct->ThreadFunction)(arg);
-    threadInfoStruct->ThreadExitCode = WorkUnitInfo::ThreadExitCodeType::SUCCESS;
+    threadInfoStruct->ThreadExitCode = WorkUnitInfo::ThreadExitCodeEnum::SUCCESS;
   }
   catch (ProcessAborted &)
   {
-    threadInfoStruct->ThreadExitCode = WorkUnitInfo::ThreadExitCodeType::ITK_PROCESS_ABORTED_EXCEPTION;
+    threadInfoStruct->ThreadExitCode = WorkUnitInfo::ThreadExitCodeEnum::ITK_PROCESS_ABORTED_EXCEPTION;
   }
   catch (ExceptionObject &)
   {
-    threadInfoStruct->ThreadExitCode = WorkUnitInfo::ThreadExitCodeType::ITK_EXCEPTION;
+    threadInfoStruct->ThreadExitCode = WorkUnitInfo::ThreadExitCodeEnum::ITK_EXCEPTION;
   }
   catch (std::exception &)
   {
-    threadInfoStruct->ThreadExitCode = WorkUnitInfo::ThreadExitCodeType::STD_EXCEPTION;
+    threadInfoStruct->ThreadExitCode = WorkUnitInfo::ThreadExitCodeEnum::STD_EXCEPTION;
   }
   catch (...)
   {
-    threadInfoStruct->ThreadExitCode = WorkUnitInfo::ThreadExitCodeType::UNKNOWN;
+    threadInfoStruct->ThreadExitCode = WorkUnitInfo::ThreadExitCodeEnum::UNKNOWN;
   }
 
   return ITK_THREAD_RETURN_DEFAULT_VALUE;
@@ -626,13 +608,6 @@ MultiThreaderBase ::ParallelizeImageRegionHelper(void * arg)
   return ITK_THREAD_RETURN_DEFAULT_VALUE;
 }
 
-std::ostream &
-operator<<(std::ostream & os, const MultiThreaderBase::ThreaderEnum & threader)
-{
-  os << MultiThreaderBase::ThreaderTypeToString(threader) << "MultiThreader";
-  return os;
-}
-
 // Print method for the multithreader
 void
 MultiThreaderBase::PrintSelf(std::ostream & os, Indent indent) const
@@ -650,4 +625,50 @@ MultiThreaderBase::PrintSelf(std::ostream & os, Indent indent) const
 
 MultiThreaderBaseGlobals * MultiThreaderBase::m_PimplGlobals;
 
+/** Print enum values */
+std::ostream &
+operator<<(std::ostream & out, const MultiThreaderBaseEnums::Threader value)
+{
+  return out << [value] {
+    switch (value)
+    {
+      case MultiThreaderBaseEnums::Threader::Platform:
+        return "itk::MultiThreaderBaseEnums::Threader::Platform";
+        //      TODO    case MultiThreaderBaseEnums::Threader::First:
+        //                    return "itk::MultiThreaderBaseEnums::Threader::First";
+      case MultiThreaderBaseEnums::Threader::Pool:
+        return "itk::MultiThreaderBaseEnums::Threader::Pool";
+      case MultiThreaderBaseEnums::Threader::TBB:
+        return "itk::MultiThreaderBaseEnums::Threader::TBB";
+        //      TODO    case MultiThreaderBaseEnums::Threader::Last:
+        //                    return "itk::MultiThreaderBaseEnums::Threader::Last";
+      case MultiThreaderBaseEnums::Threader::Unknown:
+        return "itk::MultiThreaderBaseEnums::Threader::Unknown";
+      default:
+        return "INVALID VALUE FOR itk::MultiThreaderBaseEnums::Threader";
+    }
+  }();
+}
+/** Print enum values */
+std::ostream &
+operator<<(std::ostream & out, const MultiThreaderBaseEnums::ThreadExitCode value)
+{
+  return out << [value] {
+    switch (value)
+    {
+      case MultiThreaderBaseEnums::ThreadExitCode::SUCCESS:
+        return "itk::MultiThreaderBaseEnums::ThreadExitCode::SUCCESS";
+      case MultiThreaderBaseEnums::ThreadExitCode::ITK_EXCEPTION:
+        return "itk::MultiThreaderBaseEnums::ThreadExitCode::ITK_EXCEPTION";
+      case MultiThreaderBaseEnums::ThreadExitCode::ITK_PROCESS_ABORTED_EXCEPTION:
+        return "itk::MultiThreaderBaseEnums::ThreadExitCode::ITK_PROCESS_ABORTED_EXCEPTION";
+      case MultiThreaderBaseEnums::ThreadExitCode::STD_EXCEPTION:
+        return "itk::MultiThreaderBaseEnums::ThreadExitCode::STD_EXCEPTION";
+      case MultiThreaderBaseEnums::ThreadExitCode::UNKNOWN:
+        return "itk::MultiThreaderBaseEnums::ThreadExitCode::UNKNOWN";
+      default:
+        return "INVALID VALUE FOR itk::MultiThreaderBaseEnums::ThreadExitCode";
+    }
+  }();
+}
 } // namespace itk

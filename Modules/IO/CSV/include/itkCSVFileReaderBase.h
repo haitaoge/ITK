@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -28,7 +28,8 @@
 
 namespace itk
 {
-/** \class CSVFileReaderBase
+/**
+ *\class CSVFileReaderBase
  * \brief A base class that contains common methods used for parsing csv files.
  *
  * CSVFileReaderBase is a base abstract class for reading csv files. It

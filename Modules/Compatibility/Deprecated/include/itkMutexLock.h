@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -36,7 +36,8 @@
 namespace itk
 {
 
-/** \class SimpleMutexLock
+/**
+ *\class SimpleMutexLock
  * \brief Simple mutual exclusion locking class.
 
  * SimpleMutexLock allows the locking of variables which are accessed
@@ -104,7 +105,8 @@ protected:
   MutexType m_MutexLock;
 };
 
-/** \class MutexLock
+/**
+ *\class MutexLock
  * \brief Mutual exclusion locking class.
  *
  * MutexLock allows the locking of variables which are accessed

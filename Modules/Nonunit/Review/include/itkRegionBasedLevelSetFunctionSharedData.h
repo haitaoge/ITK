@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -175,16 +175,15 @@ public:
   LevelSetDataPointerVector m_LevelSetDataPointerVector;
 
   unsigned int     m_FunctionCount;
-  unsigned int     m_NumberOfNeighbors;
+  unsigned int     m_NumberOfNeighbors{ 6 };
   ListImagePointer m_NearestNeighborListImage;
   KdTreePointer    m_KdTree;
 
 protected:
   RegionBasedLevelSetFunctionSharedData()
-    : m_NumberOfNeighbors(6)
-    , m_KdTree(nullptr)
+    : m_KdTree(nullptr)
   {}
-  ~RegionBasedLevelSetFunctionSharedData() override {}
+  ~RegionBasedLevelSetFunctionSharedData() override = default;
 };
 } // end namespace itk
 

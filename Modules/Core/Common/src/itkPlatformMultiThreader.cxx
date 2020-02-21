@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -210,7 +210,7 @@ PlatformMultiThreader::SingleMethodExecute()
 
       this->SpawnWaitForSingleMethodThread(process_id[thread_loop]);
 
-      if (m_ThreadInfoArray[thread_loop].ThreadExitCode != WorkUnitInfo::ThreadExitCodeType::SUCCESS)
+      if (m_ThreadInfoArray[thread_loop].ThreadExitCode != WorkUnitInfo::ThreadExitCodeEnum::SUCCESS)
       {
         exceptionOccurred = true;
       }

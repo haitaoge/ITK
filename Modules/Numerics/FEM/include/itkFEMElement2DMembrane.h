@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -126,7 +126,7 @@ protected:
   /**
    * Pointer to material properties for the element
    */
-  const MaterialLinearElasticity * m_mat;
+  const MaterialLinearElasticity * m_mat{ nullptr };
 
 }; // class Element2DMembrane
 } // end namespace fem

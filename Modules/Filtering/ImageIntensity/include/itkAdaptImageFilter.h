@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@ namespace itk
 {
 namespace Functor
 {
-/** \class AccessorFunctor
+/**
+ *\class AccessorFunctor
  * \brief Convert an accessor to a functor so that it can be used in a
  * UnaryFunctorImageFilter.
  *
@@ -100,7 +101,8 @@ private:
 };
 } // namespace Functor
 
-/** \class AdaptImageFilter
+/**
+ *\class AdaptImageFilter
  * \brief Convert an image to another pixel type using the specified data accessor.
  *
  * AdaptImageFilter converts an image to another pixel type using a

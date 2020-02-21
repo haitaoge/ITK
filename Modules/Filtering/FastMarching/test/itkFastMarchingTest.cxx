@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -194,6 +194,19 @@ itkFastMarchingTest(int, char *[])
   std::cout << std::endl;
 
   marcher->Print(std::cout);
+
+  // Test streaming enumeration for FastMarchingImageFilterEnums::Label elements
+  const std::set<itk::FastMarchingImageFilterEnums::Label> allLabel{
+    itk::FastMarchingImageFilterEnums::Label::FarPoint,
+    itk::FastMarchingImageFilterEnums::Label::AlivePoint,
+    itk::FastMarchingImageFilterEnums::Label::TrialPoint,
+    itk::FastMarchingImageFilterEnums::Label::InitialTrialPoint,
+    itk::FastMarchingImageFilterEnums::Label::OutsidePoint
+  };
+  for (const auto & ee : allLabel)
+  {
+    std::cout << "STREAMED ENUM VALUE FastMarchingImageFilterEnums::Label: " << ee << std::endl;
+  }
 
   if (passed)
   {

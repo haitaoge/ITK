@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@
 
 namespace itk
 {
-/** \class HistogramToEntropyImageFilter
+/**
+ *\class HistogramToEntropyImageFilter
  * \brief The class takes a histogram as an input and gives the entropy
  * image as the output. A pixel, at position I,  in the output image is given by
  *
@@ -61,7 +62,7 @@ public:
   // Returns pixels of float..
   using OutputPixelType = TOutput;
 
-  HistogramEntropyFunction() {}
+  HistogramEntropyFunction() = default;
 
   ~HistogramEntropyFunction() = default;
 

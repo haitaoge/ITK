@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -34,7 +34,8 @@
 
 namespace itk
 {
-/** \class ThresholdImageFilter
+/**
+ *\class ThresholdImageFilter
  * \brief Set image values to a user-specified value if they are below,
  * above, or between simple threshold values.
  *

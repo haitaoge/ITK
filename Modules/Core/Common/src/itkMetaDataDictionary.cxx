@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,12 +23,11 @@ MetaDataDictionary ::MetaDataDictionary()
   : m_Dictionary(std::make_shared<MetaDataDictionaryMapType>())
 {}
 
-MetaDataDictionary ::~MetaDataDictionary() {}
+MetaDataDictionary ::~MetaDataDictionary() = default;
 
-MetaDataDictionary ::MetaDataDictionary(const MetaDataDictionary & old)
-  // perform shallow copy, so m_Dictionary is shared
-  : m_Dictionary(old.m_Dictionary)
-{}
+// NOTE: Desired behavior is to perform shallow copy, so m_Dictionary is shared
+//       as is thee default behavior for copy constructors.
+MetaDataDictionary ::MetaDataDictionary(const MetaDataDictionary &) = default;
 
 MetaDataDictionary &
 MetaDataDictionary ::operator=(const MetaDataDictionary & old)

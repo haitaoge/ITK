@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -86,9 +86,9 @@ class ITKCommon_EXPORT LinuxMemoryUsageObserver : public MemoryUsageObserverBase
 {
 public:
   /** destructor */
-  virtual ~LinuxMemoryUsageObserver();
-  virtual MemoryLoadType
-  GetMemoryUsage();
+  ~LinuxMemoryUsageObserver() override;
+  MemoryLoadType
+  GetMemoryUsage() override;
 };
 #endif // __linux__
 
@@ -133,9 +133,9 @@ class ITKCommon_EXPORT MallinfoMemoryUsageObserver : public MemoryUsageObserverB
 {
 public:
   /** destructor */
-  virtual ~MallinfoMemoryUsageObserver();
-  virtual MemoryLoadType
-  GetMemoryUsage();
+  ~MallinfoMemoryUsageObserver() override;
+  MemoryLoadType
+  GetMemoryUsage() override;
 };
 #  endif // Mallinfo
 #endif   // !defined(WIN32) && !defined(_WIN32)

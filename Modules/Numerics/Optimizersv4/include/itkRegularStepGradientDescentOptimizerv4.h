@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,7 +23,8 @@
 
 namespace itk
 {
-/** \class RegularStepGradientDescentOptimizerv4
+/**
+ *\class RegularStepGradientDescentOptimizerv4
  *  \brief Regular Step Gradient descent optimizer.
  *
  *   This optimizer is a variant of gradient descent that attempts to prevent it
@@ -73,7 +74,6 @@ public:
   using IndexRangeType = typename Superclass::IndexRangeType;
   using ScalesType = typename Superclass::ScalesType;
   using ParametersType = typename Superclass::ParametersType;
-  using StopConditionEnum = typename Superclass::StopConditionEnum;
 
   /** Compensated summation type. */
   using CompensatedSummationType = CompensatedSummation<InternalComputationValueType>;

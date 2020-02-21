@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@
 namespace itk
 {
 
-/** \class RenyiEntropyThresholdCalculator
+/**
+ *\class RenyiEntropyThresholdCalculator
  * \brief Computes the RenyiEntropy's threshold for an image.
  *
  * Kapur J.N., Sahoo P.K., and Wong A.K.C. (1985) "A New Method for

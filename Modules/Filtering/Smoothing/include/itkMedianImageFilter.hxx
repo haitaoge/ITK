@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ MedianImageFilter<TInputImage, TOutputImage>::DynamicThreadedGenerateData(
 
   const auto nonBoundaryRegion = calculatorResult.GetNonBoundaryRegion();
 
-  if (nonBoundaryRegion.GetSize() != InputSizeType())
+  if (!nonBoundaryRegion.GetSize().empty())
   {
     // Process the non-boundary subregion, using a faster pixel access policy without boundary extrapolation.
     auto neighborhoodRange =

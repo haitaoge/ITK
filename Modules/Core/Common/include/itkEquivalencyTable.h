@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -92,7 +92,7 @@ public:
   unsigned long
   Lookup(const unsigned long a) const
   {
-    ConstIterator result = m_HashMap.find(a);
+    auto result = m_HashMap.find(a);
 
     if (result == m_HashMap.end())
     {

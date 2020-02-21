@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -141,6 +141,9 @@ protected:
 
   void
   Process();
+
+  void
+  ReassignCellData(const OutputCellIdentifier & in, const OutputCellIdentifier & out);
 
   inline CriterionValueType
   Dyer07Criterion(OutputMeshType * iMesh, OutputQEType * iEdge) const

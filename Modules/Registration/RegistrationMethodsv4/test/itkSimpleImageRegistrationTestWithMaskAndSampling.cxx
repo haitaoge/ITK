@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -168,7 +168,7 @@ PerformSimpleImageRegistrationWithMaskAndSampling(int argc, char * argv[])
   affineSimple->SetObjectName("affineSimple");
   affineSimple->SetFixedImage(fixedImage);
   affineSimple->SetMovingImage(movingImage);
-  affineSimple->SetMetricSamplingStrategy(AffineRegistrationType::REGULAR);
+  affineSimple->SetMetricSamplingStrategy(AffineRegistrationType::MetricSamplingStrategyEnum::REGULAR);
   affineSimple->SetMetricSamplingPercentage(0.5);
   affineSimple->SetInitialTransform(affineTransform);
   affineSimple->InPlaceOn();

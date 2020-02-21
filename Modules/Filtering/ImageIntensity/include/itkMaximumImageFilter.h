@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -62,7 +62,8 @@ public:
 };
 } // namespace Functor
 
-/** \class MaximumImageFilter
+/**
+ *\class MaximumImageFilter
  * \brief Implements a pixel-wise operator Max(a,b) between two images.
  *
  * The pixel values of the output image are the maximum between the

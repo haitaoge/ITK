@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -39,7 +39,8 @@
 
 namespace itk
 {
-/** \class IPLCommonImageIO
+/**
+ *\class IPLCommonImageIO
  *
  * \author Hans J. Johnson
  * \brief Class that defines how to read GE4 file format.
@@ -163,9 +164,9 @@ protected:
 
   //
   // data members
-  GEImageHeader *        m_ImageHeader;
-  ImageIOBase::ByteOrder m_SystemByteOrder;
-  IPLFileNameList *      m_FilenameList;
+  GEImageHeader *   m_ImageHeader;
+  IOByteOrderEnum   m_SystemByteOrder;
+  IPLFileNameList * m_FilenameList;
   //
   // return 0 on success, -1 on failure
   int

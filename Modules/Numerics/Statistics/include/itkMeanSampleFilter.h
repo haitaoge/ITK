@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,7 +26,8 @@ namespace itk
 {
 namespace Statistics
 {
-/** \class MeanSampleFilter
+/**
+ *\class MeanSampleFilter
  * \brief Given a sample, this filter computes the sample mean
  *
  * The sample is plugged in using SetSample method. Then invoke

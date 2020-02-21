@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -122,7 +122,7 @@ public:
   itkNewMacro(Self);
 
 protected:
-  RegistrationInterfaceCommand(){};
+  RegistrationInterfaceCommand() = default;
 
   //
   // For convenience, we declare types useful for converting pointers
@@ -159,7 +159,7 @@ public:
     // \code{dynamic\_cast} was successful since we know the actual object
     // is a multi-resolution registration method.
     //
-    RegistrationPointer registration = static_cast<RegistrationPointer>(object);
+    auto registration = static_cast<RegistrationPointer>(object);
 
     //
     // If this is the first resolution level we set the maximum step length
@@ -173,7 +173,7 @@ public:
     // for the previous level. This will guarantee the continuity of the path
     // taken by the optimizer through the parameter space.
     //
-    OptimizerPointer optimizer = static_cast<OptimizerPointer>(registration->GetModifiableOptimizer());
+    auto optimizer = static_cast<OptimizerPointer>(registration->GetModifiableOptimizer());
 
     std::cout << "-------------------------------------" << std::endl;
     std::cout << "MultiResolution Level : " << registration->GetCurrentLevel() << std::endl;
@@ -216,7 +216,7 @@ public:
   itkNewMacro(Self);
 
 protected:
-  CommandIterationUpdate(){};
+  CommandIterationUpdate() = default;
 
 public:
   using OptimizerType = itk::RegularStepGradientDescentOptimizer;
@@ -231,7 +231,7 @@ public:
   void
   Execute(const itk::Object * object, const itk::EventObject & event) override
   {
-    OptimizerPointer optimizer = static_cast<OptimizerPointer>(object);
+    auto optimizer = static_cast<OptimizerPointer>(object);
     if (!(itk::IterationEvent().CheckEvent(&event)))
     {
       return;

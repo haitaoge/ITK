@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -51,10 +51,9 @@ struct FFTWGlobalConfigurationGlobals
   std::mutex                       m_CreationLock;
 };
 
-WisdomFilenameGeneratorBase ::WisdomFilenameGeneratorBase() {}
+WisdomFilenameGeneratorBase ::WisdomFilenameGeneratorBase() = default;
 
-
-WisdomFilenameGeneratorBase ::~WisdomFilenameGeneratorBase() {}
+WisdomFilenameGeneratorBase ::~WisdomFilenameGeneratorBase() = default;
 
 ManualWisdomFilenameGenerator ::ManualWisdomFilenameGenerator(std::string wfn)
   : m_WisdomFilename(std::move(wfn))
@@ -171,20 +170,7 @@ FFTWGlobalConfiguration ::GetInstance()
   return m_PimplGlobals->m_Instance;
 }
 
-HardwareWisdomFilenameGenerator ::HardwareWisdomFilenameGenerator()
-  : m_UseOSName(true)
-  , m_UseOSRelease(false)
-  , m_UseOSVersion(false)
-  , m_UseOSPlatform(true)
-  , m_UseOSBitSize(true)
-  , m_UseNumberOfProcessors(true)
-  , m_UseVendorString(true)
-  , m_UseVendorID(false)
-  , m_UseTypeID(true)
-  , m_UseFamilyID(true)
-  , m_UseModelID(true)
-  , m_UseSteppingCode(true)
-{}
+HardwareWisdomFilenameGenerator ::HardwareWisdomFilenameGenerator() = default;
 
 std::string
 HardwareWisdomFilenameGenerator ::GenerateWisdomFilename(const std::string & baseCacheDirectory) const
@@ -387,17 +373,13 @@ HardwareWisdomFilenameGenerator ::GetUseSteppingCode() const
 
 
 FFTWGlobalConfiguration ::FFTWGlobalConfiguration()
-  : m_NewWisdomAvailable(false)
-  , m_PlanRigor(0)
-  , m_WriteWisdomCache(false)
-  , m_ReadWisdomCache(true)
-  , m_WisdomCacheBase("")
+  : m_WisdomCacheBase("")
 {
   { // Configure default method for creating WISDOM_CACHE files
     std::string manualCacheFilename = "";
     if (itksys::SystemTools::GetEnv("ITK_FFTW_WISDOM_CACHE_FILE", manualCacheFilename))
     {
-      ManualWisdomFilenameGenerator * DefaultFilenameGenerator = new ManualWisdomFilenameGenerator(manualCacheFilename);
+      auto * DefaultFilenameGenerator = new ManualWisdomFilenameGenerator(manualCacheFilename);
       this->m_WisdomFilenameGenerator = DefaultFilenameGenerator;
       this->m_WisdomFilenameGenerator->GenerateWisdomFilename(this->m_WisdomCacheBase);
     }
@@ -452,7 +434,7 @@ FFTWGlobalConfiguration ::FFTWGlobalConfiguration()
     {
       this->m_WisdomCacheBase = envSetPath;
     }
-    else if (this->m_WisdomCacheBase.size() < 1) // Use home account if nothing specified
+    else if (this->m_WisdomCacheBase.empty()) // Use home account if nothing specified
     {
 #  ifdef _WIN32
       this->m_WisdomCacheBase = std::string(itksys::SystemTools::GetEnv("HOMEPATH"));

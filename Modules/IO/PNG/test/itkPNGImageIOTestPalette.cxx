@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -141,7 +141,7 @@ itkPNGImageIOTestPalette(int argc, char * argv[])
       std::cerr << std::endl << "Palette image read as scalar plus palette, but expanding is requested." << std::endl;
       return EXIT_FAILURE;
     }
-    if (palette_read.size() != 0)
+    if (!palette_read.empty())
     {
       std::cerr << std::endl << "Test failed!" << std::endl;
       std::cerr << std::endl << "Non empty palette but expanding palette to rgb requested." << std::endl;
@@ -158,7 +158,7 @@ itkPNGImageIOTestPalette(int argc, char * argv[])
       std::cerr << std::endl << "Image indicated as non palette read as scalar plus palette." << std::endl;
       return EXIT_FAILURE;
     }
-    if (palette_read.size() != 0)
+    if (!palette_read.empty())
     {
       std::cerr << std::endl << "Test failed!" << std::endl;
       std::cerr << std::endl << "Non empty palette but image indicated as RGB." << std::endl;

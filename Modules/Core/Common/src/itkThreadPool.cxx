@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -148,9 +148,9 @@ ThreadPool ::~ThreadPool()
   // Even if the threads have already been terminated,
   // we should join() the std::thread variables.
   // Otherwise some sanity check in debug mode complains.
-  for (ThreadIdType i = 0; i < m_Threads.size(); i++)
+  for (auto & m_Thread : m_Threads)
   {
-    m_Threads[i].join();
+    m_Thread.join();
   }
 }
 

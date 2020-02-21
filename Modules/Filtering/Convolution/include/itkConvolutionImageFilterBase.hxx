@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ namespace itk
 {
 template <typename TInputImage, typename TKernelImage, typename TOutputImage>
 ConvolutionImageFilterBase<TInputImage, TKernelImage, TOutputImage>::ConvolutionImageFilterBase()
-  : m_OutputRegionMode(ConvolutionImageFilterOutputRegionEnum::SAME)
 {
   this->AddRequiredInputName("KernelImage");
 
@@ -39,7 +38,7 @@ ConvolutionImageFilterBase<TInputImage, TKernelImage, TOutputImage>::GenerateOut
   // behavior corresponds to SAME output region mode.
   Superclass::GenerateOutputInformation();
 
-  if (m_OutputRegionMode == ConvolutionImageFilterOutputRegionEnum::VALID)
+  if (m_OutputRegionMode == ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion::VALID)
   {
     OutputRegionType validRegion = this->GetValidRegion();
 
@@ -96,14 +95,14 @@ template <typename TInputImage, typename TKernelImage, typename TOutputImage>
 void
 ConvolutionImageFilterBase<TInputImage, TKernelImage, TOutputImage>::SetOutputRegionModeToSame()
 {
-  this->SetOutputRegionMode(ConvolutionImageFilterOutputRegionEnum::SAME);
+  this->SetOutputRegionMode(ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion::SAME);
 }
 
 template <typename TInputImage, typename TKernelImage, typename TOutputImage>
 void
 ConvolutionImageFilterBase<TInputImage, TKernelImage, TOutputImage>::SetOutputRegionModeToValid()
 {
-  this->SetOutputRegionMode(ConvolutionImageFilterOutputRegionEnum::VALID);
+  this->SetOutputRegionMode(ConvolutionImageFilterBaseEnums::ConvolutionImageFilterOutputRegion::VALID);
 }
 
 template <typename TInputImage, typename TKernelImage, typename TOutputImage>
